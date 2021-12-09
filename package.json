@@ -16,12 +16,12 @@
   },
   "keywords": [
     "68publishers",
-    "cookie",
     "consent",
-    "cookieconsent"
+    "cookieconsent",
+    "cookie-consent"
   ],
   "author": "68publishers",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.16.0",
     "@babel/polyfill": "^7.12.1",
