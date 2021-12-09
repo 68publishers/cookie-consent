@@ -49,7 +49,7 @@ class CookieConsentWrapper {
         let translations;
 
         try {
-            translations = require(`./resources/translations/${locale}.js`);
+            translations = require(`./resources/translations/${locale}`);
         } catch (e) {
             translations = {};
         }
