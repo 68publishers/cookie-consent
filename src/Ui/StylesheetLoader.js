@@ -41,7 +41,7 @@ class StylesheetLoader {
 
     loadInternal(content) {
         const element = this._document.createElement('style');
-        element.innerText = content;
+        element.innerText = content.replace(/\s/g, '');
 
         this._appendStylesheet(element);
     }
