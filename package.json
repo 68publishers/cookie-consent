@@ -1,5 +1,5 @@
 {
-  "name": "68publishers-cookie-consent",
+  "name": "@68publishers/cookie-consent",
   "version": "0.1",
   "description": "Cookie consent wrapper based on orestbida/cookieconsent with GTM integration.",
   "homepage": "http://www.68publishers.io/",
