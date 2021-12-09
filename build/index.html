@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Cookie consent wrapper</title>
+        <script>
+            window.dataLayer = {
+                push: function (args) {
+                    var code = document.createElement('pre');
+                    code.innerText = JSON.stringify(args);
+                    code.style = 'padding: 10px 0';
+
+                    document.getElementById('data-layer-pushes').appendChild(code);
+                }
+            };
+        </script>
+
+        <script src="./cookie-consent.js" type="text/javascript"></script>
+
+        <script>
+            CookieConsentWrapper.setUiOptions({
+                include_default_stylesheets: true,
+                modal_trigger_selector: 'footer .footer-item'
+            });
+
+            CookieConsentWrapper.setPluginOptions({
+                cookie_name: 'consent-settings',
+                force_consent: true
+            });
+
+            CookieConsentWrapper.setConsentModalOptions({
+                position: 'middle center'
+            });
+
+            CookieConsentWrapper.loadTranslations('en');
+
+            CookieConsentWrapper.addStorage({
+                name: 'functionality_storage',
+                enabled_by_default: true,
+                display_in_widget: true,
+                readonly: true,
+                event_trigger: 'functionality_storage_event'
+            });
+
+            CookieConsentWrapper.addStorage({
+                name: 'personalization_storage',
+                sync_consent_with: 'functionality_storage',
+                event_trigger: 'functionality_storage_event'
+            });
+
+            CookieConsentWrapper.addStorage({
+                name: 'security_storage',
+                sync_consent_with: 'functionality_storage',
+                event_trigger: 'functionality_storage_event'
+            });
+
+            CookieConsentWrapper.addStorage({
+                name: 'ad_storage',
+                display_in_widget: true,
+                event_trigger: 'ad_storage_event'
+            });
+
+            CookieConsentWrapper.addStorage({
+                name: 'analytics_storage',
+                display_in_widget: true,
+                event_trigger: 'analytics_storage_event'
+            });
+        </script>
+    </head>
+    <body>
+        <main style="max-width: 800px; margin: 0 auto; padding: 20px">
+            <h1 style="text-align: center">Demo page</h1>
+            <h2 style="margin-top: 40px;">DataLayer pushes:</h2>
+            <div id="data-layer-pushes" style="margin-top: 10px; overflow-x: scroll;"></div>
+
+            <footer style="margin-top: 100px; display: flex; justify-content: center">
+                <div class="footer-item" style="padding: 10px 20px">
+                    <a href="#item-1"><span>First link</span></a>
+                </div>
+                <div class="footer-item" style="padding: 10px 20px">
+                    <a href="#item-2"><span>Second link</span></a>
+                </div>
+                <div class="footer-item" style="padding: 10px 20px">
+                    <a href="#item-3"><span>Third link</span></a>
+                </div>
+            </footer>
+        </main>
+    </body>
+</html>

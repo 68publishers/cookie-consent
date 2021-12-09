@@ -1,0 +1,44 @@
+{
+  "name": "68publishers-cookie-consent",
+  "version": "0.1",
+  "description": "Cookie consent wrapper based on orestbida/cookieconsent with GTM integration.",
+  "homepage": "http://www.68publishers.io/",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/68publishers/cookie-consent"
+  },
+  "scripts": {
+    "build:dev": "webpack --config webpack.config.dev.js --progress --profile",
+    "build:prod": "webpack --config webpack.config.prod.js --progress --profile",
+    "start:dev": "webpack --config webpack.config.dev.js --progress --profile && webpack-dev-server --config webpack.config.dev.js",
+    "prepublish": "npm run build:prod"
+  },
+  "keywords": [
+    "68publishers",
+    "cookie",
+    "consent",
+    "cookieconsent"
+  ],
+  "author": "68publishers",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.16.4",
+    "babel-loader": "^8.2.3",
+    "path": "^0.12.7",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.6.0"
+  },
+  "dependencies": {
+    "vanilla-cookieconsent": "^2.7.0-rc3"
+  },
+  "files": [
+    "src",
+    "index.js",
+    "dist/cookie-consent.min.js"
+  ]
+}
