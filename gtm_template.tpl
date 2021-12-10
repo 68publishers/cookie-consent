@@ -202,8 +202,7 @@ ___TEMPLATE_PARAMETERS___
           {
             "type": "NON_EMPTY"
           }
-        ],
-        "help": "Options \"middle\" are ignored if the option \"Make consent required\" is disabled."
+        ]
       },
       {
         "type": "SELECT",
@@ -1743,6 +1742,6 @@ setup: ''
 
 ___NOTES___
 
-Created on 9. 12. 2021 7:34:28
+Created on 10. 12. 2021 1:12:30
 
 
