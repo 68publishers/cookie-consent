@@ -146,7 +146,7 @@ Then the plugin injects a new item into the footer automatically:
 </footer>
 ```
 
-But it is not always possible to achieve the right result with this automation (depending on the website layout). In this case, leave the `Settings modal trigger selector` field blank and define the link in your layout manually.
+However, it is not always possible to achieve the right result with this automation (depending on the website layout). In this case, leave the `Settings modal trigger selector` field blank and define the link in your layout manually.
 Opening of the settings modal will be triggered automatically to the link.
 
 ## Triggering tags based on the consent
@@ -168,7 +168,8 @@ And a tag that is fired with the trigger:
 Firstly download the package:
 
 ```sh
-$ npm install 68publishers-cookie-consent
+$ git clone https://github.com/68publishers/cookie-consent.git
+$ cd cookie-consent
 ```
 
 Use predefined commands for the package build:
