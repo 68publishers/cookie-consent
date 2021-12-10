@@ -14,7 +14,7 @@ class UiOptions extends require('./AbstractOptions') {
     get defaultStylesheets() {
         if (true === this.include_default_stylesheets) {
             return [
-                'https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v2.7.0-rc3/dist/cookieconsent.css'
+                'https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v2.7.0/dist/cookieconsent.css'
             ];
         }
 
