@@ -28,13 +28,13 @@
     "@babel/preset-env": "^7.16.4",
     "babel-loader": "^8.2.3",
     "path": "^0.12.7",
-    "uglifyjs-webpack-plugin": "^2.2.0",
+    "terser-webpack-plugin": "^5.2.5",
     "webpack": "^5.65.0",
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.6.0"
   },
   "dependencies": {
-    "vanilla-cookieconsent": "^2.7.0"
+    "vanilla-cookieconsent": "^2.7.1"
   },
   "files": [
     "src",
