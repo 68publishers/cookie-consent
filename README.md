@@ -43,14 +43,14 @@ The plugin is configurable using fields inside the tag definition.
 | Show the widget as soon as possible | The widget will be displayed automatically on the page load. You must trigger the widget manually with calling `CookieConsentWrapper.unwrap().show()` if the option is disabled. |
 | Cookie name | The name of the cookie that contains the user's consents |
 | Cookie expiration | Expiration of the cookie in days |
-| Revision | Revision number of your terms of use of cookies. More information [here](https://github.com/orestbida/cookieconsent#how-to-enablemanage-revisions) |
+| Revision | Revision number of your terms of use of cookies. More information [here](#how-to-manage-revisions) |
 | Delay | Number of milliseconds before showing the consent modal |
 | Settings modal trigger selector | CSS selector for automatic creation of trigger button that opens the settings modal. More information [here](#settings-modal-trigger) |
 
 ### Consent & Setting modal options
 
 Both sections contain these fields: `Layout`, `Position`, `Transition`. These settings affect where modals appear and what shape they take.
-For more information follow this [link](https://github.com/orestbida/cookieconsent#layout-options--customization).
+For more information follow this [link](https://github.com/orestbida/cookieconsent/tree/v2.7.1#layout-options--customization).
 
 ### Storage options
 
@@ -81,6 +81,15 @@ The package comes with the default translations for following languages:
 
 Translations that will be loaded and accessible for the widget are taken from the field `Locales`. Locale codes are in the format `ISO 639-1` and each locale must be defined on a new line.
 If you want to rewrite default translations or you want to add translations for a new locale then you can define them in a table `Translations`.
+
+### How to manage revisions
+
+The default revision number is `0` and the number can be changed through the field `Revision`. When you change the value the consent modal will be displayed for all users again.
+You can define a message that will be displayed in the consent modal's description. If you want to do that define custom translation with the key `consent_modal_revision_message` and rewrite a translation with the key `consent_modal_description`. The plugin will replace the placeholder `[[revision_message]]` in the consent modal description with your revision message.
+
+<img src="docs/images/revision-message-translation.png" alt="Revision message translation" width="600">
+
+*<sup>Note: the <a href="https://github.com/orestbida/cookieconsent/tree/v2.7.1#how-to-enablemanage-revisions">cookieconsent plugin</a> uses the placeholder `{{revision_message}}` but this notation is used by GTM for variables so the package comes with the placeholder `[[revision_message]]` instead.</sup>*
 
 ### Stylesheets
 

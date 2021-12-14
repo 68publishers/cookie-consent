@@ -110,7 +110,8 @@ class Catalogue {
         return {
             consent_modal: {
                 title: this.consent_modal_title,
-                description: this.consent_modal_description,
+                description: this.consent_modal_description.replace('[[revision_message]]', '{{revision_message}}'),
+                revision_message: this.consent_modal_revision_message,
                 primary_btn: {
                     text: this.consent_modal_primary_btn,
                     role: 'accept_all'
