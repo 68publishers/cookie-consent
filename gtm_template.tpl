@@ -933,6 +933,7 @@ const injectScript = require('injectScript');
 const setInWindow = require('setInWindow');
 const JSON = require('JSON');
 const Object = require('Object');
+const makeInteger = require('makeInteger');
 
 log('data =', data);
 
@@ -1030,9 +1031,9 @@ setInWindow('cc_plugin_options', {
   force_consent: data.force_consent,
   autorun: data.autorun,
   cookie_name: data.cookie_name,
-  cookie_expiration: data.cookie_expiration,
-  revision: data.revision,
-  delay: data.delay
+  cookie_expiration: makeInteger(data.cookie_expiration),
+  revision: makeInteger(data.revision),
+  delay: makeInteger(data.delay)
 }, true);
 
 // set consent modal options
@@ -1742,6 +1743,6 @@ setup: ''
 
 ___NOTES___
 
-Created on 10. 12. 2021 1:12:30
+Created on 14. 12. 2021 0:50:55
 
 
