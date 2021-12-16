@@ -41,6 +41,7 @@ The plugin is configurable using fields inside the tag definition.
 | Package version  | Version of the package `68publishers/cookie-consent`. Valid inputs are `latest` or a version in format `x.x.x` |
 | Make consent required | The page will be blocked until a user action |
 | Show the widget as soon as possible | The widget will be displayed automatically on the page load. You must trigger the widget manually with calling `CookieConsentWrapper.unwrap().show()` if the option is disabled. |
+| Hide from bots | Enable if you don't want the plugin to run when a bot/crawler/webdriver is detected. |
 | Cookie name | The name of the cookie that contains the user's consents |
 | Cookie expiration | Expiration of the cookie in days |
 | Revision | Revision number of your terms of use of cookies. More information [here](#how-to-manage-revisions) |
@@ -72,7 +73,7 @@ Each storage defines the name of a trigger that will be invoked if the user prov
 | Synchronize consent with | The consent can be synchronized with another storage. The option is available only if the option `Display in the widget` is not checked. |
 | Event trigger name | The name of an event trigger that will be invoked on `granted` consent with storage. The name may not be unique for each storage (unique triggers are invoked only). No trigger is invoked if the option has an empty value. |
 
-###  Translation settings
+### Translation settings
 
 The package comes with the default translations for following languages:
 
@@ -81,6 +82,15 @@ The package comes with the default translations for following languages:
 
 Translations that will be loaded and accessible for the widget are taken from the field `Locales`. Locale codes are in the format `ISO 639-1` and each locale must be defined on a new line.
 If you want to rewrite default translations or you want to add translations for a new locale then you can define them in a table `Translations`.
+
+### Locale detection
+
+Locale detection can be affected with the following fields:
+
+| Field | Description |
+| ------ | ------ |
+| Locale detection strategy | `Browser` to get user's browser language or `Document` to read a value from `<html lang="...">` of the current page. |
+| Locale | You must define the website locale when the detection strategy is disabled. The locale must be one of the previously defined locales in the field `Locales`. |
 
 ### How to manage revisions
 
@@ -96,8 +106,25 @@ You can define a message that will be displayed in the consent modal's descripti
 | Field | Description |
 | ------ | ------ |
 | Include default stylesheets | The default stylesheet for the widget will be loaded into the page if the option is checked. We recommend keeping the option checked and adding custom stylesheets through the next options. |
-| External stylesheets | The list of custom CSS stylesheets. One URL per line |
+| External stylesheets | The list of custom CSS stylesheets. One URL per line. |
 | Internal stylesheet | Custom CSS rules that will be injected into the page after default stylesheets and other external stylesheets. |
+
+### Page scripts
+
+| Field | Description |
+| ------ | ------ |
+| Manage page scripts | Enable if you want to easily manage existing `<script>` tags. |
+| Script selector | The name of a data attribute that is used for managed <script> tags. |
+
+Managing page scripts is disabled by default. When the feature is enabled then the following notation can be used for scripts you want to manage:
+
+```html
+<script type="text/plain" data-cookiecategory="analytics_storage" src="analytics.js" defer></script>
+
+<script type="text/plain" data-cookiecategory="ad_storage" defer>
+    console.log('Ad storage enabled!');
+</script>
+```
 
 ## Settings modal trigger
 
@@ -160,7 +187,7 @@ Opening of the settings modal will be triggered automatically to the link.
 
 ## Triggering tags based on the consent
 
-Tags are triggered after the consent with event triggers that are defined for each [storage](#storage-options). For example, if you have the `analytics_stroage` configured like this:
+Tags are triggered after the consent with event triggers that are defined for each [storage](#storage-options). For example, if you have the `analytics_storage` configured like this:
 
 <img src="docs/images/analytics-storage-options.png" alt="Analytics storage options" width="300">
 
