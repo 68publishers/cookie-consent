@@ -65,23 +65,22 @@ class CookieConsentWrapper {
         return this._cookieConsent;
     }
 
+    allowedCategory(name) {
+        this.unwrap().allowedCategory(name);
+    }
+
     init(window, document) {
         if (this._initialized) {
             return;
         }
 
         const self = this;
+        window.CookieConsentWrapper = self;
 
         if (document) {
-            // load stylesheets and modal trigger
+            // load stylesheets
             const documentLoadedCallback = function () {
                 StylesheetLoader.loadFromConfig(document, self._config.uiOptions);
-
-                if (document && 'string' === typeof self._config.uiOptions.modal_trigger_selector) {
-                    const modalTriggerFactory = new ModalTriggerFactory(document, self._dictionary);
-
-                    modalTriggerFactory.create(self._config.uiOptions.modal_trigger_selector, document.documentElement.lang);
-                }
             };
 
             if ('loading' !== document.readyState) {
@@ -102,8 +101,22 @@ class CookieConsentWrapper {
             config.onChange = () => consentManager.onChange();
             config.languages = self._dictionary.build(self._storagePool);
 
+            let modalTriggerElements;
+
+            // load modal trigger, must be created before cookieconsent.run()
+            if (document && 'string' === typeof self._config.uiOptions.modal_trigger_selector) {
+                const modalTriggerFactory = new ModalTriggerFactory(document, self._dictionary);
+
+                modalTriggerElements = modalTriggerFactory.create(self._config.uiOptions.modal_trigger_selector, self._config.pluginOptions.current_lang || document.documentElement.lang);
+            }
+
             // run cookie consent
             self._cookieConsent.run(config);
+
+            // re-translate modal trigger
+            if (modalTriggerElements && modalTriggerElements.textElement) {
+                modalTriggerElements.textElement.innerHTML = self._dictionary.translate(self._cookieConsent.getConfig('current_lang'), 'modal_trigger_title');
+            }
         });
 
         this._initialized = true;

@@ -13,7 +13,10 @@ class ModalTriggerFactory {
         if (!item) {
             console.log(`HTML element with selector ${selector} not found.`);
 
-            return;
+            return {
+                itemElement: undefined,
+                linkElement: undefined,
+            };
         }
 
         const newItem = item.cloneNode(true);
@@ -44,6 +47,11 @@ class ModalTriggerFactory {
         link.setAttribute('href', '#cookie-settings');
 
         item.parentNode.appendChild(newItem);
+
+        return {
+            itemElement: newItem,
+            textElement: lastLinkElement,
+        };
     }
 }
 
