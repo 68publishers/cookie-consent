@@ -62,6 +62,14 @@ ___TEMPLATE_PARAMETERS___
     "help": "You need to manually call the CookieConsentWrapper.unwrap().show() method if you disable the option."
   },
   {
+    "type": "CHECKBOX",
+    "name": "hide_from_bots",
+    "checkboxText": "Hide from bots",
+    "simpleValueType": true,
+    "defaultValue": false,
+    "help": "Enable if you don\u0027t want the plugin to run when a bot/crawler/webdriver is detected."
+  },
+  {
     "type": "TEXT",
     "name": "cookie_name",
     "displayName": "Cookie name",
@@ -332,10 +340,6 @@ ___TEMPLATE_PARAMETERS___
             "macrosInSelect": false,
             "selectItems": [
               {
-                "value": "none",
-                "displayValue": "None"
-              },
-              {
                 "value": "personalization_storage",
                 "displayValue": "Personalization storage"
               },
@@ -360,7 +364,7 @@ ___TEMPLATE_PARAMETERS___
                 "type": "EQUALS"
               }
             ],
-            "defaultValue": "none"
+            "notSetText": "None"
           }
         ],
         "defaultValue": true
@@ -415,10 +419,6 @@ ___TEMPLATE_PARAMETERS___
             "macrosInSelect": false,
             "selectItems": [
               {
-                "value": "none",
-                "displayValue": "None"
-              },
-              {
                 "value": "personalization_storage",
                 "displayValue": "Personalization storage"
               },
@@ -443,7 +443,7 @@ ___TEMPLATE_PARAMETERS___
                 "type": "EQUALS"
               }
             ],
-            "defaultValue": "none"
+            "notSetText": "None"
           }
         ],
         "defaultValue": false
@@ -498,10 +498,6 @@ ___TEMPLATE_PARAMETERS___
             "macrosInSelect": false,
             "selectItems": [
               {
-                "value": "none",
-                "displayValue": "None"
-              },
-              {
                 "value": "ad_storage",
                 "displayValue": "Ad storage"
               },
@@ -526,7 +522,7 @@ ___TEMPLATE_PARAMETERS___
                 "type": "EQUALS"
               }
             ],
-            "defaultValue": "none"
+            "notSetText": "None"
           }
         ],
         "defaultValue": false
@@ -581,10 +577,6 @@ ___TEMPLATE_PARAMETERS___
             "macrosInSelect": false,
             "selectItems": [
               {
-                "value": "none",
-                "displayValue": "None"
-              },
-              {
                 "value": "analytics_storage",
                 "displayValue": "Analytics storage"
               },
@@ -609,7 +601,7 @@ ___TEMPLATE_PARAMETERS___
                 "type": "EQUALS"
               }
             ],
-            "defaultValue": "none"
+            "notSetText": "None"
           }
         ],
         "defaultValue": false
@@ -664,10 +656,6 @@ ___TEMPLATE_PARAMETERS___
             "macrosInSelect": false,
             "selectItems": [
               {
-                "value": "none",
-                "displayValue": "None"
-              },
-              {
                 "value": "functionality_storage",
                 "displayValue": "Functionality storage"
               },
@@ -692,7 +680,7 @@ ___TEMPLATE_PARAMETERS___
                 "type": "EQUALS"
               }
             ],
-            "defaultValue": "none"
+            "notSetText": "None"
           }
         ],
         "defaultValue": false
@@ -727,6 +715,46 @@ ___TEMPLATE_PARAMETERS___
           }
         ],
         "help": "One per line."
+      },
+      {
+        "type": "SELECT",
+        "name": "locale_detection_strategy",
+        "displayName": "Locale detection strategy",
+        "macrosInSelect": false,
+        "selectItems": [
+          {
+            "value": "browser",
+            "displayValue": "Browser"
+          },
+          {
+            "value": "document",
+            "displayValue": "Document"
+          }
+        ],
+        "simpleValueType": true,
+        "help": "\"Browser\" to get user\u0027s browser language or \"Document\" to read value from \u0026lt;html lang\u003d\"...\"\u0026gt; of current page.",
+        "defaultValue": "document",
+        "notSetText": "None"
+      },
+      {
+        "type": "TEXT",
+        "name": "current_locale",
+        "displayName": "Locale",
+        "simpleValueType": true,
+        "valueValidators": [
+          {
+            "type": "NON_EMPTY",
+            "enablingConditions": []
+          }
+        ],
+        "help": "You must define the website locale when the detection strategy is disabled. The locale must be one of the previously defined locales.",
+        "enablingConditions": [
+          {
+            "paramName": "locale_detection_strategy",
+            "paramValue": "",
+            "type": "NOT_PRESENT"
+          }
+        ]
       },
       {
         "type": "PARAM_TABLE",
@@ -910,8 +938,47 @@ ___TEMPLATE_PARAMETERS___
         "name": "internal_stylesheets",
         "displayName": "Internal stylesheet",
         "simpleValueType": true,
-        "help": "CSS rules without \"\u003cstyle\u003e\u003c/style\u003e\" tags.",
+        "help": "CSS rules without \u0026lt;style\u0026gt;\u0026lt;/style\u0026gt; tags.",
         "lineCount": 2
+      }
+    ]
+  },
+  {
+    "type": "GROUP",
+    "name": "scripts_group",
+    "displayName": "Page scripts",
+    "groupStyle": "ZIPPY_OPEN",
+    "subParams": [
+      {
+        "type": "CHECKBOX",
+        "name": "page_scripts",
+        "checkboxText": "Manage page scripts",
+        "simpleValueType": true,
+        "defaultValue": false,
+        "help": "Enable if you want to easily manage existing \u0026lt;script\u0026gt; tags."
+      },
+      {
+        "type": "TEXT",
+        "name": "script_selector",
+        "displayName": "Script selector",
+        "simpleValueType": true,
+        "defaultValue": "data-cookiecategory",
+        "valueValidators": [
+          {
+            "type": "REGEX",
+            "args": [
+              "^data-.+$"
+            ]
+          }
+        ],
+        "enablingConditions": [
+          {
+            "paramName": "page_scripts",
+            "paramValue": true,
+            "type": "EQUALS"
+          }
+        ],
+        "help": "The name of a data attribute that is used for managed \u0026lt;script\u0026gt; tags."
       }
     ]
   }
@@ -963,7 +1030,7 @@ for (let key in storageNames) {
     readonly: data[storageName + '_readonly'] || false,
   };
   
-  if (syncConsentWith && 'none' !== syncConsentWith) {
+  if (syncConsentWith) {
     storage.sync_consent_with = syncConsentWith;
   }
   
@@ -1027,14 +1094,27 @@ for (translationKey in translationsData) {
 }
 
 // set plugin options
-setInWindow('cc_plugin_options', {
+const pluginOptions = {
   force_consent: data.force_consent,
   autorun: data.autorun,
+  hide_from_bots: data.hide_from_bots,
   cookie_name: data.cookie_name,
   cookie_expiration: makeInteger(data.cookie_expiration),
   revision: makeInteger(data.revision),
-  delay: makeInteger(data.delay)
-}, true);
+  delay: makeInteger(data.delay),
+  auto_language: data.hasOwnProperty('locale_detection_strategy') ? data.locale_detection_strategy : null,
+  page_scripts: data.page_scripts
+};
+
+if (data.hasOwnProperty('current_locale')) {
+  pluginOptions.current_locale = data.current_locale;
+}
+
+if (data.hasOwnProperty('script_selector')) {
+  pluginOptions.script_selector = data.script_selector;
+}
+
+setInWindow('cc_plugin_options', pluginOptions, true);
 
 // set consent modal options
 setInWindow('cc_consent_modal_options', {
@@ -1743,6 +1823,6 @@ setup: ''
 
 ___NOTES___
 
-Created on 14. 12. 2021 0:50:55
+Created on 17. 12. 2021 0:22:20
 
 

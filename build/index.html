@@ -4,13 +4,17 @@
         <meta charset="utf-8">
         <title>Cookie consent wrapper</title>
         <script>
+            function logEvent(line) {
+                var code = document.createElement('pre');
+                code.innerText = line;
+                code.style = 'padding: 10px 0';
+
+                document.getElementById('event-log').appendChild(code);
+            }
+
             window.dataLayer = {
                 push: function (args) {
-                    var code = document.createElement('pre');
-                    code.innerText = JSON.stringify(args);
-                    code.style = 'padding: 10px 0';
-
-                    document.getElementById('data-layer-pushes').appendChild(code);
+                    logEvent('DataLayer push: ' + JSON.stringify(args));
                 }
             };
         </script>
@@ -25,7 +29,8 @@
 
             CookieConsentWrapper.setPluginOptions({
                 cookie_name: 'consent-settings',
-                force_consent: true
+                force_consent: true,
+                page_scripts: true
             });
 
             CookieConsentWrapper.setConsentModalOptions({
@@ -70,8 +75,8 @@
     <body>
         <main style="max-width: 800px; margin: 0 auto; padding: 20px">
             <h1 style="text-align: center">Demo page</h1>
-            <h2 style="margin-top: 40px;">DataLayer pushes:</h2>
-            <div id="data-layer-pushes" style="margin-top: 10px; overflow-x: scroll;"></div>
+            <h2 style="margin-top: 40px;">Event log:</h2>
+            <div id="event-log" style="margin-top: 10px; overflow-x: scroll;"></div>
 
             <footer style="margin-top: 100px; display: flex; justify-content: center">
                 <div class="footer-item" style="padding: 10px 20px">
@@ -85,5 +90,9 @@
                 </div>
             </footer>
         </main>
+
+        <script type="text/plain" data-cookiecategory="analytics_storage">
+            logEvent('Page script for analytics storage loaded.');
+        </script>
     </body>
 </html>
