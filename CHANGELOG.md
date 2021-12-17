@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.1] - 2021-12-17
+
+### Fixed
+
+- Fixed GTM template - the field `locale_detection_strategy` now contains an item `disabled` instead of "noSet" value because of problem with saving in a tag configuration.
+
 ## [0.2.0] - 2021-12-17
 
 ### Added
@@ -72,7 +78,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first version of the package has been released.
 
-[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.2.0...main
+[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.2.1...main
+[0.2.1]: https://github.com/68publishers/cookie-consent/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/68publishers/cookie-consent/compare/v0.1.3...v0.2.0
 [0.1.3]: https://github.com/68publishers/cookie-consent/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/68publishers/cookie-consent/compare/v0.1.1...v0.1.2

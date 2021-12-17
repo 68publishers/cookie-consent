@@ -729,12 +729,15 @@ ___TEMPLATE_PARAMETERS___
           {
             "value": "document",
             "displayValue": "Document"
+          },
+          {
+            "value": "disabled",
+            "displayValue": "Disabled"
           }
         ],
         "simpleValueType": true,
         "help": "\"Browser\" to get user\u0027s browser language or \"Document\" to read value from \u0026lt;html lang\u003d\"...\"\u0026gt; of current page.",
-        "defaultValue": "document",
-        "notSetText": "None"
+        "defaultValue": "document"
       },
       {
         "type": "TEXT",
@@ -751,8 +754,8 @@ ___TEMPLATE_PARAMETERS___
         "enablingConditions": [
           {
             "paramName": "locale_detection_strategy",
-            "paramValue": "",
-            "type": "NOT_PRESENT"
+            "paramValue": "disabled",
+            "type": "EQUALS"
           }
         ]
       },
@@ -1102,12 +1105,12 @@ const pluginOptions = {
   cookie_expiration: makeInteger(data.cookie_expiration),
   revision: makeInteger(data.revision),
   delay: makeInteger(data.delay),
-  auto_language: data.hasOwnProperty('locale_detection_strategy') ? data.locale_detection_strategy : null,
+  auto_language: 'disabled' !== data.locale_detection_strategy ? data.locale_detection_strategy : null,
   page_scripts: data.page_scripts
 };
 
 if (data.hasOwnProperty('current_locale')) {
-  pluginOptions.current_locale = data.current_locale;
+  pluginOptions.current_lang = data.current_locale;
 }
 
 if (data.hasOwnProperty('script_selector')) {
