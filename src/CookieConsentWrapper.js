@@ -9,6 +9,8 @@ const ConsentManager = require('./ConsentManager');
 const Dictionary = require('./Translation/Dictionary');
 const StylesheetLoader = require('./Ui/StylesheetLoader');
 const ModalTriggerFactory = require('./Ui/ModalTriggerFactory');
+const EventBus = require('./EventBus/EventBus');
+const Events = require('./EventBus/Events');
 
 class CookieConsentWrapper {
     constructor(gtag) {
@@ -17,6 +19,7 @@ class CookieConsentWrapper {
         this._config = new Config();
         this._storagePool = new StoragePool();
         this._dictionary = new Dictionary();
+        this._eventBus = new EventBus();
 
         this._cookieConsent = null;
     }
@@ -66,7 +69,17 @@ class CookieConsentWrapper {
     }
 
     allowedCategory(name) {
-        this.unwrap().allowedCategory(name);
+        return this.unwrap().allowedCategory(name);
+    }
+
+    on(event, callback, scope = null) {
+        if (Events.ON_INIT === event && this._initialized && null !== this._cookieConsent) {
+            callback.call(scope, this);
+
+            return function () {};
+        }
+
+        return this._eventBus.subscribe(event, callback, scope);
     }
 
     init(window, document) {
@@ -117,6 +130,8 @@ class CookieConsentWrapper {
             if (modalTriggerElements && modalTriggerElements.textElement) {
                 modalTriggerElements.textElement.innerHTML = self._dictionary.translate(self._cookieConsent.getConfig('current_lang'), 'modal_trigger_title');
             }
+
+            self._eventBus.dispatch(Events.ON_INIT, self);
         });
 
         this._initialized = true;
