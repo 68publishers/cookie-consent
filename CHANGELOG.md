@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.2] - 2021-12-17
+
+### Added
+
+- The method `CookieConsentWrapper.on()` and an event `init`. The event is fired when the plugin initialization is completed or has been already completed. For example: `CookieConsentWrapper.on('init' function (wrapper) { /* do something*/ })`.
+
 ## [0.2.1] - 2021-12-17
 
 ### Fixed
