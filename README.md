@@ -1,8 +1,8 @@
 <div align="center" style="text-align: center; margin-bottom: 50px">
-<img src="docs/images/logo.png" alt="Cookie consent tag" width="75" height="75" align="center">
+<img src="docs/images/logo.svg" alt="Cookie Consent Logo" align="center">
 <h1 align="center">Cookie Consent</h1>
 
-A wrapper over a plugin [orestbida/cookieconsent](https://github.com/orestbida/cookieconsent) with integration into the Google Tag Manager. 
+An extended integration of [orestbida/cookieconsent](https://github.com/orestbida/cookieconsent) with support of the Google Tag Manager. 
 </div>
 
 ## Table of contents
@@ -19,7 +19,7 @@ A wrapper over a plugin [orestbida/cookieconsent](https://github.com/orestbida/c
 Open Google Tag Manager [web administration](https://tagmanager.google.com) and select a container for your website.
 Next, go through the `Templates` link in the left navigation and click on the button `New` inside a section `Tag Templates`.
 
-All you need is a file `gtm_template.tpl` from the root directory of this package. Download the file and import it in the Template editor:
+All you need is a file [`gtm_template.tpl`](/gtm_template.tpl) from the root directory of this package. Download the file and import it in the Template editor:
 
 <img src="docs/images/import-template.png" alt="Right dropdown" width="150">
 
@@ -38,20 +38,20 @@ The plugin is configurable using fields inside the tag definition.
 
 | Field | Description |
 | ------ | ------ |
-| Package version  | Version of the package `68publishers/cookie-consent`. Valid inputs are `latest` or a version in format `x.x.x` |
-| Make consent required | The page will be blocked until a user action |
-| Show the widget as soon as possible | The widget will be displayed automatically on the page load. You must trigger the widget manually with calling `CookieConsentWrapper.unwrap().show()` if the option is disabled. |
+| Package version  | Version of the package `68publishers/cookie-consent`. Valid inputs are the `latest` or a version in format `x.x.x`. For available versions see the [releases](https://github.com/68publishers/cookie-consent/releases). |
+| Make consent required | The page will be blocked until a user action. |
+| Show the widget as soon as possible | The widget will be displayed automatically on the page load. You must trigger the widget manually by calling `CookieConsentWrapper.unwrap().show()` if the option is disabled. |
 | Hide from bots | Enable if you don't want the plugin to run when a bot/crawler/webdriver is detected. |
-| Cookie name | The name of the cookie that contains the user's consents |
-| Cookie expiration | Expiration of the cookie in days |
-| Revision | Revision number of your terms of use of cookies. More information [here](#how-to-manage-revisions) |
-| Delay | Number of milliseconds before showing the consent modal |
-| Settings modal trigger selector | CSS selector for automatic creation of trigger button that opens the settings modal. More information [here](#settings-modal-trigger) |
+| Cookie name | The name of the cookie that contains the user's consent. |
+| Cookie expiration | Expiration of the cookie in days. |
+| Revision | Revision number of your terms of use of cookies. For more information [see below](#how-to-manage-revisions). |
+| Delay | Number of milliseconds before showing the consent modal. |
+| Settings modal trigger selector | CSS selector for automatic creation of the trigger button that opens the settings modal. Check the [example](#settings-modal-trigger). |
 
 ### Consent & Setting modal options
 
 Both sections contain these fields: `Layout`, `Position`, `Transition`. These settings affect where modals appear and what shape they take.
-For more information follow this [link](https://github.com/orestbida/cookieconsent/tree/v2.7.1#layout-options--customization).
+See the [widget documentation](https://github.com/orestbida/cookieconsent/tree/v2.7.1#layout-options--customization) for more details.
 
 ### Storage options
 
@@ -75,7 +75,7 @@ Each storage defines the name of a trigger that will be invoked if the user prov
 
 ### Translation settings
 
-The package comes with the default translations for following languages:
+The package comes with the default translations for the following languages:
 
 - [en](src/resources/translations/en.json)
 - [cs](src/resources/translations/cs.json)
