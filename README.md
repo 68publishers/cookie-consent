@@ -1,5 +1,5 @@
 <div align="center" style="text-align: center; margin-bottom: 50px">
-<img src="docs/images/logo.svg" alt="Cookie Consent Logo" align="center">
+<img src="docs/images/logo.svg" alt="Cookie Consent Logo" align="center" width="250">
 <h1 align="center">Cookie Consent</h1>
 
 An extended integration of [orestbida/cookieconsent](https://github.com/orestbida/cookieconsent) with support of the Google Tag Manager. 
