@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Changed the package logo
+- Updated GTM template - logo, brand etc. - nothing about functionality
+
+### Fixed
+
+- Fixed typos in README
+
 ## [0.2.2] - 2021-12-17
 
 ### Added
@@ -29,7 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The field `page_scripts` in GTM template.
 - The field `script_selector` in GTM template.
 - Sections `Locale detection` and `Page scripts` in README.
-- Shortcut method `CookieConsentWrapper.allowedCategor()`.
+- Shortcut method `CookieConsentWrapper.allowedCategory()`.
 - Dummy page script in the development demo.
 
 ### Fixed
