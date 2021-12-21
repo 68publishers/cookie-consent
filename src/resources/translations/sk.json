@@ -1,0 +1,36 @@
+{
+  "modal_trigger_title": "Nastavenia cookies",
+
+  "consent_modal_title": "🍪 Používame súbory cookies!",
+  "consent_modal_description": "Na našich webových stránkach používame súbory cookies. Niektoré sú nevyhnutné, iné nám pomáhajú zlepšovať túto webovú stránku a váš používateľský zážitok.",
+  "consent_modal_primary_btn": "Súhlasím a pokračujem",
+  "consent_modal_secondary_btn_settings": "Prispôsobenie",
+  "consent_modal_secondary_btn_accept_necessary": "Povoliť potrebné súbory cookies",
+
+  "settings_modal_title": "📢 Nastavenia cookies",
+  "settings_modal_save_settings_btn": "Uložiť nastavenia",
+  "settings_modal_accept_all_btn": "Povoliť všetky cookies",
+  "settings_modal_reject_all_btn": "Povoliť potrebné cookies",
+  "settings_modal_close_btn_label": "Zavrieť",
+
+  "settings_modal_before_consent_title": "Používanie súborov cookies 📢",
+  "settings_modal_before_consent_description": "Súbory cookie používame na zabezpečenie základných funkcií stránky a na zlepšenie vášho používateľského zážitku. Svoj súhlas pre každú kategóriu môžete kedykoľvek zmeniť.",
+
+  "settings_modal_after_consent_title": "Ďalšie informácie",
+  "settings_modal_after_consent_description": "Ak máte akékoľvek otázky týkajúce sa používania súborov cookie a vašich volieb, kontaktujte nás.",
+
+  "functionality_storage_title": "Potrebné cookies",
+  "functionality_storage_description": "Tieto súbory cookie sú potrebné na správne fungovanie našej webovej stránky. Bez týchto súborov cookie by webová stránka nefungovala správne.",
+
+  "personalization_storage_title": "Súbory cookie na prispôsobenie obsahu",
+  "personalization_storage_description": "Súbory cookie na prispôsobenie obsahu môžu používať súbory cookie tretích strán, ktoré im pomáhajú prispôsobiť obsah a umožňujú im sledovať používateľov na rôznych webových stránkach a zariadeniach.",
+
+  "security_storage_title": "Zabezpečené cookies",
+  "security_storage_description": "Zabezpečené súbory cookie sú typom súborov cookie HTTP, ktoré majú nastavený atribút Secure, ktorý obmedzuje rozsah súboru cookie na \"bezpečné\" kanály (kde \"bezpečné\" je definované používateľským agentom, typicky webovým prehliadačom). Keď má súbor cookie atribút Secure, používateľský agent zahrnie súbor cookie do požiadavky HTTP len vtedy, ak je požiadavka prenášaná cez zabezpečený kanál (typicky HTTPS).",
+
+  "ad_storage_title": "Reklamné cookies",
+  "ad_storage_description": "Reklamné súbory cookie používame my alebo naši partneri na zobrazovanie relevantného obsahu alebo reklám na našej stránke aj na stránkach tretích strán. To nám umožňuje vytvárať profily na základe vašich záujmov, tzv. pseudonymizované profily. Na základe týchto informácií vás vo všeobecnosti nie je možné priamo identifikovať ako osobu, pretože sa používajú len pseudonymizované údaje. Ak nevyjadríte svoj súhlas, nebudete dostávať obsah a reklamy prispôsobené vašim záujmom.",
+
+  "analytics_storage_title": "Analytické cookies",
+  "analytics_storage_description": "Analytické súbory cookie nám umožňujú merať výkonnosť našej webovej stránky a našich reklamných kampaní. Používame ich na určenie počtu návštev a zdrojov návštev našich webových stránok. Údaje získané prostredníctvom týchto súborov cookie spracúvame súhrnne bez použitia identifikátorov, ktoré by poukazovali na konkrétnych používateľov našej webovej stránky. Ak zakážete používanie analytických súborov cookie v súvislosti s vašou návštevou, stratíme možnosť analyzovať výkon a optimalizovať naše opatrenia."
+}

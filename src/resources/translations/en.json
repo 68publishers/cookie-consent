@@ -20,17 +20,17 @@
     "settings_modal_after_consent_description": "For any queries in relation to my policy on cookies and your choices, please contact us.",
 
     "functionality_storage_title": "Functionality cookies",
-    "functionality_storage_description": "Functionality cookies description.",
+    "functionality_storage_description": "These cookies are necessary for the proper functioning of our website. Without these cookies, the website might not be working properly.",
 
     "personalization_storage_title": "Personalization cookies",
-    "personalization_storage_description": "Personalization cookies description.",
+    "personalization_storage_description": "Personalisation cookies may use third party cookies to help them personalise content and track users across different websites and devices.",
 
     "security_storage_title": "Security cookies",
-    "security_storage_description": "Security cookies description.",
+    "security_storage_description": "Secure cookies are a type of HTTP cookie that have Secure attribute set, which limits the scope of the cookie to \"secure\" channels (where \"secure\" is defined by the user agent, typically web browser). When a cookie has the Secure attribute, the user agent will include the cookie in an HTTP request only if the request is transmitted over a secure channel (typically HTTPS). Although seemingly useful for protecting cookies from active network attackers, the Secure attribute protects only the cookie's confidentiality.",
 
     "ad_storage_title": "Ad cookies",
-    "ad_storage_description": "Ad cookies description.",
+    "ad_storage_description": "Advertising cookies are used by us or our partners to show you relevant content or advertisements both on our site and on third party sites. This enables us to create profiles based on your interests, so-called pseudonymised profiles. Based on this information, it is generally not possible to directly identify you as a person, as only pseudonymised data is used. Unless you express your consent, you will not receive content and advertisements tailored to your interests.",
 
     "analytics_storage_title": "Analytics cookies",
-    "analytics_storage_description": "Analytics cookies description."
+    "analytics_storage_description": "Analytics cookies allow us to measure the performance of our website and our advertising campaigns. We use them to determine the number of visits and sources of visits to our website. We process the data obtained through these cookies in aggregate, without using identifiers that point to specific users of our website. If you disable the use of analytics cookies in relation to your visit, we lose the ability to analyse performance and optimise our measures."
 }
