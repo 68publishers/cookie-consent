@@ -4,12 +4,13 @@
     "consent_modal_title": "🍪 We use cookies!",
     "consent_modal_description": "This website uses essential cookies to ensure its proper operation and tracking cookies to understand how you interact with it. The latter will be set only after consent.",
     "consent_modal_primary_btn": "Accept all",
-    "consent_modal_secondary_btn": "Customize",
+    "consent_modal_secondary_btn_settings": "Customize",
+    "consent_modal_secondary_btn_accept_necessary": "Accept necessary",
 
     "settings_modal_title": "📢 Cookie settings",
     "settings_modal_save_settings_btn": "Save settings",
     "settings_modal_accept_all_btn": "Accept all",
-    "settings_modal_reject_all_btn": "Reject all",
+    "settings_modal_reject_all_btn": "Accept necessary",
     "settings_modal_close_btn_label": "Close",
 
     "settings_modal_before_consent_title": "Cookie usage 📢",

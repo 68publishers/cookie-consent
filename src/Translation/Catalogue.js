@@ -12,7 +12,8 @@ class Catalogue {
         this.consent_modal_description = '';
         this.consent_modal_revision_message = ''; // optional, the translation is passed into the "consent_modal_description" under placeholder {{revision_message}}
         this.consent_modal_primary_btn = '';
-        this.consent_modal_secondary_btn = '';
+        this.consent_modal_secondary_btn_settings = '';
+        this.consent_modal_secondary_btn_accept_necessary = '';
 
         // setting modal
         this.settings_modal_title = '';
@@ -64,7 +65,7 @@ class Catalogue {
         }
     }
 
-    build(storagePool) {
+    exportTranslations(storagePool, config) {
         const blocks = [];
 
         if ('' !== this.settings_modal_before_consent_title || '' !== this.settings_modal_before_consent_description) {
@@ -114,11 +115,11 @@ class Catalogue {
                 revision_message: this.consent_modal_revision_message,
                 primary_btn: {
                     text: this.consent_modal_primary_btn,
-                    role: 'accept_all'
+                    role: config.consentModalOptions.primary_button_role
                 },
                 secondary_btn: {
-                    text: this.consent_modal_secondary_btn,
-                    role: 'settings'
+                    text: 'accept_necessary' === config.consentModalOptions.secondary_button_role ? this.consent_modal_secondary_btn_accept_necessary : this.consent_modal_secondary_btn_settings,
+                    role: config.consentModalOptions.secondary_button_role
                 }
             },
             settings_modal: {

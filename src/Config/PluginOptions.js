@@ -27,6 +27,10 @@ class PluginOptions extends require('./AbstractOptions') {
         this.remove_cookie_tables = false;
         this.hide_from_bots = false;
     }
+
+    exportCookieConsentConfig() {
+        return {...this};
+    }
 }
 
 module.exports = PluginOptions;

@@ -51,6 +51,8 @@ The plugin is configurable using fields inside the tag definition.
 ### Consent & Setting modal options
 
 Both sections contain these fields: `Layout`, `Position`, `Transition`. These settings affect where modals appear and what shape they take.
+The behavior of the consent modal buttons can be configured through fields `Primary button role`, `Secondary button role` (accept necessary cookies or open the settings modal), and `Buttons order`.
+
 See the [widget documentation](https://github.com/orestbida/cookieconsent/tree/v2.7.1#layout-options--customization) for more details.
 
 ### Storage options
