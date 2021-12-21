@@ -16,21 +16,21 @@
     "settings_modal_before_consent_title": "Použití cookies 📢",
     "settings_modal_before_consent_description": "Soubory cookie používáme k zajištění základních funkcí webu a ke zlepšení vašeho uživatelského zážitku. Souhlas pro každou kategorii můžete kdykoliv změnit.",
 
-    "settings_modal_after_consent_title": "Vice informací",
+    "settings_modal_after_consent_title": "Více informací",
     "settings_modal_after_consent_description": "Máte-li jakékoli dotazy týkající se používání souborů cookie a vašich voleb, kontaktujte nás prosím.",
 
-    "functionality_storage_title": "Functionality cookies",
-    "functionality_storage_description": "Popis functionality cookies.",
+    "functionality_storage_title": "Nezbytně nutné soubory cookies",
+    "functionality_storage_description": "Tyto soubory cookie jsou nezbytné pro správné fungování našich webových stránek. Bez těchto souborů cookie by webové stránky nefungovaly správně.",
 
-    "personalization_storage_title": "Personalization cookies",
-    "personalization_storage_description": "Popis personalization cookies.",
+    "personalization_storage_title": "Personalizační cookies",
+    "personalization_storage_description": "Personalizační soubory cookie mohou používat soubory cookie třetích stran, které jim pomáhají přizpůsobit obsah a umožňují sledovat uživatele na různých webových stránkách a zařízeních.",
 
-    "security_storage_title": "Security cookies",
-    "security_storage_description": "Popis security cookies.",
+    "security_storage_title": "Zabezpečené cookies",
+    "security_storage_description": "Zabezpečené soubory cookie jsou typem souborů cookie HTTP s nastaveným atributem Secure, který omezuje rozsah souboru cookie na \"bezpečné\" kanály (kde \"bezpečné\" definuje uživatelský agent, typicky webový prohlížeč). Pokud má soubor cookie atribut Secure, uživatelský agent zahrne soubor cookie do požadavku HTTP pouze v případě, že je požadavek přenášen zabezpečeným kanálem (typicky HTTPS).Ačkoli se zdá, že je užitečný pro ochranu souborů cookie před aktivními síťovými útočníky, atribut Secure chrání pouze důvěrnost souboru cookie.",
 
-    "ad_storage_title": "Ad cookies",
-    "ad_storage_description": "Popis ad cookies.",
+    "ad_storage_title": "Reklamní cookies",
+    "ad_storage_description": "Reklamní cookies používáme my nebo naši partneři, abychom Vám mohli zobrazit vhodné obsahy nebo reklamy jak na našich stránkách, tak na stránkách třetích subjektů. Díky tomu můžeme vytvářet profily založené na Vašich zájmech, tak zvané pseudonymizované profily. Na základě těchto informací není zpravidla možná bezprostřední identifikace Vaší osoby, protože jsou používány pouze pseudonymizované údaje. Pokud nevyjádříte souhlas, nebudete příjemcem obsahů a reklam přizpůsobených Vašim zájmům.",
 
-    "analytics_storage_title": "Analytics cookies",
-    "analytics_storage_description": "Popis analytics cookies."
+    "analytics_storage_title": "Analytické cookies",
+    "analytics_storage_description": "Analytické cookies nám umožňují měření výkonu našeho webu a našich reklamních kampaní. Jejich pomocí určujeme počet návštěv a zdroje návštěv našich internetových stránek. Data získaná pomocí těchto cookies zpracováváme souhrnně, bez použití identifikátorů, které ukazují na konkrétní uživatelé našeho webu. Pokud vypnete používání analytických cookies ve vztahu k Vaší návštěvě, ztrácíme možnost analýzy výkonu a optimalizace našich opatření."
 }
