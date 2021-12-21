@@ -109,10 +109,10 @@ class CookieConsentWrapper {
             const consentManager = new ConsentManager(self._cookieConsent, self._storagePool, self._gtag);
 
             // build cookie consent config
-            const config = self._config.buildCookieConsentConfig();
+            const config = self._config.exportCookieConsentConfig();
             config.onAccept = () => consentManager.onAccept();
             config.onChange = () => consentManager.onChange();
-            config.languages = self._dictionary.build(self._storagePool);
+            config.languages = self._dictionary.exportTranslations(self._storagePool, self._config);
 
             let modalTriggerElements;
 

@@ -5,16 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.2.3] - 2021-12-21
+
+### Added
+
+- The field `Primary button role` in GTM template under the section `Consent modal options`.
+- The field `Secondary button role` in GTM template under the section `Consent modal options`.
+- The field `Buttons order` in GTM template under the section `Consent modal options`.
+- The translation key `consent_modal_secondary_btn_settings`
+- The translation key `consent_modal_secondary_btn_accept_necessary`
 
 ### Changed
 
-- Changed the package logo
-- Updated GTM template - logo, brand etc. - nothing about functionality
+- Changed the package logo.
+- Updated GTM template - logo, brand etc. - nothing about functionality.
+- Updated README.
 
-### Fixed
+### Removed
 
-- Fixed typos in README
+- The translation key `consent_modal_secondary_btn`
 
 ## [0.2.2] - 2021-12-17
 
@@ -93,7 +102,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first version of the package has been released.
 
-[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.2.2...main
+[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.2.3...main
+[0.2.3]: https://github.com/68publishers/cookie-consent/compare/v0.2.2...v0.2.3
 [0.2.2]: https://github.com/68publishers/cookie-consent/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/68publishers/cookie-consent/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/68publishers/cookie-consent/compare/v0.1.3...v0.2.0

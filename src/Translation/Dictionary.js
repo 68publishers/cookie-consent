@@ -29,7 +29,7 @@ class Dictionary {
         return key;
     }
 
-    build(storagePool) {
+    exportTranslations(storagePool, config) {
         const dictionary = {};
         let key;
         let catalogue;
@@ -40,7 +40,7 @@ class Dictionary {
             }
 
             catalogue = this._catalogues[key];
-            dictionary[catalogue.locale] = catalogue.build(storagePool);
+            dictionary[catalogue.locale] = catalogue.exportTranslations(storagePool, config);
         }
 
         return dictionary;
