@@ -848,10 +848,6 @@ ___TEMPLATE_PARAMETERS___
                   "displayValue": "consent_modal_primary_btn"
                 },
                 {
-                  "value": "consent_modal_secondary_btn",
-                  "displayValue": "consent_modal_secondary_btn"
-                },
-                {
                   "value": "settings_modal_title",
                   "displayValue": "settings_modal_title"
                 },
@@ -934,6 +930,14 @@ ___TEMPLATE_PARAMETERS___
                 {
                   "value": "modal_trigger_title",
                   "displayValue": "modal_trigger_title"
+                },
+                {
+                  "value": "consent_modal_secondary_btn_settings",
+                  "displayValue": "consent_modal_secondary_btn_settings"
+                },
+                {
+                  "value": "consent_modal_secondary_btn_accept_necessary",
+                  "displayValue": "consent_modal_secondary_btn_accept_necessary"
                 }
               ],
               "simpleValueType": true
