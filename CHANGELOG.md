@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.7] - 2021-12-22
+
+### Changed
+
+- Changed descriptions of the `security` storage in translations.
+- Unified translations for buttons in the consent modal.
+- Removed emojis from translations.
+
 ## [0.2.6] - 2021-12-21
 
 ### Added
@@ -126,7 +134,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first version of the package has been released.
 
-[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.2.6...main
+[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.2.7...main
+[0.2.7]: https://github.com/68publishers/cookie-consent/compare/v0.2.6...v0.2.7
 [0.2.6]: https://github.com/68publishers/cookie-consent/compare/v0.2.5...v0.2.6
 [0.2.5]: https://github.com/68publishers/cookie-consent/compare/v0.2.4...v0.2.5
 [0.2.4]: https://github.com/68publishers/cookie-consent/compare/v0.2.3...v0.2.4
