@@ -25,8 +25,8 @@
   "personalization_storage_title": "Súbory cookie na prispôsobenie obsahu",
   "personalization_storage_description": "Súbory cookie na prispôsobenie obsahu môžu používať súbory cookie tretích strán, ktoré im pomáhajú prispôsobiť obsah a umožňujú im sledovať používateľov na rôznych webových stránkach a zariadeniach.",
 
-  "security_storage_title": "Zabezpečené cookies",
-  "security_storage_description": "Zabezpečené súbory cookie sú typom súborov cookie HTTP, ktoré majú nastavený atribút Secure, ktorý obmedzuje rozsah súboru cookie na \"bezpečné\" kanály (kde \"bezpečné\" je definované používateľským agentom, typicky webovým prehliadačom). Keď má súbor cookie atribút Secure, používateľský agent zahrnie súbor cookie do požiadavky HTTP len vtedy, ak je požiadavka prenášaná cez zabezpečený kanál (typicky HTTPS).",
+  "security_storage_title": "Bezpečnostné cookie",
+  "security_storage_description": "Bezpečnostné súbory cookie umožňujú ukladanie informácií súvisiacich s bezpečnosťou, ako je overovanie, ochrana pred podvodmi a iné prostriedky ochrany používateľa.",
 
   "ad_storage_title": "Reklamné cookies",
   "ad_storage_description": "Reklamné súbory cookie používame my alebo naši partneri na zobrazovanie relevantného obsahu alebo reklám na našej stránke aj na stránkach tretích strán. To nám umožňuje vytvárať profily na základe vašich záujmov, tzv. pseudonymizované profily. Na základe týchto informácií vás vo všeobecnosti nie je možné priamo identifikovať ako osobu, pretože sa používajú len pseudonymizované údaje. Ak nevyjadríte svoj súhlas, nebudete dostávať obsah a reklamy prispôsobené vašim záujmom.",
