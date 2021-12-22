@@ -1,19 +1,19 @@
 {
   "modal_trigger_title": "Nastavenia cookies",
 
-  "consent_modal_title": "🍪 Používame súbory cookies!",
+  "consent_modal_title": "Používame súbory cookies!",
   "consent_modal_description": "Na našich webových stránkach používame súbory cookies. Niektoré sú nevyhnutné, iné nám pomáhajú zlepšovať túto webovú stránku a váš používateľský zážitok.",
-  "consent_modal_primary_btn": "Súhlasím a pokračujem",
+  "consent_modal_primary_btn": "Súhlasím",
   "consent_modal_secondary_btn_settings": "Prispôsobenie",
   "consent_modal_secondary_btn_accept_necessary": "Povoliť potrebné súbory cookies",
 
-  "settings_modal_title": "📢 Nastavenia cookies",
+  "settings_modal_title": "Nastavenia cookies",
   "settings_modal_save_settings_btn": "Uložiť nastavenia",
   "settings_modal_accept_all_btn": "Povoliť všetky cookies",
   "settings_modal_reject_all_btn": "Povoliť potrebné cookies",
   "settings_modal_close_btn_label": "Zavrieť",
 
-  "settings_modal_before_consent_title": "Používanie súborov cookies 📢",
+  "settings_modal_before_consent_title": "Používanie súborov cookies",
   "settings_modal_before_consent_description": "Súbory cookie používame na zabezpečenie základných funkcií stránky a na zlepšenie vášho používateľského zážitku. Svoj súhlas pre každú kategóriu môžete kedykoľvek zmeniť.",
 
   "settings_modal_after_consent_title": "Ďalšie informácie",
