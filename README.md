@@ -2,8 +2,15 @@
 <img src="docs/images/logo.svg" alt="Cookie Consent Logo" align="center" width="250">
 <h1 align="center">Cookie Consent</h1>
 
-An extended integration of [orestbida/cookieconsent](https://github.com/orestbida/cookieconsent) with support of the Google Tag Manager. 
+An extended integration of [orestbida/cookieconsent](https://github.com/orestbida/cookieconsent) with support of the Google Tag Manager.
 </div>
+
+<br>
+
+- :white_check_mark: Easy configurable GTM template
+- :white_check_mark: Five configurable storages standardized by Google
+- :white_check_mark: Possibility to synchronize consents between more storages
+- :white_check_mark: Default translations
 
 ## Table of contents
 
