@@ -1,9 +1,10 @@
 'use strict';
 
 class ConsentManager {
-    constructor(cookieConsent, storagePool, gtag) {
+    constructor(cookieConsent, storagePool, eventTriggers, gtag) {
         this._cookieConsent = cookieConsent;
         this._storagePool = storagePool;
+        this._eventTriggers = eventTriggers;
         this._gtag = gtag;
     }
 
@@ -18,7 +19,7 @@ class ConsentManager {
     _updateConsent() {
         const storageArr = this._storagePool.all();
         const consent = {};
-        const eventTriggers = [];
+        const accepted = [];
 
         for (let storageKey in storageArr) {
             if (!storageArr.hasOwnProperty(storageKey)) {
@@ -27,33 +28,34 @@ class ConsentManager {
 
             const storage = storageArr[storageKey];
             const checkName = null !== storage.syncConsentWith ? storage.syncConsentWith : storage.name;
+            const allowed = this._cookieConsent.allowedCategory(checkName);
 
-            const permission = this._cookieConsent.allowedCategory(checkName) ? 'granted' : 'denied';
+            consent[storage.name] = allowed ? 'granted' : 'denied';
 
-            consent[storage.name] = permission;
-
-            if ('granted' === permission && null !== storage.eventTrigger && !storage.eventTrigger.invoked) {
-                eventTriggers.push(storage.eventTrigger);
+            if (allowed) {
+                accepted.push(storage.name);
             }
         }
 
         this._gtag('consent', 'update', consent);
 
-        const invokedNames = [];
+        if (0 >= accepted.length) {
+            return;
+        }
 
-        for (let eventTriggerKey in eventTriggers) {
-            if (!eventTriggers.hasOwnProperty(eventTriggerKey)) {
+        let eventTriggerKey;
+        let eventTrigger;
+
+        for (eventTriggerKey in this._eventTriggers) {
+            if (!this._eventTriggers.hasOwnProperty(eventTriggerKey)) {
                 continue;
             }
 
-            const eventTrigger = eventTriggers[eventTriggerKey];
+            eventTrigger = this._eventTriggers[eventTriggerKey];
 
-            if (-1 === invokedNames.indexOf(eventTrigger.name)) {
-                this._gtag('event', eventTrigger.name, {});
-                invokedNames.push(eventTrigger.name);
+            if (eventTrigger.tryInvoke(this._gtag, accepted)) {
+                delete this._eventTriggers[eventTriggerKey];
             }
-
-            eventTrigger.invoked = true;
         }
     }
 }

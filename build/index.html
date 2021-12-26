@@ -47,33 +47,36 @@
                 name: 'functionality_storage',
                 enabled_by_default: true,
                 display_in_widget: true,
-                readonly: true,
-                event_trigger: 'functionality_storage_event'
+                readonly: true
             });
 
             CookieConsentWrapper.addStorage({
                 name: 'personalization_storage',
-                sync_consent_with: 'functionality_storage',
-                event_trigger: 'functionality_storage_event'
+                sync_consent_with: 'functionality_storage'
             });
 
             CookieConsentWrapper.addStorage({
                 name: 'security_storage',
-                sync_consent_with: 'functionality_storage',
-                event_trigger: 'functionality_storage_event'
+                sync_consent_with: 'functionality_storage'
             });
 
             CookieConsentWrapper.addStorage({
                 name: 'ad_storage',
-                display_in_widget: true,
-                event_trigger: 'ad_storage_event'
+                display_in_widget: true
             });
 
             CookieConsentWrapper.addStorage({
                 name: 'analytics_storage',
-                display_in_widget: true,
-                event_trigger: 'analytics_storage_event'
+                display_in_widget: true
             });
+
+            CookieConsentWrapper.addEventTrigger('functionality_storage_event', ['functionality_storage']);
+            CookieConsentWrapper.addEventTrigger('personalization_storage_event', ['personalization_storage']);
+            CookieConsentWrapper.addEventTrigger('security_storage_event', ['security_storage']);
+            CookieConsentWrapper.addEventTrigger('ad_storage_event', ['ad_storage']);
+            CookieConsentWrapper.addEventTrigger('analytics_storage_event', ['analytics_storage']);
+
+            CookieConsentWrapper.addEventTrigger('fb_pixel_event', ['ad_storage', 'analytics_storage'], 'and');
         </script>
     </head>
     <body>

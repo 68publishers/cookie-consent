@@ -11,6 +11,7 @@ const StylesheetLoader = require('./Ui/StylesheetLoader');
 const ModalTriggerFactory = require('./Ui/ModalTriggerFactory');
 const EventBus = require('./EventBus/EventBus');
 const Events = require('./EventBus/Events');
+const EventTrigger = require('./Storage/EventTrigger');
 
 class CookieConsentWrapper {
     constructor(gtag) {
@@ -20,6 +21,7 @@ class CookieConsentWrapper {
         this._storagePool = new StoragePool();
         this._dictionary = new Dictionary();
         this._eventBus = new EventBus();
+        this._eventTriggers = {};
 
         this._cookieConsent = null;
     }
@@ -42,6 +44,10 @@ class CookieConsentWrapper {
 
     addStorage(config) {
         this._storagePool.add(new Storage(config || {}));
+    }
+
+    addEventTrigger(name, storageNames, type = EventTrigger.TYPE_OR) {
+        this._eventTriggers[name] = new EventTrigger(name, storageNames, type);
     }
 
     addTranslations(locale, translations) {
@@ -106,7 +112,7 @@ class CookieConsentWrapper {
         window.addEventListener('load', function () {
             // init cookie consent
             self._cookieConsent = initCookieConsent();
-            const consentManager = new ConsentManager(self._cookieConsent, self._storagePool, self._gtag);
+            const consentManager = new ConsentManager(self._cookieConsent, self._storagePool, Object.values(self._eventTriggers), self._gtag);
 
             // build cookie consent config
             const config = self._config.exportCookieConsentConfig();

@@ -15,6 +15,7 @@ class CookieConsentWrapperFactory {
         this._setupSettingsModalOptions(cookieConsentWrapper);
         this._setupUiOptions(cookieConsentWrapper);
         this._setupStoragePool(cookieConsentWrapper);
+        this._setupEventTriggers(cookieConsentWrapper);
         this._setupLocales(cookieConsentWrapper);
         this._setupTranslations(cookieConsentWrapper);
 
@@ -71,6 +72,22 @@ class CookieConsentWrapperFactory {
                 }
 
                 wrapper.addStorage(storagePool[i] || {});
+            }
+        }
+    }
+
+    _setupEventTriggers(wrapper) {
+        if (window.cc_event_triggers && Array.isArray(window.cc_event_triggers)) {
+            const eventTriggers = window.cc_event_triggers;
+
+            for (let i in eventTriggers) {
+                if (!eventTriggers.hasOwnProperty(i)) {
+                    continue;
+                }
+
+                const eventTrigger = eventTriggers[i];
+
+                wrapper.addEventTrigger(eventTrigger.name, eventTrigger.storage_names, eventTrigger.type);
             }
         }
     }
