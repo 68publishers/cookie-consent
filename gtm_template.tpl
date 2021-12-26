@@ -38,7 +38,7 @@ ___TEMPLATE_PARAMETERS___
       {
         "type": "REGEX",
         "args": [
-          "^latest$|^([\\d]{1}\\.[\\d]{1}\\.[\\d]{1})$"
+          "^latest$|^([\\d]{1}\\.[\\d]{1}\\.[\\d]{1})(?:(\\-beta|\\-alpha)\\.[\\d]+)?$"
         ]
       }
     ],
@@ -424,8 +424,8 @@ ___TEMPLATE_PARAMETERS___
         "name": "functionality_storage_event_trigger",
         "displayName": "Event trigger name",
         "simpleValueType": true,
-        "valueHint": "The name of a trigger that will be invoked on after a consent.",
-        "defaultValue": "68publishers_functionality_storage"
+        "defaultValue": "68publishers_functionality_storage",
+        "help": "The name of a trigger that will be invoked on after a consent."
       }
     ]
   },
@@ -503,8 +503,8 @@ ___TEMPLATE_PARAMETERS___
         "name": "security_storage_event_trigger",
         "displayName": "Event trigger name",
         "simpleValueType": true,
-        "valueHint": "The name of a trigger that will be invoked on after a consent.",
-        "defaultValue": "68publishers_security_storage"
+        "defaultValue": "68publishers_security_storage",
+        "help": "The name of a trigger that will be invoked on after a consent."
       }
     ]
   },
@@ -582,8 +582,8 @@ ___TEMPLATE_PARAMETERS___
         "name": "personalization_storage_event_trigger",
         "displayName": "Event trigger name",
         "simpleValueType": true,
-        "valueHint": "The name of a trigger that will be invoked on after a consent.",
-        "defaultValue": "68publishers_personalization_storage"
+        "defaultValue": "68publishers_personalization_storage",
+        "help": "The name of a trigger that will be invoked on after a consent."
       }
     ]
   },
@@ -661,8 +661,8 @@ ___TEMPLATE_PARAMETERS___
         "name": "ad_storage_event_trigger",
         "displayName": "Event trigger name",
         "simpleValueType": true,
-        "valueHint": "The name of a trigger that will be invoked on after a consent.",
-        "defaultValue": "68publishers_ad_storage"
+        "defaultValue": "68publishers_ad_storage",
+        "help": "The name of a trigger that will be invoked on after a consent."
       }
     ]
   },
@@ -740,8 +740,86 @@ ___TEMPLATE_PARAMETERS___
         "name": "analytics_storage_event_trigger",
         "displayName": "Event trigger name",
         "simpleValueType": true,
-        "valueHint": "The name of a trigger that will be invoked on after a consent.",
-        "defaultValue": "68publishers_analytics_storage"
+        "defaultValue": "68publishers_analytics_storage",
+        "help": "The name of a trigger that will be invoked on after a consent."
+      }
+    ]
+  },
+  {
+    "type": "GROUP",
+    "name": "composite_consent",
+    "displayName": "Composite consent",
+    "groupStyle": "ZIPPY_OPEN",
+    "subParams": [
+      {
+        "type": "PARAM_TABLE",
+        "name": "composite_consent_event_triggers",
+        "displayName": "Event triggers",
+        "paramTableColumns": [
+          {
+            "param": {
+              "type": "TEXT",
+              "name": "name",
+              "displayName": "Trigger name",
+              "simpleValueType": true,
+              "valueValidators": [
+                {
+                  "type": "NON_EMPTY"
+                }
+              ]
+            },
+            "isUnique": true
+          },
+          {
+            "param": {
+              "type": "CHECKBOX",
+              "name": "functionality_storage",
+              "checkboxText": "Functionality storage",
+              "simpleValueType": true
+            },
+            "isUnique": false
+          },
+          {
+            "param": {
+              "type": "CHECKBOX",
+              "name": "security_storage",
+              "checkboxText": "Security storage",
+              "simpleValueType": true
+            },
+            "isUnique": false
+          },
+          {
+            "param": {
+              "type": "CHECKBOX",
+              "name": "personalization_storage",
+              "checkboxText": "Personalization storage",
+              "simpleValueType": true
+            },
+            "isUnique": false
+          },
+          {
+            "param": {
+              "type": "CHECKBOX",
+              "name": "ad_storage",
+              "checkboxText": "Ad storage",
+              "simpleValueType": true
+            },
+            "isUnique": false
+          },
+          {
+            "param": {
+              "type": "CHECKBOX",
+              "name": "analytics_storage",
+              "checkboxText": "Analytics Storage",
+              "simpleValueType": true
+            },
+            "isUnique": false
+          }
+        ],
+        "help": "If you need to invoke some trigger only if the user makes consent with more storage types together then define the trigger here.",
+        "newRowTitle": "New event trigger",
+        "newRowButtonText": "Add event trigger",
+        "editRowTitle": "Edit event trigger"
       }
     ]
   },
@@ -1071,14 +1149,15 @@ let consentCookie = getCookieValues(data.cookie_name);
 consentCookie = JSON.parse(consentCookie[0] || '{}');
 consentCookie = consentCookie.hasOwnProperty('level') && consentCookie.level.length ? consentCookie.level : [];
 
-// build storage pool
+// build storage pool & event triggers
 const storagePool = {};
+const eventTriggers = {};
 const storageNames = ['functionality_storage', 'security_storage', 'personalization_storage', 'ad_storage', 'analytics_storage'];
 
 for (let key in storageNames) {
   const storageName = storageNames[key];
   const syncConsentWith = data[storageName + '_sync_consent_with'];
-  const eventTrigger = data[storageName + '_event_trigger'];
+  const eventTriggerName = data[storageName + '_event_trigger'];
   
   // build storage config
   const storage = {
@@ -1092,18 +1171,60 @@ for (let key in storageNames) {
     storage.sync_consent_with = syncConsentWith;
   }
   
-  if (eventTrigger && '' !== eventTrigger) {
-    storage.event_trigger = eventTrigger;
-  }
-  
   // push into the pool
   storagePool[storage.name] = storage;
+  
+  // push new trigger or update existing
+  if (eventTriggerName && '' !== eventTriggerName) {
+    if (eventTriggers.hasOwnProperty(eventTriggerName)) {
+      eventTriggers[eventTriggerName].storage_names.push(storage.name);
+    } else {
+      eventTriggers[eventTriggerName] = {
+        name: eventTriggerName,
+        storage_names: [storage.name],
+        type: 'or'
+      };
+    }
+  }
+}
+
+// process composite triggers
+for (let key in data.composite_consent_event_triggers || []) {
+  const compositeEventTrigger = data.composite_consent_event_triggers[key];
+  
+  // check duplicated trigger name
+  if (eventTriggers.hasOwnProperty(compositeEventTrigger.name)) {
+    log('Error: Composite event trigger "' + compositeEventTrigger.name + '" defined but some trigger with same name is also defined as a storage trigger.');
+    data.gtmOnFailure();
+    
+    continue;
+  }
+  
+  // get array of storage names that are needed for triggering of an event
+  const compositeEventTriggerStorageNames = [];
+  
+  for (let storageKey in storageNames) {
+    const storageName = storageNames[storageKey];
+
+    if (compositeEventTrigger.hasOwnProperty(storageName) && compositeEventTrigger[storageName]) {
+      compositeEventTriggerStorageNames.push(storageName);
+    }
+  }
+
+  // append new composite trigger
+  if (0 < compositeEventTriggerStorageNames.length) {
+    eventTriggers[compositeEventTrigger.name] = {
+      name: compositeEventTrigger.name,
+      storage_names: compositeEventTriggerStorageNames,
+      type: 'and'
+    };
+  }
 }
 
 const defaultConsents = {};
-const defaultEventTriggers = [];
+const acceptedStorageNames = [];
 
-// setup default consent & event trigger
+// setup default consent & invoke event triggers for accepted storages
 for (let key in storagePool) {
   const storage = storagePool[key];
   
@@ -1118,12 +1239,8 @@ for (let key in storagePool) {
 
   defaultConsents[storage.name] = defaultStorageConsent;
   
-  if ('granted' === defaultStorageConsent && storage.hasOwnProperty('event_trigger')) {
-    if (-1 === defaultEventTriggers.indexOf(storage.event_trigger)) {
-      defaultEventTriggers.push(storage.event_trigger);
-    }
-    
-    storage.event_trigger_invoked = true;
+  if ('granted' === defaultStorageConsent) {
+    acceptedStorageNames.push(storage.name);
   }
 }
 
@@ -1131,8 +1248,26 @@ for (let key in storagePool) {
 setDefaultConsentState(defaultConsents);
 
 // fire event triggers for granted consents
-for (let defaultEventTriggerKey in defaultEventTriggers) {
-  gtag('event', defaultEventTriggers[defaultEventTriggerKey], {});
+for (let eventTriggerKey in eventTriggers) {
+  const eventTrigger = eventTriggers[eventTriggerKey];
+  let invoke = false;
+
+  // check needed consents
+  for (let storageKey in eventTrigger.storage_names) {
+    invoke = -1 !== acceptedStorageNames.indexOf(eventTrigger.storage_names[storageKey]);
+
+    if ((invoke && 'or' === eventTrigger.type) || (!invoke && 'and' === eventTrigger.type)) {
+      break;
+    }
+  }
+
+  // fire a trigger and remove the trigger from widget's triggers
+  if (invoke) {
+    gtag('event', eventTrigger.name, {});
+    Object.delete(eventTriggers, eventTriggerKey);
+    
+    log('EventTrigger "' + eventTrigger.name + '" invoked with the default consent.');
+  }
 }
 
 // build custom translations
@@ -1201,6 +1336,9 @@ setInWindow('cc_ui_options', {
 
 // set storage pool
 setInWindow('cc_storage_pool', Object.values(storagePool), true);
+
+// set event triggers
+setInWindow('cc_event_triggers', Object.values(eventTriggers), true);
 
 // set locales
 setInWindow('cc_locales', data.locales, true);
@@ -1827,6 +1965,45 @@ ___WEB_PERMISSIONS___
                   {
                     "type": 1,
                     "string": "cc_ui_options"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "key"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  },
+                  {
+                    "type": 1,
+                    "string": "execute"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "cc_event_triggers"
                   },
                   {
                     "type": 8,
