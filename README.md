@@ -75,6 +75,15 @@ Each storage defines the name of a trigger that will be invoked if the user prov
 | Synchronize consent with | The consent can be synchronized with another storage. The option is available only if the option `Display in the widget` is not checked. |
 | Event trigger name | The name of an event trigger that will be invoked on `granted` consent with storage. The name may not be unique for each storage (unique triggers are invoked only). No trigger is invoked if the option has an empty value. |
 
+### Event triggers based on composite consent
+
+As mentioned above, each storage can define a trigger that is invoked when consent with the storage has been granted.
+In some situations, you may want some trigger to be fired only if the user gives consent with multiple storage types.
+For example, if you have a trigger called `fb_pixel_trigger` and you want to fire it only if the user gives consent with the `analytics_storage` and the `ad_stroage`.
+Then your configuration may look like this:
+
+<img src="docs/images/composite-consent-event-trigger.png" alt="Revision message translation" width="600">
+
 ### Translation settings
 
 The package comes with the default translations for the following languages:

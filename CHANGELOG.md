@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added param table `Event triggers` in a new section `Composite consent` in GTM template. Event triggers for composite consent can be defined here. For more information look into the section [Event triggers based on composite consent](./README.md#event-triggers-based-on-composite-consent) in README.
+
+### Changed
+
+- Modified regex validation rule for GTM field `Package version`. The regex now allows beta and alpha versions.
+
 ## [0.2.7] - 2021-12-22
 
 ### Changed
