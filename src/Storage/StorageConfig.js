@@ -11,8 +11,6 @@ class StorageConfig {
         this.display_in_widget = config.display_in_widget || false;
         this.readonly = config.readonly || false;
         this.sync_consent_with = config.sync_consent_with || null;
-        this.event_trigger = config.event_trigger || null;
-        this.event_trigger_invoked = config.event_trigger_invoked || false;
     }
 }
 

@@ -6,7 +6,6 @@ const EventTrigger = require('./EventTrigger');
 class Storage {
     constructor(config) {
         this._config = new StorageConfig(config);
-        this._eventTrigger = 'string' === typeof this._config.event_trigger ? new EventTrigger(this._config.event_trigger, this._config.event_trigger_invoked) : null;
     }
 
     get name() {
@@ -27,10 +26,6 @@ class Storage {
 
     get syncConsentWith() {
         return this._config.sync_consent_with;
-    }
-
-    get eventTrigger() {
-        return this._eventTrigger;
     }
 }
 
