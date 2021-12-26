@@ -1034,7 +1034,9 @@ ___TEMPLATE_PARAMETERS___
           }
         ],
         "help": "Here you can rewrite default translations that are defined inside the widget.",
-        "newRowButtonText": "Add translation"
+        "newRowButtonText": "Add translation",
+        "editRowTitle": "Edit translation",
+        "newRowTitle": "New translation"
       }
     ]
   },
