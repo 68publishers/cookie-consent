@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Options for the wrapper are now accessible under a single global variable `window.cc_wrapper_config` instead of multiple smaller variables (GTM template must be updated).
 - Modified regex validation rule for GTM field `Package version`. The regex now allows beta and alpha versions.
 
 ## [0.2.7] - 2021-12-22

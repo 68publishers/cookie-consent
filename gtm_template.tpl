@@ -1288,7 +1288,7 @@ for (translationKey in translationsData) {
   translations[translation.locale][translation.key] = translation.value;
 }
 
-// set plugin options
+// create plugin options
 const pluginOptions = {
   force_consent: data.force_consent,
   autorun: data.autorun,
@@ -1309,46 +1309,39 @@ if (data.hasOwnProperty('script_selector')) {
   pluginOptions.script_selector = data.script_selector;
 }
 
-setInWindow('cc_plugin_options', pluginOptions, true);
-
-// set consent modal options
-setInWindow('cc_consent_modal_options', {
-  layout: data.consent_modal_layout,
-  position: data.consent_modal_position,
-  transition: data.consent_modal_transition,
-  primary_button_role: data.consent_modal_primary_button_role,
-  secondary_button_role: data.consent_modal_secondary_button_role,
-  swap_buttons: 'secondary_primary' === data.consent_modal_buttons_order
+// setup wrapper config
+setInWindow('cc_wrapper_config', {
+  plugin_options: pluginOptions,
+  
+  consent_modal_options: {
+    layout: data.consent_modal_layout,
+    position: data.consent_modal_position,
+    transition: data.consent_modal_transition,
+    primary_button_role: data.consent_modal_primary_button_role,
+    secondary_button_role: data.consent_modal_secondary_button_role,
+    swap_buttons: 'secondary_primary' === data.consent_modal_buttons_order
+  },
+  
+  settings_modal_options: {
+    layout: data.settings_modal_layout,
+    position: data.settings_modal_position,
+    transition: data.settings_modal_transition
+  },
+  
+  ui_options: {
+    include_default_stylesheets: data.include_default_stylesheets,
+    external_stylesheets: data.external_stylesheets || [],
+    internal_stylesheets: data.hasOwnProperty('internal_stylesheets') ? [data.internal_stylesheets] : [],
+    modal_trigger_selector: data.modal_trigger_selector || undefined
+  },
+  
+  storage_pool: Object.values(storagePool),
+  event_triggers: Object.values(eventTriggers),
+  locales: data.locales,
+  translations: translations
 }, true);
 
-// set settigns modal options
-setInWindow('cc_settings_modal_options', {
-  layout: data.settings_modal_layout,
-  position: data.settings_modal_position,
-  transition: data.settings_modal_transition
-}, true);
-
-// set ui options
-setInWindow('cc_ui_options', {
-  include_default_stylesheets: data.include_default_stylesheets,
-  external_stylesheets: data.external_stylesheets || [],
-  internal_stylesheets: data.hasOwnProperty('internal_stylesheets') ? [data.internal_stylesheets] : [],
-  modal_trigger_selector: data.modal_trigger_selector || undefined
-}, true);
-
-// set storage pool
-setInWindow('cc_storage_pool', Object.values(storagePool), true);
-
-// set event triggers
-setInWindow('cc_event_triggers', Object.values(eventTriggers), true);
-
-// set locales
-setInWindow('cc_locales', data.locales, true);
-
-// set rewritten translations
-setInWindow('cc_translations', translations, true);
-
-// inject cookie manager wrapper
+// inject cookie consent wrapper
 const packageVersion = 'latest' === data.package_version ? '' : '@' + data.package_version;
 const cookieConsentWrapper = 'https://unpkg.com/68publishers-cookie-consent' + packageVersion + '/dist/cookie-consent.min.js';
 
@@ -1732,280 +1725,7 @@ ___WEB_PERMISSIONS___
                 "mapValue": [
                   {
                     "type": 1,
-                    "string": "cc_plugin_options"
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  }
-                ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  {
-                    "type": 1,
-                    "string": "key"
-                  },
-                  {
-                    "type": 1,
-                    "string": "read"
-                  },
-                  {
-                    "type": 1,
-                    "string": "write"
-                  },
-                  {
-                    "type": 1,
-                    "string": "execute"
-                  }
-                ],
-                "mapValue": [
-                  {
-                    "type": 1,
-                    "string": "cc_storage_pool"
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  }
-                ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  {
-                    "type": 1,
-                    "string": "key"
-                  },
-                  {
-                    "type": 1,
-                    "string": "read"
-                  },
-                  {
-                    "type": 1,
-                    "string": "write"
-                  },
-                  {
-                    "type": 1,
-                    "string": "execute"
-                  }
-                ],
-                "mapValue": [
-                  {
-                    "type": 1,
-                    "string": "cc_locales"
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  }
-                ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  {
-                    "type": 1,
-                    "string": "key"
-                  },
-                  {
-                    "type": 1,
-                    "string": "read"
-                  },
-                  {
-                    "type": 1,
-                    "string": "write"
-                  },
-                  {
-                    "type": 1,
-                    "string": "execute"
-                  }
-                ],
-                "mapValue": [
-                  {
-                    "type": 1,
-                    "string": "cc_consent_modal_options"
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  }
-                ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  {
-                    "type": 1,
-                    "string": "key"
-                  },
-                  {
-                    "type": 1,
-                    "string": "read"
-                  },
-                  {
-                    "type": 1,
-                    "string": "write"
-                  },
-                  {
-                    "type": 1,
-                    "string": "execute"
-                  }
-                ],
-                "mapValue": [
-                  {
-                    "type": 1,
-                    "string": "cc_settings_modal_options"
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  }
-                ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  {
-                    "type": 1,
-                    "string": "key"
-                  },
-                  {
-                    "type": 1,
-                    "string": "read"
-                  },
-                  {
-                    "type": 1,
-                    "string": "write"
-                  },
-                  {
-                    "type": 1,
-                    "string": "execute"
-                  }
-                ],
-                "mapValue": [
-                  {
-                    "type": 1,
-                    "string": "cc_translations"
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  }
-                ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  {
-                    "type": 1,
-                    "string": "key"
-                  },
-                  {
-                    "type": 1,
-                    "string": "read"
-                  },
-                  {
-                    "type": 1,
-                    "string": "write"
-                  },
-                  {
-                    "type": 1,
-                    "string": "execute"
-                  }
-                ],
-                "mapValue": [
-                  {
-                    "type": 1,
-                    "string": "cc_ui_options"
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  }
-                ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  {
-                    "type": 1,
-                    "string": "key"
-                  },
-                  {
-                    "type": 1,
-                    "string": "read"
-                  },
-                  {
-                    "type": 1,
-                    "string": "write"
-                  },
-                  {
-                    "type": 1,
-                    "string": "execute"
-                  }
-                ],
-                "mapValue": [
-                  {
-                    "type": 1,
-                    "string": "cc_event_triggers"
+                    "string": "cc_wrapper_config"
                   },
                   {
                     "type": 8,
