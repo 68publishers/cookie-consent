@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2021-12-28
+
 ### Added
 
 - Added param table `Event triggers` in a new section `Composite consent` in GTM template. Event triggers for composite consent can be defined here. For more information look into the section [Event triggers based on composite consent](./README.md#event-triggers-based-on-composite-consent) in README.
@@ -143,7 +145,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first version of the package has been released.
 
-[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.2.7...main
+[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.3.0...main
+[0.3.0]: https://github.com/68publishers/cookie-consent/compare/v0.2.7...v0.3.0
 [0.2.7]: https://github.com/68publishers/cookie-consent/compare/v0.2.6...v0.2.7
 [0.2.6]: https://github.com/68publishers/cookie-consent/compare/v0.2.5...v0.2.6
 [0.2.5]: https://github.com/68publishers/cookie-consent/compare/v0.2.4...v0.2.5
