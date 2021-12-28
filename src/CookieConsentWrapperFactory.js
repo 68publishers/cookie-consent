@@ -9,15 +9,16 @@ class CookieConsentWrapperFactory {
         }
 
         const cookieConsentWrapper = new CookieConsentWrapper(this._createGtagFunction());
+        const wrapperConfig = window.cc_wrapper_config || {};
 
-        this._setupPluginOptions(cookieConsentWrapper);
-        this._setupConsentModalOptions(cookieConsentWrapper);
-        this._setupSettingsModalOptions(cookieConsentWrapper);
-        this._setupUiOptions(cookieConsentWrapper);
-        this._setupStoragePool(cookieConsentWrapper);
-        this._setupEventTriggers(cookieConsentWrapper);
-        this._setupLocales(cookieConsentWrapper);
-        this._setupTranslations(cookieConsentWrapper);
+        this._setupPluginOptions(cookieConsentWrapper, wrapperConfig);
+        this._setupConsentModalOptions(cookieConsentWrapper, wrapperConfig);
+        this._setupSettingsModalOptions(cookieConsentWrapper, wrapperConfig);
+        this._setupUiOptions(cookieConsentWrapper, wrapperConfig);
+        this._setupStoragePool(cookieConsentWrapper, wrapperConfig);
+        this._setupEventTriggers(cookieConsentWrapper, wrapperConfig);
+        this._setupLocales(cookieConsentWrapper, wrapperConfig);
+        this._setupTranslations(cookieConsentWrapper, wrapperConfig);
 
         cookieConsentWrapper.init(window, document);
 
@@ -38,33 +39,33 @@ class CookieConsentWrapperFactory {
         return gtag;
     }
 
-    _setupPluginOptions(wrapper) {
-        if (window.cc_plugin_options && 'object' === typeof window.cc_plugin_options) {
-            wrapper.setPluginOptions(window.cc_plugin_options);
+    _setupPluginOptions(wrapper, wrapperConfig) {
+        if (wrapperConfig.hasOwnProperty('plugin_options') && 'object' === typeof wrapperConfig.plugin_options) {
+            wrapper.setPluginOptions(wrapperConfig.plugin_options);
         }
     }
 
-    _setupConsentModalOptions(wrapper) {
-        if (window.cc_consent_modal_options && 'object' === typeof window.cc_consent_modal_options) {
-            wrapper.setConsentModalOptions(window.cc_consent_modal_options);
+    _setupConsentModalOptions(wrapper, wrapperConfig) {
+        if (wrapperConfig.hasOwnProperty('consent_modal_options') && 'object' === typeof wrapperConfig.consent_modal_options) {
+            wrapper.setConsentModalOptions(wrapperConfig.consent_modal_options);
         }
     }
 
-    _setupSettingsModalOptions(wrapper) {
-        if (window.cc_settings_modal_options && 'object' === typeof window.cc_settings_modal_options) {
-            wrapper.setSettingsModalOptions(window.cc_settings_modal_options);
+    _setupSettingsModalOptions(wrapper, wrapperConfig) {
+        if (wrapperConfig.hasOwnProperty('settings_modal_options') && 'object' === typeof wrapperConfig.settings_modal_options) {
+            wrapper.setSettingsModalOptions(wrapperConfig.settings_modal_options);
         }
     }
 
-    _setupUiOptions(wrapper) {
-        if (window.cc_ui_options && 'object' === typeof window.cc_ui_options) {
-            wrapper.setUiOptions(window.cc_ui_options);
+    _setupUiOptions(wrapper, wrapperConfig) {
+        if (wrapperConfig.hasOwnProperty('ui_options') && 'object' === typeof wrapperConfig.ui_options) {
+            wrapper.setUiOptions(wrapperConfig.ui_options);
         }
     }
 
-    _setupStoragePool(wrapper) {
-        if (window.cc_storage_pool && Array.isArray(window.cc_storage_pool)) {
-            const storagePool = window.cc_storage_pool;
+    _setupStoragePool(wrapper, wrapperConfig) {
+        if (wrapperConfig.hasOwnProperty('storage_pool') && Array.isArray(wrapperConfig.storage_pool)) {
+            const storagePool = wrapperConfig.storage_pool;
 
             for (let i in storagePool) {
                 if (!storagePool.hasOwnProperty(i)) {
@@ -76,9 +77,9 @@ class CookieConsentWrapperFactory {
         }
     }
 
-    _setupEventTriggers(wrapper) {
-        if (window.cc_event_triggers && Array.isArray(window.cc_event_triggers)) {
-            const eventTriggers = window.cc_event_triggers;
+    _setupEventTriggers(wrapper, wrapperConfig) {
+        if (wrapperConfig.hasOwnProperty('event_triggers') && Array.isArray(wrapperConfig.event_triggers)) {
+            const eventTriggers = wrapperConfig.event_triggers;
 
             for (let i in eventTriggers) {
                 if (!eventTriggers.hasOwnProperty(i)) {
@@ -92,9 +93,9 @@ class CookieConsentWrapperFactory {
         }
     }
 
-    _setupLocales(wrapper) {
-        if (window.cc_locales && Array.isArray(window.cc_locales)) {
-            const locales = window.cc_locales;
+    _setupLocales(wrapper, wrapperConfig) {
+        if (wrapperConfig.hasOwnProperty('locales') && Array.isArray(wrapperConfig.locales)) {
+            const locales = wrapperConfig.locales;
             let localeKey;
 
             for (localeKey in locales) {
@@ -107,9 +108,9 @@ class CookieConsentWrapperFactory {
         }
     }
 
-    _setupTranslations(wrapper) {
-        if (window.cc_translations && 'object' === typeof window.cc_translations) {
-            const translations = window.cc_translations;
+    _setupTranslations(wrapper, wrapperConfig) {
+        if (wrapperConfig.hasOwnProperty('translations') && 'object' === typeof wrapperConfig.translations) {
+            const translations = wrapperConfig.translations;
             let locale;
 
             for (locale in translations) {
