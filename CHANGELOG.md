@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.1] - 2021-12-31
+
 ### Fixed
 
 - Fixed initialization of the original plugin when a page is too small and DOM is already loaded before an event `window.addEventListener('load', ...)` is attached.
@@ -149,7 +151,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first version of the package has been released.
 
-[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.3.0...main
+[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.3.1...main
+[0.3.1]: https://github.com/68publishers/cookie-consent/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/68publishers/cookie-consent/compare/v0.2.7...v0.3.0
 [0.2.7]: https://github.com/68publishers/cookie-consent/compare/v0.2.6...v0.2.7
 [0.2.6]: https://github.com/68publishers/cookie-consent/compare/v0.2.5...v0.2.6
