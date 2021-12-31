@@ -109,7 +109,7 @@ class CookieConsentWrapper {
             }
         }
 
-        window.addEventListener('load', function () {
+        const windowLoadedCallback = function () {
             // init cookie consent
             self._cookieConsent = initCookieConsent();
             const consentManager = new ConsentManager(self._cookieConsent, self._storagePool, Object.values(self._eventTriggers), self._gtag);
@@ -138,7 +138,13 @@ class CookieConsentWrapper {
             }
 
             self._eventBus.dispatch(Events.ON_INIT, self);
-        });
+        };
+
+        if ('complete' === document.readyState) {
+            windowLoadedCallback();
+        } else {
+            window.addEventListener('load', windowLoadedCallback);
+        }
 
         this._initialized = true;
     }
