@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed initialization of the original plugin when a page is too small and DOM is already loaded before an event `window.addEventListener('load', ...)` is attached.
+
 ## [0.3.0] - 2021-12-28
 
 ### Added
