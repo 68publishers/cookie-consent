@@ -109,8 +109,17 @@ class ConsentManager {
             }
         }
 
+        const domain = this._cookieConsent.getConfig('cookie_domain');
+        const domains = [domain];
+
+        if (0 === domain.lastIndexOf('www.', 0)) {
+            domains.push(domain.substring(4));
+        }
+
         if (0 < cookiesForDeletion.length) {
-            this._cookieConsent.eraseCookies(cookiesForDeletion);
+            for (let i = 0; i < domains.length; i++) {
+                this._cookieConsent.eraseCookies(cookiesForDeletion, '/', domains[i]);
+            }
         }
     }
 }
