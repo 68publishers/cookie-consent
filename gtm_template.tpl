@@ -1136,6 +1136,7 @@ const queryPermission = require('queryPermission');
 const getCookieValues = require('getCookieValues');
 const injectScript = require('injectScript');
 const setInWindow = require('setInWindow');
+const callInWindow = require('callInWindow');
 const JSON = require('JSON');
 const Object = require('Object');
 const makeInteger = require('makeInteger');
@@ -1144,6 +1145,24 @@ log('data =', data);
 
 // create gtag
 const gtag = createArgumentsQueue('gtag', 'dataLayer');
+
+// create temporary wrapper in the window
+const temporaryWrapper = (function() {
+  const events = [];
+  
+  return {
+    on: function (event, callback, scope) {
+      events.push([event, callback, scope || null]);
+      
+      return function () {};
+    },
+    getEvents: function () {
+      return events;
+    }
+  };
+})();
+
+setInWindow('CookieConsentWrapper', temporaryWrapper, false);
 
 // parse consents from cookies
 let consentCookie = getCookieValues(data.cookie_name);
@@ -1343,10 +1362,21 @@ setInWindow('cc_wrapper_config', {
 
 // inject cookie consent wrapper
 const packageVersion = 'latest' === data.package_version ? '' : '@' + data.package_version;
-const cookieConsentWrapper = 'https://unpkg.com/68publishers-cookie-consent' + packageVersion + '/dist/cookie-consent.min.js';
+const cookieConsentWrapperScript = 'https://unpkg.com/68publishers-cookie-consent' + packageVersion + '/dist/cookie-consent.min.js';
 
-if (queryPermission('inject_script', cookieConsentWrapper)) {
-    injectScript(cookieConsentWrapper, data.gtmOnSuccess, data.gtmOnFailure);
+if (queryPermission('inject_script', cookieConsentWrapperScript)) {
+    injectScript(cookieConsentWrapperScript, function () {      
+      const events = temporaryWrapper.getEvents();
+      let event;
+      let eventKey;
+      
+      for (eventKey in events) {
+        event = events[eventKey];
+        callInWindow('CookieConsentWrapper.on', event[0], event[1], event[2]);
+      }
+      
+      data.gtmOnSuccess();
+    }, data.gtmOnFailure);
 } else {
   data.gtmOnFailure();
 }
@@ -1738,6 +1768,84 @@ ___WEB_PERMISSIONS___
                   {
                     "type": 8,
                     "boolean": false
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "key"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  },
+                  {
+                    "type": 1,
+                    "string": "execute"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "CookieConsentWrapper"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "key"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  },
+                  {
+                    "type": 1,
+                    "string": "execute"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "CookieConsentWrapper.on"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
                   }
                 ]
               }

@@ -18,6 +18,7 @@ An extended integration of [orestbida/cookieconsent](https://github.com/orestbid
 * [Configuration](#configuration)
 * [Settings modal trigger](#settings-modal-trigger)
 * [Triggering tags based on the consent](#triggering-tags-based-on-the-consent)
+* [Accessing the wrapper in the JavaScript](#accessing-the-wrapper-in-the-javascript)
 * [Development](#development)
 * [License](#license)
 
@@ -217,6 +218,27 @@ Then create a custom trigger with the following options:
 And a tag that is fired with the trigger:
 
 <img src="docs/images/analytics-storage-tag.png" alt="Analytics storage trigger" width="600">
+
+## Accessing the wrapper in the JavaScript
+
+The wrapper is accessible in the `window` under the name `CookieConsentWrapper`. The recommended way how to manipulate with it is through event callbacks because the wrapper may not be fully initialized at the time your script is executed.
+Callbacks are attached with calling of the method `CookieConsentWrapper.on()`.
+
+### Init event
+
+The only currently available event is `init`. A callback is invoked when the wrapper is fully initialized or directly if everything has been already initialized.
+
+```html
+<script>
+    CookieConsentWrapper.on('init', function (wrapper) {
+        if (wrapper.allowedCategory('analytics_storage')) {
+            // check if the analytics_storage is granted
+        }
+        
+        wrapper.unwrap(); // get the original cookie consent plugin
+    });
+</script>
+```
 
 ## Development
 

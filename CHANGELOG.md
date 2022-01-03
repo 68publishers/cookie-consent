@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added the section `Accessing the wrapper in the JavaScript` in the README
+
+### Changed
+
+- Updated a code in the GTM template - temporary object `window.CookieConsentWrapper` is created before the real wrapper is created by an external script. This allows attaching events through the method `CookieConsentWrapper.on()` before the script is downloaded by a browser.
+
 ## [0.3.1] - 2021-12-31
 
 ### Fixed
