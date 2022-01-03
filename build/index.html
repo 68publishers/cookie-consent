@@ -26,19 +26,23 @@
                 logEvent('CookieConsentWrapper initialized.');
             });
 
-            CookieConsentWrapper.setUiOptions({
-                include_default_stylesheets: true,
-                modal_trigger_selector: 'footer .footer-item'
-            });
-
             CookieConsentWrapper.setPluginOptions({
                 cookie_name: 'consent-settings',
                 force_consent: true,
                 page_scripts: true
             });
 
+            CookieConsentWrapper.setAutoClearOptions({
+                enabled: true,
+                strategy: 'clear_all_except_defined',
+            });
+
             CookieConsentWrapper.setConsentModalOptions({
                 position: 'middle center'
+            });
+
+            CookieConsentWrapper.setSettingsModalOptions({
+                modal_trigger_selector: 'footer .footer-item'
             });
 
             CookieConsentWrapper.loadTranslations('en');

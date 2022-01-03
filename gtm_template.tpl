@@ -71,32 +71,6 @@ ___TEMPLATE_PARAMETERS___
   },
   {
     "type": "TEXT",
-    "name": "cookie_name",
-    "displayName": "Cookie name",
-    "simpleValueType": true,
-    "defaultValue": "cc-settings",
-    "valueValidators": [
-      {
-        "type": "NON_EMPTY"
-      }
-    ]
-  },
-  {
-    "type": "TEXT",
-    "name": "cookie_expiration",
-    "displayName": "Cookie expiration",
-    "simpleValueType": true,
-    "defaultValue": 182,
-    "valueUnit": "days",
-    "valueHint": "How many days will be a cookie value valid.",
-    "valueValidators": [
-      {
-        "type": "POSITIVE_NUMBER"
-      }
-    ]
-  },
-  {
-    "type": "TEXT",
     "name": "revision",
     "displayName": "Revision",
     "simpleValueType": true,
@@ -120,13 +94,6 @@ ___TEMPLATE_PARAMETERS___
     ],
     "defaultValue": 500,
     "valueUnit": "ms"
-  },
-  {
-    "type": "TEXT",
-    "name": "modal_trigger_selector",
-    "displayName": "Settings modal trigger selector",
-    "simpleValueType": true,
-    "help": "CSS selector that matches some element on your website. The element will be cloned and modified as a button that opens the cookie settings modal.\nThe option is ignored if the value is empty."
   },
   {
     "type": "GROUP",
@@ -347,6 +314,123 @@ ___TEMPLATE_PARAMETERS___
         ],
         "simpleValueType": true,
         "defaultValue": "zoom"
+      },
+      {
+        "type": "TEXT",
+        "name": "modal_trigger_selector",
+        "displayName": "Settings modal trigger selector",
+        "simpleValueType": true,
+        "help": "CSS selector that matches some element on your website. The element will be cloned and modified as a button that opens the cookie settings modal.\nThe option is ignored if the value is empty."
+      }
+    ]
+  },
+  {
+    "type": "GROUP",
+    "name": "cookies_options",
+    "displayName": "Cookies options",
+    "groupStyle": "ZIPPY_OPEN",
+    "subParams": [
+      {
+        "type": "TEXT",
+        "name": "cookie_name",
+        "displayName": "Cookie name",
+        "simpleValueType": true,
+        "defaultValue": "cc-settings",
+        "valueValidators": [
+          {
+            "type": "NON_EMPTY"
+          }
+        ],
+        "help": "The name of a cookie value that holds information about the user\u0027s consent."
+      },
+      {
+        "type": "TEXT",
+        "name": "cookie_expiration",
+        "displayName": "Cookie expiration",
+        "simpleValueType": true,
+        "defaultValue": 182,
+        "valueUnit": "days",
+        "valueValidators": [
+          {
+            "type": "POSITIVE_NUMBER"
+          }
+        ],
+        "help": "How many days will be a cookie value valid."
+      },
+      {
+        "type": "CHECKBOX",
+        "name": "auto_clear_enabled",
+        "checkboxText": "Enable cookies auto-clear",
+        "simpleValueType": true,
+        "defaultValue": false,
+        "help": "All cookies will be deleted based on the user\u0027s consent and a selected strategy if the option is enabled."
+      },
+      {
+        "type": "SELECT",
+        "name": "auto_clear_strategy",
+        "displayName": "Cookies auto-clear strategy",
+        "macrosInSelect": false,
+        "selectItems": [
+          {
+            "value": "clear_all_except_defined",
+            "displayValue": "Clear all except defined"
+          },
+          {
+            "value": "clear_defined_only",
+            "displayValue": "Clear defined only"
+          }
+        ],
+        "simpleValueType": true,
+        "defaultValue": "clear_all_except_defined",
+        "enablingConditions": [
+          {
+            "paramName": "auto_clear_enabled",
+            "paramValue": true,
+            "type": "EQUALS"
+          }
+        ],
+        "subParams": [
+          {
+            "type": "LABEL",
+            "name": "label_clear_all_except_defined",
+            "displayName": "All cookies except those you define below will be deleted when the user denies any storage.",
+            "enablingConditions": [
+              {
+                "paramName": "auto_clear_strategy",
+                "paramValue": "clear_all_except_defined",
+                "type": "EQUALS"
+              }
+            ]
+          },
+          {
+            "type": "LABEL",
+            "name": "label_clear_defined_only",
+            "displayName": "All cookies you defined below will be deleted when the user denies any storage.",
+            "enablingConditions": [
+              {
+                "paramName": "auto_clear_strategy",
+                "paramValue": "clear_defined_only",
+                "type": "EQUALS"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TEXT",
+        "name": "auto_clear_cookie_names",
+        "displayName": "Cookie names",
+        "simpleValueType": true,
+        "textAsList": true,
+        "enablingConditions": [
+          {
+            "paramName": "auto_clear_enabled",
+            "paramValue": true,
+            "type": "EQUALS"
+          }
+        ],
+        "help": "One name per line.",
+        "lineCount": 3
       }
     ]
   },
@@ -1328,9 +1412,20 @@ if (data.hasOwnProperty('script_selector')) {
   pluginOptions.script_selector = data.script_selector;
 }
 
+// create auto-clear options
+const autoClearOptions = {
+  enabled: data.auto_clear_enabled
+};
+
+if (data.auto_clear_enabled) {
+  autoClearOptions.strategy = data.auto_clear_strategy;
+  autoClearOptions.cookie_names = data.auto_clear_cookie_names || [];
+}
+
 // setup wrapper config
 setInWindow('cc_wrapper_config', {
   plugin_options: pluginOptions,
+  auto_clear_options: autoClearOptions,
   
   consent_modal_options: {
     layout: data.consent_modal_layout,
@@ -1344,14 +1439,14 @@ setInWindow('cc_wrapper_config', {
   settings_modal_options: {
     layout: data.settings_modal_layout,
     position: data.settings_modal_position,
-    transition: data.settings_modal_transition
+    transition: data.settings_modal_transition,
+    modal_trigger_selector: data.modal_trigger_selector || undefined
   },
   
   ui_options: {
     include_default_stylesheets: data.include_default_stylesheets,
     external_stylesheets: data.external_stylesheets || [],
-    internal_stylesheets: data.hasOwnProperty('internal_stylesheets') ? [data.internal_stylesheets] : [],
-    modal_trigger_selector: data.modal_trigger_selector || undefined
+    internal_stylesheets: data.hasOwnProperty('internal_stylesheets') ? [data.internal_stylesheets] : []
   },
   
   storage_pool: Object.values(storagePool),

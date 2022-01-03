@@ -1,19 +1,42 @@
 'use strict';
 
+const AutoClearOptions = require('./Config/AutoClearOptions');
+
 class ConsentManager {
-    constructor(cookieConsent, storagePool, eventTriggers, gtag) {
+    constructor(cookieConsent, config, storagePool, eventTriggers, gtag) {
         this._cookieConsent = cookieConsent;
+        this._config = config;
         this._storagePool = storagePool;
         this._eventTriggers = eventTriggers;
         this._gtag = gtag;
+    }
+
+    onFirstAction(userPreferences) {
+        if ('all' !== userPreferences.accept_type && 0 < userPreferences.rejected_categories.length) {
+            this._autoClearCookies();
+        }
     }
 
     onAccept() {
         this._updateConsent();
     }
 
-    onChange() {
-        this._updateConsent();
+    onChange(cookie, changedCategories) {
+        const consent = this._updateConsent();
+
+        if (0 < changedCategories.length) {
+            for (let changedCategoryKey in changedCategories) {
+                if (!changedCategories.hasOwnProperty(changedCategoryKey) || !consent.hasOwnProperty(changedCategories[changedCategoryKey])) {
+                    continue;
+                }
+
+                if ('denied' === consent[changedCategories[changedCategoryKey]]) {
+                    this._autoClearCookies();
+
+                    break;
+                }
+            }
+        }
     }
 
     _updateConsent() {
@@ -56,6 +79,38 @@ class ConsentManager {
             if (eventTrigger.tryInvoke(this._gtag, accepted)) {
                 delete this._eventTriggers[eventTriggerKey];
             }
+        }
+
+        return consent;
+    }
+
+    _autoClearCookies() {
+        if (!this._config.autoClearOptions.enabled) {
+            return;
+        }
+
+        const allCookies = document.cookie.split(/;\s*/);
+        const cookiesForDeletion = [];
+        const strategy = this._config.autoClearOptions.strategy;
+
+        const cookieNames = this._config.autoClearOptions.cookie_names || [];
+
+        for(let i = 0; i < allCookies.length; i++){
+            const name = allCookies[i].split("=")[0];
+
+            if (this._config.pluginOptions.cookie_name === name) {
+                continue;
+            }
+
+            if ((AutoClearOptions.STRATEGY_CLEAR_ALL_EXCEPT_DEFINED === strategy && -1 === cookieNames.indexOf(name))
+                || AutoClearOptions.STRATEGY_CLEAR_DEFINED_ONLY === strategy && -1 !== cookieNames.indexOf(name)
+            ) {
+                cookiesForDeletion.push(name);
+            }
+        }
+
+        if (0 < cookiesForDeletion.length) {
+            this._cookieConsent.eraseCookies(cookiesForDeletion);
         }
     }
 }
