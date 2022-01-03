@@ -12,6 +12,7 @@ class CookieConsentWrapperFactory {
         const wrapperConfig = window.cc_wrapper_config || {};
 
         this._setupPluginOptions(cookieConsentWrapper, wrapperConfig);
+        this._setupAutoClearOptions(cookieConsentWrapper, wrapperConfig);
         this._setupConsentModalOptions(cookieConsentWrapper, wrapperConfig);
         this._setupSettingsModalOptions(cookieConsentWrapper, wrapperConfig);
         this._setupUiOptions(cookieConsentWrapper, wrapperConfig);
@@ -42,6 +43,12 @@ class CookieConsentWrapperFactory {
     _setupPluginOptions(wrapper, wrapperConfig) {
         if (wrapperConfig.hasOwnProperty('plugin_options') && 'object' === typeof wrapperConfig.plugin_options) {
             wrapper.setPluginOptions(wrapperConfig.plugin_options);
+        }
+    }
+
+    _setupAutoClearOptions(wrapper, wrapperConfig) {
+        if (wrapperConfig.hasOwnProperty('auto_clear_options') && 'object' === typeof wrapperConfig.auto_clear_options) {
+            wrapper.setAutoClearOptions(wrapperConfig.auto_clear_options);
         }
     }
 

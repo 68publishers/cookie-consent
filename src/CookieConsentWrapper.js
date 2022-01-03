@@ -30,6 +30,10 @@ class CookieConsentWrapper {
         this._config.pluginOptions.merge(options || {});
     }
 
+    setAutoClearOptions(options) {
+        this._config.autoClearOptions.merge(options || {});
+    }
+
     setConsentModalOptions(options) {
         this._config.consentModalOptions.merge(options || {});
     }
@@ -112,21 +116,22 @@ class CookieConsentWrapper {
         const windowLoadedCallback = function () {
             // init cookie consent
             self._cookieConsent = initCookieConsent();
-            const consentManager = new ConsentManager(self._cookieConsent, self._storagePool, Object.values(self._eventTriggers), self._gtag);
+            const consentManager = new ConsentManager(self._cookieConsent, self._config, self._storagePool, Object.values(self._eventTriggers), self._gtag);
 
             // build cookie consent config
             const config = self._config.exportCookieConsentConfig();
+            config.onFirstAction = (userPreferences) => consentManager.onFirstAction(userPreferences);
             config.onAccept = () => consentManager.onAccept();
-            config.onChange = () => consentManager.onChange();
+            config.onChange = (cookie, changedCategories) => consentManager.onChange(cookie, changedCategories);
             config.languages = self._dictionary.exportTranslations(self._storagePool, self._config);
 
             let modalTriggerElements;
 
             // load modal trigger, must be created before cookieconsent.run()
-            if (document && 'string' === typeof self._config.uiOptions.modal_trigger_selector) {
+            if (document && 'string' === typeof self._config.settingsModalOptions.modal_trigger_selector) {
                 const modalTriggerFactory = new ModalTriggerFactory(document, self._dictionary);
 
-                modalTriggerElements = modalTriggerFactory.create(self._config.uiOptions.modal_trigger_selector, self._config.pluginOptions.current_lang || document.documentElement.lang);
+                modalTriggerElements = modalTriggerFactory.create(self._config.settingsModalOptions.modal_trigger_selector, self._config.pluginOptions.current_lang || document.documentElement.lang);
             }
 
             // run cookie consent

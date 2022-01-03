@@ -7,8 +7,6 @@ class UiOptions extends require('./AbstractOptions') {
         this.include_default_stylesheets = true;
         this.external_stylesheets = [];
         this.internal_stylesheets = [];
-
-        this.modal_trigger_selector = null;
     }
 
     get defaultStylesheets() {
