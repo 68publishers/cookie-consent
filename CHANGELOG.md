@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.2] - 2021-01-03
+
 ### Added
 
 - Added the section `Accessing the wrapper in the JavaScript` in the README
@@ -166,7 +168,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first version of the package has been released.
 
-[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.3.1...main
+[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.3.2...main
+[0.3.2]: https://github.com/68publishers/cookie-consent/compare/v0.3.1...v0.3.2
 [0.3.1]: https://github.com/68publishers/cookie-consent/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/68publishers/cookie-consent/compare/v0.2.7...v0.3.0
 [0.2.7]: https://github.com/68publishers/cookie-consent/compare/v0.2.6...v0.2.7
