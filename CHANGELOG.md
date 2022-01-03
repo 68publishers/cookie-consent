@@ -10,10 +10,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added the section `Accessing the wrapper in the JavaScript` in the README
+- Added the section `Cookies options` in the README
+- Added the field `Enable cookies auto-clear` in GTM template under the section `Cookies options`.
+- Added the field `Cookies auto-clear strategy` in GTM template under the section `Cookies options`.
+- Added the field `Cookie names` in GTM template under the section `Cookies options`.
+- Added implementation of cookies auto-clear based on mentioned fields.
 
 ### Changed
 
 - Updated a code in the GTM template - temporary object `window.CookieConsentWrapper` is created before the real wrapper is created by an external script. This allows attaching events through the method `CookieConsentWrapper.on()` before the script is downloaded by a browser.
+- Moved fields `Cookie name` and `Cookie expiration` under the new section `Cookies options`.
+- Moved the field `Settings modal trigger selector` under the section `Settings modal options`.
 
 ## [0.3.1] - 2021-12-31
 

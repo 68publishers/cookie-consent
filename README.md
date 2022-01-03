@@ -50,18 +50,34 @@ The plugin is configurable using fields inside the tag definition.
 | Make consent required | The page will be blocked until a user action. |
 | Show the widget as soon as possible | The widget will be displayed automatically on the page load. You must trigger the widget manually by calling `CookieConsentWrapper.unwrap().show()` if the option is disabled. |
 | Hide from bots | Enable if you don't want the plugin to run when a bot/crawler/webdriver is detected. |
-| Cookie name | The name of the cookie that contains the user's consent. |
-| Cookie expiration | Expiration of the cookie in days. |
 | Revision | Revision number of your terms of use of cookies. For more information [see below](#how-to-manage-revisions). |
 | Delay | Number of milliseconds before showing the consent modal. |
-| Settings modal trigger selector | CSS selector for automatic creation of the trigger button that opens the settings modal. Check the [example](#settings-modal-trigger). |
 
 ### Consent & Setting modal options
 
 Both sections contain these fields: `Layout`, `Position`, `Transition`. These settings affect where modals appear and what shape they take.
 The behavior of the consent modal buttons can be configured through fields `Primary button role`, `Secondary button role` (accept necessary cookies or open the settings modal), and `Buttons order`.
-
 See the [widget documentation](https://github.com/orestbida/cookieconsent/tree/v2.7.1#layout-options--customization) for more details.
+
+The settings modal has one special option with the name `Settings modal trigger selector`. A value of the option can be CSS selector for automatic creation of the trigger button that opens the modal. Check the [example](#settings-modal-trigger).
+
+### Cookies options
+
+| Field | Description |
+| ------ | ------ |
+| Cookie name | The name of a cookie value that holds information about the user's consent. |
+| Cookie expiration | Expiration of the cookie in days. |
+| Enable cookies auto-clear | All cookies will be deleted based on the user's consent and a selected strategy if the option is enabled. |
+| Cookies auto-clear strategy | Strategy for cookies auto-clear feature. |
+| Cookie names | Names of the cookies that will be deleted or kept (based on a selected strategy). |
+
+The following strategies are implemented:
+
+1) `Clear all except defined` - All cookies except those you define in the field `Cookie names` will be deleted when the user denies any storage.
+2) `Clear defined only` - All cookies you defined in the field `Cookie names` will be deleted when the user denies any storage.
+
+There is no need to define a name from the `Cookie name` field because this cookie is never automatically deleted.
+The option `autoclear_cookies` from the original [plugin](https://github.com/orestbida/cookieconsent) is not currently supported because cookie tables are not implemented in this package.
 
 ### Storage options
 
