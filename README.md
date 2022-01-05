@@ -19,6 +19,8 @@ An extended integration of [orestbida/cookieconsent](https://github.com/orestbid
 * [Settings modal trigger](#settings-modal-trigger)
 * [Triggering tags based on the consent](#triggering-tags-based-on-the-consent)
 * [Accessing the wrapper in the JavaScript](#accessing-the-wrapper-in-the-javascript)
+* [How the GTM integration works](#how-the-gtm-integration-works)
+* [How to update already published container](#how-to-update-already-published-containers)
 * [Development](#development)
 * [License](#license)
 
@@ -40,13 +42,15 @@ Now you can open a preview of the website and as you can see the cookie widget i
 
 ## Configuration
 
+> :exclamation: Locking the package version is highly recommended (see the field `Package version` below) after you successfully configure the template. Avoid using the `latest` version in production containers!
+
 The plugin is configurable using fields inside the tag definition.
 
 ### Basic options
 
 | Field | Description |
 | ------ | ------ |
-| Package version  | Version of the package `68publishers/cookie-consent`. Valid inputs are the `latest` or a version in format `x.x.x`. For available versions see the [releases](https://github.com/68publishers/cookie-consent/releases). |
+| Package version  | Version of the package `68publishers/cookie-consent`. Valid inputs are the `latest` or a version in formats `x.x.x`, `x.x.x-beta.x` and `x.x.x-alpha-x`. For available versions see the [releases](https://github.com/68publishers/cookie-consent/releases). |
 | Make consent required | The page will be blocked until a user action. |
 | Show the widget as soon as possible | The widget will be displayed automatically on the page load. You must trigger the widget manually by calling `CookieConsentWrapper.unwrap().show()` if the option is disabled. |
 | Hide from bots | Enable if you don't want the plugin to run when a bot/crawler/webdriver is detected. |
@@ -255,6 +259,41 @@ The only currently available event is `init`. A callback is invoked when the wra
     });
 </script>
 ```
+
+## How the GTM integration works
+
+#### Consent initialization
+
+- :fire: A tag that is associated with the [Cookie Consent Template](/gtm_template.tpl) is fired
+    - :gear: A configuration for `CookieConsentWrapper` object is created from values defined inside the tag
+    - :ballot_box_with_check: The default consent is resolved according to the configuration and already existent user preferences
+    - :arrows_counterclockwise: The default consent is sent into [native Google Consent API](https://developers.google.com/tag-platform/devguides/consent#gtag.js)
+    - :hourglass_flowing_sand: Custom [triggers](#triggering-tags-based-on-the-consent) for granted storage types are scheduled into a `gtag` function
+    - :arrow_double_down: A script with the wrapper initialization is injected into a page
+
+#### GTM Container loaded
+
+- :fire: Custom triggers for granted storage types are fired
+
+#### Page loaded
+
+- :fast_forward: The `CookieConsentWrapper` object is fully initialized
+    - :fast_forward: The [original plugin](https://github.com/orestbida/cookieconsent) is initialized
+    - :fire: Callbacks for an [event](#init-event) `CookieConsentWrappe.on('init')` are fired
+    - :eye: The consent modal is shown if a user has not yet agreed to the use of cookies
+
+#### User updates his preferences through the setting modal
+
+- :arrows_counterclockwise: The consent update is sent into [native Google Consent API](https://developers.google.com/tag-platform/devguides/consent#gtag.js)
+- :fire: Custom triggers for newly granted storage types are fired
+
+## How to update already published containers
+
+If you want to update to the newer version please firstly look into [releases](https://github.com/68publishers/cookie-consent/releases) to see what has changed until the release that you using.
+
+For update, you must reimport the Template in your GTM in the same way how you imported it for the first time. The template will be updated but existing configurations inside tags will be kept. Of course, if the Template wasn't changed between releases then you can skip this step.
+
+Then open the associated tag and update the value of the field `Package version`.
 
 ## Development
 
