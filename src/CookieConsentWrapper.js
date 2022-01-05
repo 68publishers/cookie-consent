@@ -85,7 +85,7 @@ class CookieConsentWrapper {
 
     on(event, callback, scope = null) {
         if (Events.ON_INIT === event && this._initialized && null !== this._cookieConsent) {
-            callback.call(scope, this);
+            callback.call(scope);
 
             return function () {};
         }
@@ -143,7 +143,7 @@ class CookieConsentWrapper {
                 modalTriggerElements.textElement.innerHTML = self._dictionary.translate(self._cookieConsent.getConfig('current_lang'), 'modal_trigger_title');
             }
 
-            self._eventBus.dispatch(Events.ON_INIT, self);
+            self._eventBus.dispatch(Events.ON_INIT);
         };
 
         if ('complete' === document.readyState) {

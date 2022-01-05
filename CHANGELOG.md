@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.4] - 2021-01-05
+
+### Removed
+
+- Removed argument `wrapper` for an event `init`. Callbacks for the event now have no arguments now, please use directly `CookieConsentWrapper` inside a callback function.
+
 ## [0.3.3] - 2021-01-05
 
 ### Changed
@@ -174,7 +180,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first version of the package has been released.
 
-[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.3.3...main
+[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.3.4...main
+[0.3.4]: https://github.com/68publishers/cookie-consent/compare/v0.3.3...v0.3.4
 [0.3.3]: https://github.com/68publishers/cookie-consent/compare/v0.3.2...v0.3.3
 [0.3.2]: https://github.com/68publishers/cookie-consent/compare/v0.3.1...v0.3.2
 [0.3.1]: https://github.com/68publishers/cookie-consent/compare/v0.3.0...v0.3.1

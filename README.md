@@ -246,12 +246,12 @@ The only currently available event is `init`. A callback is invoked when the wra
 
 ```html
 <script>
-    CookieConsentWrapper.on('init', function (wrapper) {
-        if (wrapper.allowedCategory('analytics_storage')) {
+    CookieConsentWrapper.on('init', function () {
+        if (CookieConsentWrapper.allowedCategory('analytics_storage')) {
             // check if the analytics_storage is granted
         }
         
-        wrapper.unwrap(); // get the original cookie consent plugin
+        CookieConsentWrapper.unwrap(); // get the original cookie consent plugin
     });
 </script>
 ```
