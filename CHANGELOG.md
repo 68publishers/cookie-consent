@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added the section `How the GTM integration works` in README
+- Added the section `How to update already published container` in README
+
 ## [0.3.4] - 2021-01-05
 
 ### Removed
