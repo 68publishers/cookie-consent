@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.3] - 2021-01-05
+
 ### Changed
 
 - Default translations are now loaded also for locales that are consist of an `ISO 639-1` language code and an `ISO 3166-1` country code e.g. `en-US`.
@@ -172,7 +174,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first version of the package has been released.
 
-[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.3.2...main
+[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.3.3...main
+[0.3.3]: https://github.com/68publishers/cookie-consent/compare/v0.3.2...v0.3.3
 [0.3.2]: https://github.com/68publishers/cookie-consent/compare/v0.3.1...v0.3.2
 [0.3.1]: https://github.com/68publishers/cookie-consent/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/68publishers/cookie-consent/compare/v0.2.7...v0.3.0
