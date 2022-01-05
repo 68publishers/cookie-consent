@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Default translations are now loaded also for locales that are consist of an `ISO 639-1` language code and an `ISO 3166-1` country code e.g. `en-US`.
+
 ## [0.3.2] - 2021-01-03
 
 ### Added

@@ -59,10 +59,11 @@ class CookieConsentWrapper {
     }
 
     loadTranslations(locale) {
+        const localeIso639 = 2 < locale.length ? locale[0] + locale[1] : locale;
         let translations;
 
         try {
-            translations = require(`./resources/translations/${locale}`);
+            translations = require(`./resources/translations/${localeIso639}`);
         } catch (e) {
             translations = {};
         }
