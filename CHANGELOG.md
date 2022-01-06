@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added the section `How the GTM integration works` in README
 - Added the section `How to update already published container` in README
 
+### Changed
+
+- The original plugin is initialized directly if the DOM is loaded or inside a callback attached to an event `document.DOMContentLoaded` instead of `window.load`.
+
 ## [0.3.4] - 2021-01-05
 
 ### Removed
