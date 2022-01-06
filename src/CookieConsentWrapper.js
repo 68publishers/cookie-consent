@@ -101,20 +101,14 @@ class CookieConsentWrapper {
         const self = this;
         window.CookieConsentWrapper = self;
 
-        if (document) {
-            // load stylesheets
-            const documentLoadedCallback = function () {
-                StylesheetLoader.loadFromConfig(document, self._config.uiOptions);
-            };
-
-            if ('loading' !== document.readyState) {
-                documentLoadedCallback();
-            } else {
-                document.addEventListener('DOMContentLoaded', documentLoadedCallback);
-            }
+        if (!document) {
+            return;
         }
 
-        const windowLoadedCallback = function () {
+        const documentLoadedCallback = function () {
+            // load stylesheets
+            StylesheetLoader.loadFromConfig(document, self._config.uiOptions);
+
             // init cookie consent
             self._cookieConsent = initCookieConsent();
             const consentManager = new ConsentManager(self._cookieConsent, self._config, self._storagePool, Object.values(self._eventTriggers), self._gtag);
@@ -146,10 +140,10 @@ class CookieConsentWrapper {
             self._eventBus.dispatch(Events.ON_INIT);
         };
 
-        if ('complete' === document.readyState) {
-            windowLoadedCallback();
+        if ('loading' !== document.readyState) {
+            documentLoadedCallback();
         } else {
-            window.addEventListener('load', windowLoadedCallback);
+            document.addEventListener('DOMContentLoaded', documentLoadedCallback);
         }
 
         this._initialized = true;
