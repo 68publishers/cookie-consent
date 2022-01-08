@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.5] - 2021-01-08
+
 ### Added
 
 - Added the section `How the GTM integration works` in README
@@ -189,7 +191,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first version of the package has been released.
 
-[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.3.4...main
+[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.3.5...main
+[0.3.5]: https://github.com/68publishers/cookie-consent/compare/v0.3.4...v0.3.5
 [0.3.4]: https://github.com/68publishers/cookie-consent/compare/v0.3.3...v0.3.4
 [0.3.3]: https://github.com/68publishers/cookie-consent/compare/v0.3.2...v0.3.3
 [0.3.2]: https://github.com/68publishers/cookie-consent/compare/v0.3.1...v0.3.2
