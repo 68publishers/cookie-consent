@@ -15,10 +15,13 @@ class ConsentManager {
         if ('all' !== userPreferences.accept_type && 0 < userPreferences.rejected_categories.length) {
             this._autoClearCookies();
         }
+
+        this._updateLastActionDate();
     }
 
     onAccept() {
         this._updateConsent();
+        this._showModalAgainIfAnyStorageIsExpired();
     }
 
     onChange(cookie, changedCategories) {
@@ -37,6 +40,8 @@ class ConsentManager {
                 }
             }
         }
+
+        this._updateLastActionDate();
     }
 
     _updateConsent() {
@@ -119,6 +124,57 @@ class ConsentManager {
         if (0 < cookiesForDeletion.length) {
             for (let i = 0; i < domains.length; i++) {
                 this._cookieConsent.eraseCookies(cookiesForDeletion, '/', domains[i]);
+            }
+        }
+    }
+
+    _updateLastActionDate() {
+        this._cookieConsent.set('data', {
+            value: {
+                last_action_date: (new Date()).toJSON(),
+            },
+            mode: 'update'
+        });
+    }
+
+    _showModalAgainIfAnyStorageIsExpired() {
+        let lastActionDate = this._cookieConsent.get('data').last_action_date;
+
+        if (!lastActionDate) {
+            return;
+        }
+
+        lastActionDate = new Date(lastActionDate);
+
+        if ('Invalid Date' === lastActionDate || isNaN(lastActionDate)) {
+            this._updateLastActionDate();
+
+            return;
+        }
+
+        const storageArr = this._storagePool.all();
+
+        for (let storageKey in storageArr) {
+            if (!storageArr.hasOwnProperty(storageKey)) {
+                continue;
+            }
+
+            const storage = storageArr[storageKey];
+
+            if ('number' !== typeof storage.showModalAgainExpiration) {
+                continue;
+            }
+
+            const now = new Date();
+            const expirationDate = new Date(lastActionDate.valueOf());
+
+            expirationDate.setDate(expirationDate.getDate() + storage.showModalAgainExpiration);
+
+            if (now >= expirationDate) {
+                this._cookieConsent.showSettings(0);
+                this._updateLastActionDate();
+
+                return;
             }
         }
     }

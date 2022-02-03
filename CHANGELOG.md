@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added fields `Show the modal again if storage is denied` for each storage in the GTM template. The settings modal can be opened again after the specified number of days if the storage is denied.
+
 ## [0.3.5] - 2021-01-08
 
 ### Added

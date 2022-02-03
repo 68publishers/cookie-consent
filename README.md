@@ -101,6 +101,7 @@ Each storage defines the name of a trigger that will be invoked if the user prov
 | Display in the widget | A storage will be displayed inside the settings modal if the option is checked. |
 | Readonly | A toggle button for storage inside the settings modal will be disabled if the option is checked. Commonly used for functionality storage. The option is available only if the option `Display in the widget` is checked. |
 | Synchronize consent with | The consent can be synchronized with another storage. The option is available only if the option `Display in the widget` is not checked. |
+| Show the modal again if storage is denied | The settings modal will be opened again after the specified number of days if the storage is denied. The option is available only if the option `Display in the widget` is not checked. |
 | Event trigger name | The name of an event trigger that will be invoked on `granted` consent with storage. The name may not be unique for each storage (unique triggers are invoked only). No trigger is invoked if the option has an empty value. |
 
 ### Event triggers based on composite consent
