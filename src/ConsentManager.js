@@ -160,6 +160,11 @@ class ConsentManager {
             }
 
             const storage = storageArr[storageKey];
+            const checkName = null !== storage.syncConsentWith ? storage.syncConsentWith : storage.name;
+
+            if (this._cookieConsent.allowedCategory(checkName)) {
+                continue;
+            }
 
             if ('number' !== typeof storage.showModalAgainExpiration) {
                 continue;
