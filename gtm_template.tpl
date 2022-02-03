@@ -499,6 +499,43 @@ ___TEMPLATE_PARAMETERS___
               }
             ],
             "notSetText": "None"
+          },
+          {
+            "type": "CHECKBOX",
+            "name": "functionality_storage_show_again",
+            "checkboxText": "Show the modal again if storage is denied",
+            "simpleValueType": true,
+            "defaultValue": false,
+            "enablingConditions": [
+              {
+                "paramName": "functionality_storage_display_in_widget",
+                "paramValue": true,
+                "type": "EQUALS"
+              }
+            ],
+            "help": "The settings modal will be opened again if the storage is denied.",
+            "subParams": [
+              {
+                "type": "TEXT",
+                "name": "functionality_storage_show_again_expiration",
+                "displayName": "After",
+                "simpleValueType": true,
+                "defaultValue": 7,
+                "enablingConditions": [
+                  {
+                    "paramName": "functionality_storage_show_again",
+                    "paramValue": true,
+                    "type": "EQUALS"
+                  }
+                ],
+                "valueUnit": "days",
+                "valueValidators": [
+                  {
+                    "type": "POSITIVE_NUMBER"
+                  }
+                ]
+              }
+            ]
           }
         ],
         "defaultValue": true
@@ -578,6 +615,43 @@ ___TEMPLATE_PARAMETERS___
               }
             ],
             "notSetText": "None"
+          },
+          {
+            "type": "CHECKBOX",
+            "name": "security_storage_show_again",
+            "checkboxText": "Show the modal again if storage is denied",
+            "simpleValueType": true,
+            "defaultValue": false,
+            "enablingConditions": [
+              {
+                "paramName": "security_storage_display_in_widget",
+                "paramValue": true,
+                "type": "EQUALS"
+              }
+            ],
+            "help": "The settings modal will be opened again if the storage is denied.",
+            "subParams": [
+              {
+                "type": "TEXT",
+                "name": "security_storage_show_again_expiration",
+                "displayName": "After",
+                "simpleValueType": true,
+                "defaultValue": 7,
+                "enablingConditions": [
+                  {
+                    "paramName": "security_storage_show_again",
+                    "paramValue": true,
+                    "type": "EQUALS"
+                  }
+                ],
+                "valueUnit": "days",
+                "valueValidators": [
+                  {
+                    "type": "POSITIVE_NUMBER"
+                  }
+                ]
+              }
+            ]
           }
         ],
         "defaultValue": false
@@ -657,6 +731,43 @@ ___TEMPLATE_PARAMETERS___
               }
             ],
             "notSetText": "None"
+          },
+          {
+            "type": "CHECKBOX",
+            "name": "personalization_storage_show_again",
+            "checkboxText": "Show the modal again if storage is denied",
+            "simpleValueType": true,
+            "defaultValue": false,
+            "enablingConditions": [
+              {
+                "paramName": "personalization_storage_display_in_widget",
+                "paramValue": true,
+                "type": "EQUALS"
+              }
+            ],
+            "help": "The settings modal will be opened again if the storage is denied.",
+            "subParams": [
+              {
+                "type": "TEXT",
+                "name": "personalization_storage_show_again_expiration",
+                "displayName": "After",
+                "simpleValueType": true,
+                "defaultValue": 7,
+                "enablingConditions": [
+                  {
+                    "paramName": "personalization_storage_show_again",
+                    "paramValue": true,
+                    "type": "EQUALS"
+                  }
+                ],
+                "valueUnit": "days",
+                "valueValidators": [
+                  {
+                    "type": "POSITIVE_NUMBER"
+                  }
+                ]
+              }
+            ]
           }
         ],
         "defaultValue": false
@@ -736,6 +847,43 @@ ___TEMPLATE_PARAMETERS___
               }
             ],
             "notSetText": "None"
+          },
+          {
+            "type": "CHECKBOX",
+            "name": "ad_storage_show_again",
+            "checkboxText": "Show the modal again if storage is denied",
+            "simpleValueType": true,
+            "defaultValue": false,
+            "enablingConditions": [
+              {
+                "paramName": "ad_storage_display_in_widget",
+                "paramValue": true,
+                "type": "EQUALS"
+              }
+            ],
+            "help": "The settings modal will be opened again if the storage is denied.",
+            "subParams": [
+              {
+                "type": "TEXT",
+                "name": "ad_storage_show_again_expiration",
+                "displayName": "After",
+                "simpleValueType": true,
+                "defaultValue": 7,
+                "enablingConditions": [
+                  {
+                    "paramName": "ad_storage_show_again",
+                    "paramValue": true,
+                    "type": "EQUALS"
+                  }
+                ],
+                "valueUnit": "days",
+                "valueValidators": [
+                  {
+                    "type": "POSITIVE_NUMBER"
+                  }
+                ]
+              }
+            ]
           }
         ],
         "defaultValue": false
@@ -815,6 +963,43 @@ ___TEMPLATE_PARAMETERS___
               }
             ],
             "notSetText": "None"
+          },
+          {
+            "type": "CHECKBOX",
+            "name": "analytics_storage_show_again",
+            "checkboxText": "Show the modal again if storage is denied",
+            "simpleValueType": true,
+            "defaultValue": false,
+            "enablingConditions": [
+              {
+                "paramName": "analytics_storage_display_in_widget",
+                "paramValue": true,
+                "type": "EQUALS"
+              }
+            ],
+            "help": "The settings modal will be opened again if the storage is denied.",
+            "subParams": [
+              {
+                "type": "TEXT",
+                "name": "analytics_storage_show_again_expiration",
+                "displayName": "After",
+                "simpleValueType": true,
+                "defaultValue": 7,
+                "enablingConditions": [
+                  {
+                    "paramName": "analytics_storage_show_again",
+                    "paramValue": true,
+                    "type": "EQUALS"
+                  }
+                ],
+                "valueUnit": "days",
+                "valueValidators": [
+                  {
+                    "type": "POSITIVE_NUMBER"
+                  }
+                ]
+              }
+            ]
           }
         ],
         "defaultValue": false
@@ -1262,6 +1447,8 @@ const storageNames = ['functionality_storage', 'security_storage', 'personalizat
 for (let key in storageNames) {
   const storageName = storageNames[key];
   const syncConsentWith = data[storageName + '_sync_consent_with'];
+  const showModalAgain = data[storageName + '_show_again'];
+  const showModalAgainExpiration = data[storageName + '_show_again_expiration'];
   const eventTriggerName = data[storageName + '_event_trigger'];
   
   // build storage config
@@ -1274,6 +1461,10 @@ for (let key in storageNames) {
   
   if (syncConsentWith) {
     storage.sync_consent_with = syncConsentWith;
+  }
+  
+  if (true === showModalAgain && showModalAgainExpiration) {
+      storage.show_modal_again_expiration = makeInteger(showModalAgainExpiration);
   }
   
   // push into the pool

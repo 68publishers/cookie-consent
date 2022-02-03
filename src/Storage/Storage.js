@@ -27,6 +27,10 @@ class Storage {
     get syncConsentWith() {
         return this._config.sync_consent_with;
     }
+
+    get showModalAgainExpiration() {
+        return this._config.show_modal_again_expiration;
+    }
 }
 
 module.exports = Storage;

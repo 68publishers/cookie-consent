@@ -11,6 +11,7 @@ class StorageConfig {
         this.display_in_widget = config.display_in_widget || false;
         this.readonly = config.readonly || false;
         this.sync_consent_with = config.sync_consent_with || null;
+        this.show_modal_again_expiration = config.show_modal_again_expiration || null;
     }
 }
 
