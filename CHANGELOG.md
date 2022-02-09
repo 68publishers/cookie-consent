@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.7] - 2021-02-09
+
+### Fixed
+
+- The data attribute `last_action_date` is automatically added into the `cc-settings` cookie for users that accepts/rejects consent before the plugin update.
+
 ## [0.3.6] - 2021-02-07
 
 ### Added
@@ -197,7 +203,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first version of the package has been released.
 
-[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.3.6...main
+[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.3.7...main
+[0.3.7]: https://github.com/68publishers/cookie-consent/compare/v0.3.6...v0.3.7
 [0.3.6]: https://github.com/68publishers/cookie-consent/compare/v0.3.5...v0.3.6
 [0.3.5]: https://github.com/68publishers/cookie-consent/compare/v0.3.4...v0.3.5
 [0.3.4]: https://github.com/68publishers/cookie-consent/compare/v0.3.3...v0.3.4
