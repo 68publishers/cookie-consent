@@ -138,7 +138,8 @@ class ConsentManager {
     }
 
     _showModalAgainIfAnyStorageIsExpired() {
-        let lastActionDate = this._cookieConsent.get('data').last_action_date;
+        let lastActionDate = (this._cookieConsent.get('data') || {}).last_action_date;
+
         lastActionDate = lastActionDate ? new Date(lastActionDate) : undefined;
 
         if (!lastActionDate || 'Invalid Date' === lastActionDate || isNaN(lastActionDate)) {

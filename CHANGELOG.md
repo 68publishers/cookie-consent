@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.8] - 2021-02-09
+
+### Fixed
+
+- The value of the key `data` from the cookie `cc-settings` could be null.
+
 ## [0.3.7] - 2021-02-09
 
 ### Fixed
@@ -203,7 +209,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first version of the package has been released.
 
-[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.3.7...main
+[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.3.8...main
+[0.3.8]: https://github.com/68publishers/cookie-consent/compare/v0.3.7...v0.3.8
 [0.3.7]: https://github.com/68publishers/cookie-consent/compare/v0.3.6...v0.3.7
 [0.3.6]: https://github.com/68publishers/cookie-consent/compare/v0.3.5...v0.3.6
 [0.3.5]: https://github.com/68publishers/cookie-consent/compare/v0.3.4...v0.3.5
