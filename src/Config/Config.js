@@ -5,6 +5,7 @@ const ConsentModalOptions = require('./ConsentModalOptions');
 const SettingsModalOptions = require('./SettingsModalOptions');
 const UiOptions = require('./UiOptions');
 const AutoClearOptions = require('./AutoClearOptions');
+const CmpApiOptions = require('./CmpApiOptions');
 
 class Config {
     constructor() {
@@ -13,6 +14,7 @@ class Config {
         this.settingsModalOptions = new SettingsModalOptions();
         this.uiOptions = new UiOptions();
         this.autoClearOptions = new AutoClearOptions();
+        this.cmpApiOptions = new CmpApiOptions();
     }
 
     exportCookieConsentConfig() {

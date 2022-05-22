@@ -5,6 +5,7 @@ const Catalogue = require('./Catalogue');
 class Dictionary {
     constructor() {
         this._catalogues = {};
+        this._placeholders = {};
     }
 
     addTranslations(locale, translations = {}) {
@@ -21,9 +22,15 @@ class Dictionary {
         catalogue.merge(translations);
     }
 
+    addPlaceholder(name, value) {
+        this._placeholders[name] = value;
+
+        return this;
+    }
+
     translate(locale, key) {
         if (this._catalogues.hasOwnProperty(locale)) {
-            return this._catalogues[locale].translate(key);
+            return this._catalogues[locale].translate(key, this._placeholders);
         }
 
         return key;
@@ -40,7 +47,7 @@ class Dictionary {
             }
 
             catalogue = this._catalogues[key];
-            dictionary[catalogue.locale] = catalogue.exportTranslations(storagePool, config);
+            dictionary[catalogue.locale] = catalogue.exportTranslations(storagePool, config, this._placeholders);
         }
 
         return dictionary;

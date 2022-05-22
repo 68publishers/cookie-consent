@@ -11,7 +11,7 @@ class ModalTriggerFactory {
         const item = items.length ? items[items.length - 1] : undefined;
 
         if (!item) {
-            console.log(`HTML element with selector ${selector} not found.`);
+            console.warn(`HTML element with selector ${selector} not found.`);
 
             return {
                 itemElement: undefined,

@@ -12,6 +12,9 @@ const ModalTriggerFactory = require('./Ui/ModalTriggerFactory');
 const EventBus = require('./EventBus/EventBus');
 const Events = require('./EventBus/Events');
 const EventTrigger = require('./Storage/EventTrigger');
+const User = require('./User/User');
+const Sha256 = require('crypto-js/sha256');
+const CmpApiIntegration = require('./Integration/CmpApiIntegration');
 
 class CookieConsentWrapper {
     constructor(gtag) {
@@ -22,8 +25,38 @@ class CookieConsentWrapper {
         this._dictionary = new Dictionary();
         this._eventBus = new EventBus();
         this._eventTriggers = {};
+        this._user = User.createDefault();
 
         this._cookieConsent = null;
+    }
+
+    get user() {
+        return this._user;
+    }
+
+    get configurationExport() {
+        let configuration = {
+            config: this._config,
+            storages: {},
+            dictionary: this._dictionary,
+        };
+        const storages = this._storagePool.all();
+
+        for (let name in storages) {
+            configuration.storages[name] = storages[name].config;
+        }
+
+        const configurationString = JSON.stringify(configuration);
+        configuration = JSON.parse(configurationString);
+
+        return {
+            configuration: configuration,
+            checksum: Sha256(configurationString).toString(),
+        };
+    }
+
+    setStaticUserIdentity(id) {
+        this._user = this.user.withStaticIdentity(id);
     }
 
     setPluginOptions(options) {
@@ -44,6 +77,10 @@ class CookieConsentWrapper {
 
     setUiOptions(options) {
         this._config.uiOptions.merge(options || {});
+    }
+
+    setCmpApiOptions(options) {
+        this._config.cmpApiOptions.merge(options || {});
     }
 
     addStorage(config) {
@@ -111,14 +148,18 @@ class CookieConsentWrapper {
 
             // init cookie consent
             self._cookieConsent = initCookieConsent();
-            const consentManager = new ConsentManager(self._cookieConsent, self._config, self._storagePool, Object.values(self._eventTriggers), self._gtag);
+
+            const consentManager = new ConsentManager(self._cookieConsent, self._eventBus, self._config, self._storagePool, Object.values(self._eventTriggers), self._gtag);
 
             // build cookie consent config
             const config = self._config.exportCookieConsentConfig();
             config.onFirstAction = (userPreferences) => consentManager.onFirstAction(userPreferences);
             config.onAccept = () => consentManager.onAccept();
             config.onChange = (cookie, changedCategories) => consentManager.onChange(cookie, changedCategories);
-            config.languages = self._dictionary.exportTranslations(self._storagePool, self._config);
+
+            config.languages = self._dictionary
+                .addPlaceholder('user_identity', self.user.identity.toString())
+                .exportTranslations(self._storagePool, self._config);
 
             let modalTriggerElements;
 
@@ -127,6 +168,10 @@ class CookieConsentWrapper {
                 const modalTriggerFactory = new ModalTriggerFactory(document, self._dictionary);
 
                 modalTriggerElements = modalTriggerFactory.create(self._config.settingsModalOptions.modal_trigger_selector, self._config.pluginOptions.current_lang || document.documentElement.lang);
+            }
+
+            if (self._config.cmpApiOptions.enabled) {
+                CmpApiIntegration(self, self._config.cmpApiOptions);
             }
 
             // run cookie consent
