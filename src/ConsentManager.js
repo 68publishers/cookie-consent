@@ -1,14 +1,18 @@
 'use strict';
 
 const AutoClearOptions = require('./Config/AutoClearOptions');
+const Events = require('./EventBus/Events');
 
 class ConsentManager {
-    constructor(cookieConsent, config, storagePool, eventTriggers, gtag) {
+    constructor(cookieConsent, eventBus, config, storagePool, eventTriggers, gtag) {
         this._cookieConsent = cookieConsent;
+        this._eventBus = eventBus;
         this._config = config;
         this._storagePool = storagePool;
         this._eventTriggers = eventTriggers;
         this._gtag = gtag;
+
+        this.first_action_triggered = false;
     }
 
     onFirstAction(userPreferences) {
@@ -16,12 +20,19 @@ class ConsentManager {
             this._autoClearCookies();
         }
 
+        const consent = this._updateConsent();
+        this.first_action_triggered = true;
+
         this._updateLastActionDate();
+        this._eventBus.dispatch(Events.ON_CONSENT_FIRST_ACTION, consent);
     }
 
     onAccept() {
-        this._updateConsent();
+        const consent = this.first_action_triggered ? this._getContent() : this._updateConsent();
+        this.first_action_triggered = false;
+
         this._showModalAgainIfAnyStorageIsExpired();
+        this._eventBus.dispatch(Events.ON_CONSENT_ACCEPTED, consent);
     }
 
     onChange(cookie, changedCategories) {
@@ -42,6 +53,25 @@ class ConsentManager {
         }
 
         this._updateLastActionDate();
+        this._eventBus.dispatch(Events.ON_CONSENT_CHANGED, consent, changedCategories);
+    }
+
+    _getContent() {
+        const storageArr = this._storagePool.all();
+        const consent = {};
+
+        for (let storageKey in storageArr) {
+            if (!storageArr.hasOwnProperty(storageKey)) {
+                continue;
+            }
+
+            const storage = storageArr[storageKey];
+            const checkName = null !== storage.syncConsentWith ? storage.syncConsentWith : storage.name;
+
+            consent[storage.name] = this._cookieConsent.allowedCategory(checkName) ? 'granted' : 'denied';
+        }
+
+        return consent;
     }
 
     _updateConsent() {

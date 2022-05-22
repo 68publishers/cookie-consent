@@ -1,11 +1,14 @@
 'use strict';
 
 const StorageConfig = require('./StorageConfig');
-const EventTrigger = require('./EventTrigger');
 
 class Storage {
     constructor(config) {
         this._config = new StorageConfig(config);
+    }
+
+    get config() {
+        return {...this._config};
     }
 
     get name() {

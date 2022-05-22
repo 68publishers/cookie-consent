@@ -11,6 +11,7 @@ class CookieConsentWrapperFactory {
         const cookieConsentWrapper = new CookieConsentWrapper(this._createGtagFunction());
         const wrapperConfig = window.cc_wrapper_config || {};
 
+        this._setupUser(cookieConsentWrapper, wrapperConfig);
         this._setupPluginOptions(cookieConsentWrapper, wrapperConfig);
         this._setupAutoClearOptions(cookieConsentWrapper, wrapperConfig);
         this._setupConsentModalOptions(cookieConsentWrapper, wrapperConfig);
@@ -20,6 +21,7 @@ class CookieConsentWrapperFactory {
         this._setupEventTriggers(cookieConsentWrapper, wrapperConfig);
         this._setupLocales(cookieConsentWrapper, wrapperConfig);
         this._setupTranslations(cookieConsentWrapper, wrapperConfig);
+        this._setupCmpApiOptions(cookieConsentWrapper, wrapperConfig);
 
         cookieConsentWrapper.init(window, document);
 
@@ -38,6 +40,18 @@ class CookieConsentWrapperFactory {
         }
 
         return gtag;
+    }
+
+    _setupUser(wrapper, wrapperConfig) {
+        if (wrapperConfig.hasOwnProperty('user_options') && 'object' === typeof wrapperConfig.user_options) {
+            if (wrapperConfig.user_options.hasOwnProperty('identity') && wrapperConfig.user_options.identity) {
+                wrapper.setStaticUserIdentity(wrapperConfig.user_options.identity);
+            }
+
+            if (wrapperConfig.user_options.hasOwnProperty('attributes') && 'object' === typeof wrapperConfig.user_options.attributes) {
+                wrapper.user.attributes = wrapperConfig.user_options.attributes;
+            }
+        }
     }
 
     _setupPluginOptions(wrapper, wrapperConfig) {
@@ -127,6 +141,12 @@ class CookieConsentWrapperFactory {
 
                 wrapper.addTranslations(locale, translations[locale] || {});
             }
+        }
+    }
+
+    _setupCmpApiOptions(wrapper, wrapperConfig) {
+        if (wrapperConfig.hasOwnProperty('cmp_api_options') && 'object' === typeof wrapperConfig.cmp_api_options) {
+            wrapper.setCmpApiOptions(wrapperConfig.cmp_api_options);
         }
     }
 }

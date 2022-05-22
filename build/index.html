@@ -26,6 +26,29 @@
                 logEvent('CookieConsentWrapper initialized.');
             });
 
+            CookieConsentWrapper.on('consent:first-action', function (consent) {
+                logEvent('Event consent:first-action triggered. ' + JSON.stringify(consent));
+            });
+
+            CookieConsentWrapper.on('consent:accepted', function (consent) {
+                logEvent('Event consent:accepted triggered. ' + JSON.stringify(consent));
+            });
+
+            CookieConsentWrapper.on('consent:changed', function (consent, changed) {
+                logEvent('Event consent:changed triggered. ' + JSON.stringify(consent) + ', ' + JSON.stringify(changed));
+            });
+
+            // CMP integration
+            /*CookieConsentWrapper.setCmpApiOptions({
+                enabled: true,
+                url: 'http://localhost:8888/',
+                project: 'demo',
+            });
+
+            CookieConsentWrapper.user.attributes = {
+                email: 'test@example.com'
+            };*/
+
             CookieConsentWrapper.setPluginOptions({
                 cookie_name: 'consent-settings',
                 force_consent: true,

@@ -51,8 +51,22 @@ class Catalogue {
         return this._locale;
     }
 
-    translate(key) {
-        return this.hasOwnProperty(key) ? this[key] : key;
+    translate(key, placeholders = {}) {
+        if (!this.hasOwnProperty(key)) {
+            return key;
+        }
+
+        if ('consent_modal_revision_message' !== key) {
+            placeholders['revision_message'] = this.consent_modal_revision_message;
+        }
+
+        let translation = this[key];
+
+        for (let placeholderName in placeholders) {
+            translation = translation.replaceAll('[[' + placeholderName + ']]', placeholders[placeholderName]);
+        }
+
+        return translation;
     }
 
     merge(translations) {
@@ -65,13 +79,13 @@ class Catalogue {
         }
     }
 
-    exportTranslations(storagePool, config) {
+    exportTranslations(storagePool, config, placeholders = {}) {
         const blocks = [];
 
         if ('' !== this.settings_modal_before_consent_title || '' !== this.settings_modal_before_consent_description) {
             blocks.push({
-                title: this.settings_modal_before_consent_title,
-                description: this.settings_modal_before_consent_description
+                title: this.translate('settings_modal_before_consent_title', placeholders),
+                description: this.translate('settings_modal_before_consent_description', placeholders),
             });
         }
 
@@ -91,45 +105,45 @@ class Catalogue {
             }
 
             blocks.push({
-                title: this[storage.name + '_title'],
-                description: this[storage.name + '_description'],
+                title: this.translate(storage.name + '_title', placeholders),
+                description: this.translate(storage.name + '_description', placeholders),
                 toggle: {
                     value: storage.name,
                     enabled: storage.enabledByDefault,
-                    readonly: storage.readonly
-                }
+                    readonly: storage.readonly,
+                },
             });
         }
 
         if ('' !== this.settings_modal_after_consent_title || '' !== this.settings_modal_after_consent_description) {
             blocks.push({
-                title: this.settings_modal_after_consent_title,
-                description: this.settings_modal_after_consent_description
+                title: this.translate('settings_modal_after_consent_title', placeholders),
+                description: this.translate('settings_modal_after_consent_description', placeholders),
             });
         }
 
         return {
             consent_modal: {
-                title: this.consent_modal_title,
-                description: this.consent_modal_description.replace('[[revision_message]]', '{{revision_message}}'),
-                revision_message: this.consent_modal_revision_message,
+                title: this.translate('consent_modal_title', placeholders),
+                description: this.translate('consent_modal_description', placeholders),
+                revision_message: this.translate('consent_modal_revision_message', placeholders),
                 primary_btn: {
-                    text: this.consent_modal_primary_btn,
-                    role: config.consentModalOptions.primary_button_role
+                    text: this.translate('consent_modal_primary_btn', placeholders),
+                    role: config.consentModalOptions.primary_button_role,
                 },
                 secondary_btn: {
-                    text: 'accept_necessary' === config.consentModalOptions.secondary_button_role ? this.consent_modal_secondary_btn_accept_necessary : this.consent_modal_secondary_btn_settings,
-                    role: config.consentModalOptions.secondary_button_role
-                }
+                    text: this.translate('accept_necessary' === config.consentModalOptions.secondary_button_role ? 'consent_modal_secondary_btn_accept_necessary' : 'consent_modal_secondary_btn_settings', placeholders),
+                    role: config.consentModalOptions.secondary_button_role,
+                },
             },
             settings_modal: {
-                title: this.settings_modal_title,
-                save_settings_btn: this.settings_modal_save_settings_btn,
-                accept_all_btn: this.settings_modal_accept_all_btn,
-                reject_all_btn: this.settings_modal_reject_all_btn,
-                close_btn_label: this.settings_modal_close_btn_label,
-                blocks: blocks
-            }
+                title: this.translate('settings_modal_title', placeholders),
+                save_settings_btn: this.translate('settings_modal_save_settings_btn', placeholders),
+                accept_all_btn: this.translate('settings_modal_accept_all_btn', placeholders),
+                reject_all_btn: this.translate('settings_modal_reject_all_btn', placeholders),
+                close_btn_label: this.translate('settings_modal_close_btn_label', placeholders),
+                blocks: blocks,
+            },
         }
     }
 }

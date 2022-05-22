@@ -34,7 +34,10 @@
     "webpack-dev-server": "^4.6.0"
   },
   "dependencies": {
-    "vanilla-cookieconsent": "^2.7.1"
+    "crypto-js": "^4.1.1",
+    "uuid": "^8.3.2",
+    "vanilla-cookieconsent": "^2.7.1",
+    "whatwg-fetch": "^3.6.2"
   },
   "files": [
     "src",
