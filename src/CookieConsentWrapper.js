@@ -15,9 +15,11 @@ const EventTrigger = require('./Storage/EventTrigger');
 const User = require('./User/User');
 const Sha256 = require('crypto-js/sha256');
 const CmpApiIntegration = require('./Integration/CmpApiIntegration');
+const ThirdButtonAppender = require('./Ui/ThirdButtonAppender');
 
 class CookieConsentWrapper {
     constructor(gtag) {
+        this._initializationTriggered = false;
         this._initialized = false;
         this._gtag = gtag;
         this._config = new Config();
@@ -131,7 +133,7 @@ class CookieConsentWrapper {
     }
 
     init(window, document) {
-        if (this._initialized) {
+        if (this._initializationTriggered) {
             return;
         }
 
@@ -141,6 +143,8 @@ class CookieConsentWrapper {
         if (!document) {
             return;
         }
+
+        this._initializationTriggered = true;
 
         const documentLoadedCallback = function () {
             // load stylesheets
@@ -174,6 +178,14 @@ class CookieConsentWrapper {
                 CmpApiIntegration(self, self._config.cmpApiOptions);
             }
 
+            if (self._config.consentModalOptions.show_third_button) {
+                self.on(Events.ON_INIT, function () {
+                    const appender = new ThirdButtonAppender();
+
+                    appender.append(self, document);
+                });
+            }
+
             // run cookie consent
             self._cookieConsent.run(config);
 
@@ -182,6 +194,7 @@ class CookieConsentWrapper {
                 modalTriggerElements.textElement.innerHTML = self._dictionary.translate(self._cookieConsent.getConfig('current_lang'), 'modal_trigger_title');
             }
 
+            self._initialized = true;
             self._eventBus.dispatch(Events.ON_INIT);
         };
 
@@ -190,8 +203,6 @@ class CookieConsentWrapper {
         } else {
             document.addEventListener('DOMContentLoaded', documentLoadedCallback);
         }
-
-        this._initialized = true;
     }
 }
 
