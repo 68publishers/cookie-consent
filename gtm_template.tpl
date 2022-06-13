@@ -251,6 +251,14 @@ ___TEMPLATE_PARAMETERS___
         ],
         "simpleValueType": true,
         "defaultValue": "primary_secondary"
+      },
+      {
+        "type": "CHECKBOX",
+        "name": "consent_modal_show_third_button",
+        "checkboxText": "Show third button",
+        "simpleValueType": true,
+        "defaultValue": false,
+        "help": "Adds the third button to the consent modal. If the secondary button\u0027s role is \"Open settings\" the third button\u0027s role is \"Accept necessary\" and vice versa."
       }
     ]
   },
@@ -1764,7 +1772,8 @@ setInWindow('cc_wrapper_config', {
     transition: data.consent_modal_transition,
     primary_button_role: data.consent_modal_primary_button_role,
     secondary_button_role: data.consent_modal_secondary_button_role,
-    swap_buttons: 'secondary_primary' === data.consent_modal_buttons_order
+    swap_buttons: 'secondary_primary' === data.consent_modal_buttons_order,
+    show_third_button: data.consent_modal_show_third_button
   },
   
   settings_modal_options: {
