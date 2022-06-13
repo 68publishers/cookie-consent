@@ -1387,6 +1387,135 @@ ___TEMPLATE_PARAMETERS___
         "help": "The name of a data attribute that is used for managed \u0026lt;script\u0026gt; tags."
       }
     ]
+  },
+  {
+    "type": "GROUP",
+    "name": "integration",
+    "displayName": "Integration",
+    "groupStyle": "ZIPPY_OPEN",
+    "subParams": [
+      {
+        "type": "GROUP",
+        "name": "user",
+        "displayName": "User",
+        "groupStyle": "ZIPPY_OPEN",
+        "subParams": [
+          {
+            "type": "SELECT",
+            "name": "user_identity",
+            "displayName": "Identity",
+            "macrosInSelect": true,
+            "selectItems": [
+              {
+                "value": "default",
+                "displayValue": "Generated UUID"
+              }
+            ],
+            "simpleValueType": true,
+            "help": "Identities for users are by default automatically generated UUIDs that are stored in a browser\u0027s local storage. You can set a custom variable from the container, but the default strategy will be used anyway if the variable contains an empty value.",
+            "defaultValue": "default"
+          },
+          {
+            "type": "PARAM_TABLE",
+            "name": "user_attributes",
+            "displayName": "Attributes",
+            "paramTableColumns": [
+              {
+                "param": {
+                  "type": "TEXT",
+                  "name": "name",
+                  "displayName": "Name",
+                  "simpleValueType": true
+                },
+                "isUnique": true
+              },
+              {
+                "param": {
+                  "type": "TEXT",
+                  "name": "value",
+                  "displayName": "Value",
+                  "simpleValueType": true
+                },
+                "isUnique": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "GROUP",
+        "name": "cmp_api",
+        "displayName": "CMP API",
+        "groupStyle": "ZIPPY_OPEN",
+        "subParams": [
+          {
+            "type": "CHECKBOX",
+            "name": "cmp_api_enabled",
+            "checkboxText": "Enabled",
+            "simpleValueType": true,
+            "defaultValue": false
+          },
+          {
+            "type": "TEXT",
+            "name": "cmp_api_host",
+            "displayName": "URL",
+            "simpleValueType": true,
+            "help": "The URL of your CMP application, just hostname like \"https://www.domain.com\" without path, etc.",
+            "enablingConditions": [
+              {
+                "paramName": "cmp_api_enabled",
+                "paramValue": true,
+                "type": "EQUALS"
+              }
+            ],
+            "valueValidators": [
+              {
+                "type": "NON_EMPTY"
+              }
+            ]
+          },
+          {
+            "type": "SELECT",
+            "name": "cmp_api_version",
+            "displayName": "API Version",
+            "macrosInSelect": false,
+            "selectItems": [
+              {
+                "value": 1,
+                "displayValue": "v1"
+              }
+            ],
+            "simpleValueType": true,
+            "defaultValue": 1,
+            "enablingConditions": [
+              {
+                "paramName": "cmp_api_enabled",
+                "paramValue": true,
+                "type": "EQUALS"
+              }
+            ]
+          },
+          {
+            "type": "TEXT",
+            "name": "cmp_api_project",
+            "displayName": "Project code",
+            "simpleValueType": true,
+            "enablingConditions": [
+              {
+                "paramName": "cmp_api_enabled",
+                "paramValue": true,
+                "type": "EQUALS"
+              }
+            ],
+            "valueValidators": [
+              {
+                "type": "NON_EMPTY"
+              }
+            ]
+          }
+        ]
+      }
+    ]
   }
 ]
 
@@ -1582,6 +1711,17 @@ for (translationKey in translationsData) {
   translations[translation.locale][translation.key] = translation.value;
 }
 
+// build user attributes
+const userAttributesData = data.user_attributes || [];
+const userAttributes = {};
+let userAttributeKey;
+let userAttribute;
+
+for (userAttributeKey in userAttributesData) {
+  userAttribute = userAttributesData[userAttributeKey];
+  userAttributes[userAttribute.name] = userAttribute.value;
+}
+
 // create plugin options
 const pluginOptions = {
   force_consent: data.force_consent,
@@ -1638,6 +1778,18 @@ setInWindow('cc_wrapper_config', {
     include_default_stylesheets: data.include_default_stylesheets,
     external_stylesheets: data.external_stylesheets || [],
     internal_stylesheets: data.hasOwnProperty('internal_stylesheets') ? [data.internal_stylesheets] : []
+  },
+  
+  user_options: {
+    identity: 'default' !== data.user_identity ? data.user_identity : null,
+    attributes: userAttributes
+  },
+  
+  cmp_api_options: {
+    enabled: data.cmp_api_enabled,
+    url: data.cmp_api_enabled ? data.cmp_api_host : null,
+    project: data.cmp_api_enabled ? data.cmp_api_project : null,
+    version: data.cmp_api_enabled ? data.cmp_api_version : 1
   },
   
   storage_pool: Object.values(storagePool),
