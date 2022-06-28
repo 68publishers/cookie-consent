@@ -40,9 +40,11 @@
 
             // CMP integration
             /*CookieConsentWrapper.setCmpApiOptions({
-                enabled: true,
                 url: 'http://localhost:8888/',
                 project: 'demo',
+                consent_api_enabled: true,
+                cookies_api_enabled: true,
+                cookie_table_headers: ['name', 'purpose', 'processing_time', 'type', 'link'],
             });
 
             CookieConsentWrapper.user.attributes = {

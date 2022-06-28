@@ -32,5 +32,17 @@
     "ad_storage_description": "Reklamní cookies používáme my nebo naši partneři, abychom Vám mohli zobrazit vhodné obsahy nebo reklamy jak na našich stránkách, tak na stránkách třetích subjektů. Díky tomu můžeme vytvářet profily založené na Vašich zájmech, tak zvané pseudonymizované profily. Na základě těchto informací není zpravidla možná bezprostřední identifikace Vaší osoby, protože jsou používány pouze pseudonymizované údaje. Pokud nevyjádříte souhlas, nebudete příjemcem obsahů a reklam přizpůsobených Vašim zájmům.",
 
     "analytics_storage_title": "Analytické cookies",
-    "analytics_storage_description": "Analytické cookies nám umožňují měření výkonu našeho webu a našich reklamních kampaní. Jejich pomocí určujeme počet návštěv a zdroje návštěv našich internetových stránek. Data získaná pomocí těchto cookies zpracováváme souhrnně, bez použití identifikátorů, které ukazují na konkrétní uživatelé našeho webu. Pokud vypnete používání analytických cookies ve vztahu k Vaší návštěvě, ztrácíme možnost analýzy výkonu a optimalizace našich opatření."
+    "analytics_storage_description": "Analytické cookies nám umožňují měření výkonu našeho webu a našich reklamních kampaní. Jejich pomocí určujeme počet návštěv a zdroje návštěv našich internetových stránek. Data získaná pomocí těchto cookies zpracováváme souhrnně, bez použití identifikátorů, které ukazují na konkrétní uživatelé našeho webu. Pokud vypnete používání analytických cookies ve vztahu k Vaší návštěvě, ztrácíme možnost analýzy výkonu a optimalizace našich opatření.",
+
+    "cookie_table_col_name": "Název",
+    "cookie_table_col_purpose": "Popis",
+    "cookie_table_col_processing_time": "Expirace",
+    "cookie_table_col_type": "Typ",
+    "cookie_table_col_link": "Odkaz",
+
+    "processing_time_session": "Session",
+    "processing_time_persistent": "Perzistentní",
+
+    "cookie_type_1st_party": "1st party",
+    "cookie_type_3rd_party": "3rd party"
 }
