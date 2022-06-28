@@ -386,6 +386,10 @@ ___TEMPLATE_PARAMETERS___
           {
             "value": "clear_defined_only",
             "displayValue": "Clear defined only"
+          },
+          {
+            "value": "cookie_tables",
+            "displayValue": "Use cookie tables"
           }
         ],
         "simpleValueType": true,
@@ -421,6 +425,18 @@ ___TEMPLATE_PARAMETERS___
                 "type": "EQUALS"
               }
             ]
+          },
+          {
+            "type": "LABEL",
+            "name": "label_cookie_tables",
+            "displayName": "Cookies for deletion are defined by cookie tables for each storage. The CMP application must be integrated for this strategy to work properly",
+            "enablingConditions": [
+              {
+                "paramName": "auto_clear_strategy",
+                "paramValue": "cookie_tables",
+                "type": "EQUALS"
+              }
+            ]
           }
         ]
       },
@@ -432,8 +448,13 @@ ___TEMPLATE_PARAMETERS___
         "textAsList": true,
         "enablingConditions": [
           {
-            "paramName": "auto_clear_enabled",
-            "paramValue": true,
+            "paramName": "auto_clear_strategy",
+            "paramValue": "clear_all_except_defined",
+            "type": "EQUALS"
+          },
+          {
+            "paramName": "auto_clear_strategy",
+            "paramValue": "clear_defined_only",
             "type": "EQUALS"
           }
         ],
@@ -1520,6 +1541,86 @@ ___TEMPLATE_PARAMETERS___
                 "type": "NON_EMPTY"
               }
             ]
+          },
+          {
+            "type": "CHECKBOX",
+            "name": "cmp_api_consent_api_enabled",
+            "checkboxText": "Consent API enabled",
+            "simpleValueType": true,
+            "defaultValue": true,
+            "enablingConditions": [
+              {
+                "paramName": "cmp_api_enabled",
+                "paramValue": true,
+                "type": "EQUALS"
+              }
+            ],
+            "help": "Consents are sent into the CMP is the option is checked."
+          },
+          {
+            "type": "CHECKBOX",
+            "name": "cmp_api_cookies_api_enabled",
+            "checkboxText": "Cookies API enabled",
+            "simpleValueType": true,
+            "defaultValue": true,
+            "enablingConditions": [
+              {
+                "paramName": "cmp_api_enabled",
+                "paramValue": true,
+                "type": "EQUALS"
+              }
+            ],
+            "help": "Cookie tables in the widget are automatically created if the option is checked."
+          },
+          {
+            "type": "SIMPLE_TABLE",
+            "name": "cmp_api_cookie_table_headers",
+            "displayName": "Cookie table headers",
+            "simpleTableColumns": [
+              {
+                "defaultValue": "",
+                "displayName": "",
+                "name": "name",
+                "type": "SELECT",
+                "selectItems": [
+                  {
+                    "value": "purpose",
+                    "displayValue": "Description"
+                  },
+                  {
+                    "value": "processing_time",
+                    "displayValue": "Expiration"
+                  },
+                  {
+                    "value": "type",
+                    "displayValue": "Type (1st party or 3rd party)"
+                  },
+                  {
+                    "value": "link",
+                    "displayValue": "Link"
+                  }
+                ]
+              }
+            ],
+            "enablingConditions": [
+              {
+                "paramName": "cmp_api_cookies_api_enabled",
+                "paramValue": true,
+                "type": "EQUALS"
+              }
+            ]
+          },
+          {
+            "type": "LABEL",
+            "name": "cmp_api_cookie_table_headers_label",
+            "displayName": "Header \"name\" is always automatically as first so it\u0027s not user-defined.",
+            "enablingConditions": [
+              {
+                "paramName": "cmp_api_cookies_api_enabled",
+                "paramValue": true,
+                "type": "EQUALS"
+              }
+            ]
           }
         ]
       }
@@ -1761,6 +1862,16 @@ if (data.auto_clear_enabled) {
   autoClearOptions.cookie_names = data.auto_clear_cookie_names || [];
 }
 
+const cookieTableHeaders = [];
+
+if (data.cmp_api_enabled && data.cmp_api_cookies_api_enabled) {
+  cookieTableHeaders.push('name');
+  
+  for (let i in data.cmp_api_cookie_table_headers) {
+    cookieTableHeaders.push(data.cmp_api_cookie_table_headers[i].name);
+  }
+}
+
 // setup wrapper config
 setInWindow('cc_wrapper_config', {
   plugin_options: pluginOptions,
@@ -1795,10 +1906,12 @@ setInWindow('cc_wrapper_config', {
   },
   
   cmp_api_options: {
-    enabled: data.cmp_api_enabled,
     url: data.cmp_api_enabled ? data.cmp_api_host : null,
     project: data.cmp_api_enabled ? data.cmp_api_project : null,
-    version: data.cmp_api_enabled ? data.cmp_api_version : 1
+    version: data.cmp_api_enabled ? data.cmp_api_version : 1,
+    consent_api_enabled: data.cmp_api_enabled ? data.cmp_api_consent_api_enabled : false,
+    cookies_api_enabled: data.cmp_api_enabled ? data.cmp_api_cookies_api_enabled : false,
+    cookie_table_headers: cookieTableHeaders
   },
   
   storage_pool: Object.values(storagePool),
