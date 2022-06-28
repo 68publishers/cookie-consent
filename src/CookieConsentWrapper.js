@@ -16,6 +16,7 @@ const User = require('./User/User');
 const Sha256 = require('crypto-js/sha256');
 const CmpApiIntegration = require('./Integration/CmpApiIntegration');
 const ThirdButtonAppender = require('./Ui/ThirdButtonAppender');
+const CookieTables = require('./CookieTable/CookieTables');
 
 class CookieConsentWrapper {
     constructor(gtag) {
@@ -26,6 +27,7 @@ class CookieConsentWrapper {
         this._storagePool = new StoragePool();
         this._dictionary = new Dictionary();
         this._eventBus = new EventBus();
+        this._cookieTables = new CookieTables();
         this._eventTriggers = {};
         this._user = User.createDefault();
 
@@ -40,7 +42,7 @@ class CookieConsentWrapper {
         let configuration = {
             config: this._config,
             storages: {},
-            dictionary: this._dictionary,
+            dictionary: this._dictionary._catalogues,
         };
         const storages = this._storagePool.all();
 
@@ -55,6 +57,10 @@ class CookieConsentWrapper {
             configuration: configuration,
             checksum: Sha256(configurationString).toString(),
         };
+    }
+
+    get cookieTables() {
+        return this._cookieTables;
     }
 
     setStaticUserIdentity(id) {
@@ -122,6 +128,14 @@ class CookieConsentWrapper {
         return this.unwrap().allowedCategory(name);
     }
 
+    changeLocale(locale, force) {
+        const plugin = this.unwrap();
+
+        this._eventBus.dispatch(Events.ON_LOCALE_CHANGE, locale);
+
+        plugin.updateLanguage(locale, force);
+    }
+
     on(event, callback, scope = null) {
         if (Events.ON_INIT === event && this._initialized && null !== this._cookieConsent) {
             callback.call(scope);
@@ -165,6 +179,8 @@ class CookieConsentWrapper {
                 .addPlaceholder('user_identity', self.user.identity.toString())
                 .exportTranslations(self._storagePool, self._config);
 
+            self._cookieTables.appendCookieTables(config.languages);
+
             let modalTriggerElements;
 
             // load modal trigger, must be created before cookieconsent.run()
@@ -174,9 +190,7 @@ class CookieConsentWrapper {
                 modalTriggerElements = modalTriggerFactory.create(self._config.settingsModalOptions.modal_trigger_selector, self._config.pluginOptions.current_lang || document.documentElement.lang);
             }
 
-            if (self._config.cmpApiOptions.enabled) {
-                CmpApiIntegration(self, self._config.cmpApiOptions);
-            }
+            CmpApiIntegration(self, self._config.cmpApiOptions);
 
             if (self._config.consentModalOptions.show_third_button) {
                 self.on(Events.ON_INIT, function () {

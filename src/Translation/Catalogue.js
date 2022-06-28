@@ -10,7 +10,7 @@ class Catalogue {
         // consent modal
         this.consent_modal_title = '';
         this.consent_modal_description = '';
-        this.consent_modal_revision_message = ''; // optional, the translation is passed into the "consent_modal_description" under placeholder {{revision_message}}
+        this.consent_modal_revision_message = ''; // optional, the translation is passed into the "consent_modal_description" under placeholder [[revision_message]]
         this.consent_modal_primary_btn = '';
         this.consent_modal_secondary_btn_settings = '';
         this.consent_modal_secondary_btn_accept_necessary = '';
@@ -45,6 +45,18 @@ class Catalogue {
 
         this.analytics_storage_title = '';
         this.analytics_storage_description = '';
+
+        this.cookie_table_col_name = '';
+        this.cookie_table_col_purpose = '';
+        this.cookie_table_col_processing_time = '';
+        this.cookie_table_col_type = '';
+        this.cookie_table_col_link = '';
+
+        this.processing_time_session = '';
+        this.processing_time_persistent = '';
+
+        this.cookie_type_1st_party = '';
+        this.cookie_type_3rd_party = '';
     }
 
     get locale() {

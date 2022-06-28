@@ -1,10 +1,6 @@
 'use strict';
 
-module.exports = function (wrapper, cmpApiOptions) {
-    if (!cmpApiOptions.enabled || !cmpApiOptions.url || !cmpApiOptions.project) {
-        return;
-    }
-
+const integrateConsentApi = function (wrapper, cmpApiOptions) {
     const fetch = window.fetch ? window.fetch : require('whatwg-fetch').fetch;
 
     const run = (consent) => {
@@ -52,4 +48,111 @@ module.exports = function (wrapper, cmpApiOptions) {
 
     wrapper.on('consent:first-action', (consent) => run(consent));
     wrapper.on('consent:changed', (consent) => run(consent));
+};
+
+const integrateCookiesApi = function (wrapper, cmpApiOptions) {
+    const columnMappers = {
+        name: (cookie) => cookie.name,
+        purpose: (cookie) => cookie.purpose,
+        processing_time: (cookie, locale) => {
+            let type = cookie.processingTime;
+
+            if ('session' === type || 'persistent' === type) {
+                type = wrapper._dictionary.translate(locale, 'processing_time_' + type);
+            }
+
+            return type;
+        },
+        type: (cookie, locale) => wrapper._dictionary.translate(locale, 'cookie_type_' + cookie.cookieProvider.type),
+        link: (cookie) => cookie.cookieProvider.link,
+    };
+    const headers = [];
+
+    for (let i in cmpApiOptions.cookie_table_headers) {
+        const header = cmpApiOptions.cookie_table_headers[i];
+
+        if (!columnMappers.hasOwnProperty(header)) {
+            console.warn(`Cookie header "${header}" is not allowed.`);
+
+            continue;
+        }
+
+        headers.push(header);
+    }
+
+    if (0 >= headers.length) {
+        return;
+    }
+
+    const fetch = window.fetch ? window.fetch : require('whatwg-fetch').fetch;
+    const fetchedLocales = [];
+    const cookieToRow = (cookie, locale) => {
+        const row = {};
+
+        for (let i in headers) {
+            const header = headers[i];
+            const mapper = columnMappers[header] || function () { return ''; };
+            row[header] = mapper(cookie, locale);
+        }
+
+        return row;
+    };
+
+    const run = (loc) => {
+        const locale = loc || wrapper.unwrap().getConfig('current_lang');
+
+        if (-1 !== fetchedLocales.indexOf(locale)) {
+            return;
+        }
+
+        fetchedLocales.push(locale);
+        const url = cmpApiOptions.url.replace(new RegExp('\/$'), '');
+
+        fetch(`${url}/api/v${cmpApiOptions.version.toString()}/cookies/${cmpApiOptions.project}?locale=${locale}`, {
+            method: 'get',
+        }).then(response => {
+            return response.json();
+        }).then(json => {
+            if ('success' !== json.status) {
+                return Promise.reject(json);
+            }
+
+            if (!json.hasOwnProperty('data') || !json.data.hasOwnProperty('cookies') || 0 >= json.data.cookies.length) {
+                return;
+            }
+
+            const cookieTable = wrapper.cookieTables.getCookieTable(locale);
+
+            for (let i in headers) {
+                cookieTable.addHeader(headers[i], wrapper._dictionary.translate(locale, 'cookie_table_col_' + headers[i]));
+            }
+
+            for (let i in json.data.cookies) {
+                const cookie = json.data.cookies[i];
+                cookieTable.addRow(cookie.category.code, cookieToRow(cookie, locale));
+            }
+
+            wrapper.cookieTables.appendCookieTables(wrapper.unwrap().getConfig('languages'));
+            wrapper.unwrap().updateLanguage(locale, true);
+        }).catch((e) => {
+            console.warn('Fetching cookies from CMP failed.', e);
+        })
+    };
+
+    wrapper.on('init', () => run());
+    wrapper.on('locale:change', (loc) => run(loc));
+}
+
+module.exports = function (wrapper, cmpApiOptions) {
+    if (!cmpApiOptions.url || !cmpApiOptions.project) {
+        return;
+    }
+
+    if (true === cmpApiOptions.consent_api_enabled) {
+        integrateConsentApi(wrapper, cmpApiOptions);
+    }
+
+    if (true === cmpApiOptions.cookies_api_enabled) {
+        integrateCookiesApi(wrapper, cmpApiOptions);
+    }
 };

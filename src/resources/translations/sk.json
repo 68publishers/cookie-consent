@@ -32,5 +32,17 @@
   "ad_storage_description": "Reklamné súbory cookie používame my alebo naši partneri na zobrazovanie relevantného obsahu alebo reklám na našej stránke aj na stránkach tretích strán. To nám umožňuje vytvárať profily na základe vašich záujmov, tzv. pseudonymizované profily. Na základe týchto informácií vás vo všeobecnosti nie je možné priamo identifikovať ako osobu, pretože sa používajú len pseudonymizované údaje. Ak nevyjadríte svoj súhlas, nebudete dostávať obsah a reklamy prispôsobené vašim záujmom.",
 
   "analytics_storage_title": "Analytické cookies",
-  "analytics_storage_description": "Analytické súbory cookie nám umožňujú merať výkonnosť našej webovej stránky a našich reklamných kampaní. Používame ich na určenie počtu návštev a zdrojov návštev našich webových stránok. Údaje získané prostredníctvom týchto súborov cookie spracúvame súhrnne bez použitia identifikátorov, ktoré by poukazovali na konkrétnych používateľov našej webovej stránky. Ak zakážete používanie analytických súborov cookie v súvislosti s vašou návštevou, stratíme možnosť analyzovať výkon a optimalizovať naše opatrenia."
+  "analytics_storage_description": "Analytické súbory cookie nám umožňujú merať výkonnosť našej webovej stránky a našich reklamných kampaní. Používame ich na určenie počtu návštev a zdrojov návštev našich webových stránok. Údaje získané prostredníctvom týchto súborov cookie spracúvame súhrnne bez použitia identifikátorov, ktoré by poukazovali na konkrétnych používateľov našej webovej stránky. Ak zakážete používanie analytických súborov cookie v súvislosti s vašou návštevou, stratíme možnosť analyzovať výkon a optimalizovať naše opatrenia.",
+
+  "cookie_table_col_name": "Názov",
+  "cookie_table_col_purpose": "Popis",
+  "cookie_table_col_processing_time": "Expirácia",
+  "cookie_table_col_type": "Typ",
+  "cookie_table_col_link": "Odkaz",
+
+  "processing_time_session": "Session",
+  "processing_time_persistent": "Perzistentné",
+
+  "cookie_type_1st_party": "1st party",
+  "cookie_type_3rd_party": "3rd party"
 }

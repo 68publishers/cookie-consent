@@ -25,6 +25,10 @@ class Config {
             settings_modal: this.settingsModalOptions.exportCookieConsentConfig()
         };
 
+        if (this.autoClearOptions.enabled && AutoClearOptions.STRATEGY_COOKIE_TABLES === this.autoClearOptions.strategy) {
+            config['autoclear_cookies'] = true;
+        }
+
         return config;
     }
 }
