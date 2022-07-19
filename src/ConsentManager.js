@@ -124,9 +124,15 @@ class ConsentManager {
             return;
         }
 
+        const strategy = this._config.autoClearOptions.strategy;
+
+        // AutoClear based on cookie tables is managed by the original plugin
+        if (AutoClearOptions.STRATEGY_COOKIE_TABLES === strategy) {
+            return;
+        }
+
         const allCookies = document.cookie.split(/;\s*/);
         const cookiesForDeletion = [];
-        const strategy = this._config.autoClearOptions.strategy;
 
         const cookieNames = this._config.autoClearOptions.cookie_names || [];
 

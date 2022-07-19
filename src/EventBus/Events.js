@@ -16,6 +16,10 @@ class Events {
     static get ON_CONSENT_CHANGED() {
         return 'consent:changed';
     };
+
+    static get ON_LOCALE_CHANGE() {
+        return 'locale:change';
+    };
 }
 
 module.exports = Events;

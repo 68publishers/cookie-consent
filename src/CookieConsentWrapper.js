@@ -15,15 +15,19 @@ const EventTrigger = require('./Storage/EventTrigger');
 const User = require('./User/User');
 const Sha256 = require('crypto-js/sha256');
 const CmpApiIntegration = require('./Integration/CmpApiIntegration');
+const ThirdButtonAppender = require('./Ui/ThirdButtonAppender');
+const CookieTables = require('./CookieTable/CookieTables');
 
 class CookieConsentWrapper {
     constructor(gtag) {
+        this._initializationTriggered = false;
         this._initialized = false;
         this._gtag = gtag;
         this._config = new Config();
         this._storagePool = new StoragePool();
         this._dictionary = new Dictionary();
         this._eventBus = new EventBus();
+        this._cookieTables = new CookieTables();
         this._eventTriggers = {};
         this._user = User.createDefault();
 
@@ -38,7 +42,7 @@ class CookieConsentWrapper {
         let configuration = {
             config: this._config,
             storages: {},
-            dictionary: this._dictionary,
+            dictionary: this._dictionary._catalogues,
         };
         const storages = this._storagePool.all();
 
@@ -53,6 +57,10 @@ class CookieConsentWrapper {
             configuration: configuration,
             checksum: Sha256(configurationString).toString(),
         };
+    }
+
+    get cookieTables() {
+        return this._cookieTables;
     }
 
     setStaticUserIdentity(id) {
@@ -91,6 +99,10 @@ class CookieConsentWrapper {
         this._eventTriggers[name] = new EventTrigger(name, storageNames, type);
     }
 
+    translate(locale, key) {
+        return this._dictionary.translate(locale, key);
+    }
+
     addTranslations(locale, translations) {
         this._dictionary.addTranslations(locale, translations || {});
     }
@@ -120,6 +132,14 @@ class CookieConsentWrapper {
         return this.unwrap().allowedCategory(name);
     }
 
+    changeLocale(locale, force) {
+        const plugin = this.unwrap();
+
+        this._eventBus.dispatch(Events.ON_LOCALE_CHANGE, locale);
+
+        plugin.updateLanguage(locale, force);
+    }
+
     on(event, callback, scope = null) {
         if (Events.ON_INIT === event && this._initialized && null !== this._cookieConsent) {
             callback.call(scope);
@@ -131,7 +151,7 @@ class CookieConsentWrapper {
     }
 
     init(window, document) {
-        if (this._initialized) {
+        if (this._initializationTriggered) {
             return;
         }
 
@@ -141,6 +161,8 @@ class CookieConsentWrapper {
         if (!document) {
             return;
         }
+
+        this._initializationTriggered = true;
 
         const documentLoadedCallback = function () {
             // load stylesheets
@@ -161,6 +183,8 @@ class CookieConsentWrapper {
                 .addPlaceholder('user_identity', self.user.identity.toString())
                 .exportTranslations(self._storagePool, self._config);
 
+            self._cookieTables.appendCookieTables(config.languages);
+
             let modalTriggerElements;
 
             // load modal trigger, must be created before cookieconsent.run()
@@ -170,8 +194,14 @@ class CookieConsentWrapper {
                 modalTriggerElements = modalTriggerFactory.create(self._config.settingsModalOptions.modal_trigger_selector, self._config.pluginOptions.current_lang || document.documentElement.lang);
             }
 
-            if (self._config.cmpApiOptions.enabled) {
-                CmpApiIntegration(self, self._config.cmpApiOptions);
+            CmpApiIntegration(self, self._config.cmpApiOptions);
+
+            if (self._config.consentModalOptions.show_third_button) {
+                self.on(Events.ON_INIT, function () {
+                    const appender = new ThirdButtonAppender();
+
+                    appender.append(self, document);
+                });
             }
 
             // run cookie consent
@@ -179,9 +209,10 @@ class CookieConsentWrapper {
 
             // re-translate modal trigger
             if (modalTriggerElements && modalTriggerElements.textElement) {
-                modalTriggerElements.textElement.innerHTML = self._dictionary.translate(self._cookieConsent.getConfig('current_lang'), 'modal_trigger_title');
+                modalTriggerElements.textElement.innerHTML = self.translate(self._cookieConsent.getConfig('current_lang'), 'modal_trigger_title');
             }
 
+            self._initialized = true;
             self._eventBus.dispatch(Events.ON_INIT);
         };
 
@@ -190,8 +221,6 @@ class CookieConsentWrapper {
         } else {
             document.addEventListener('DOMContentLoaded', documentLoadedCallback);
         }
-
-        this._initialized = true;
     }
 }
 

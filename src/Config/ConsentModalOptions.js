@@ -10,6 +10,9 @@ class ConsentModalOptions extends require('./AbstractOptions') {
         this.primary_button_role = 'accept_all';
         this.secondary_button_role = 'settings';
         this.swap_buttons = false;
+
+        // Custom implementation. Adds the third button to the consent modal. If the secondary button's role is "Open settings" the third button's role is "Accept necessary" and vice versa.
+        this.show_third_button = false;
     }
 
     exportCookieConsentConfig() {

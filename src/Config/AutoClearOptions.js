@@ -11,14 +11,18 @@ class AutoClearOptions extends require('./AbstractOptions') {
 
     static get STRATEGY_CLEAR_ALL_EXCEPT_DEFINED() {
         return 'clear_all_except_defined';
-    };
+    }
 
     static get STRATEGY_CLEAR_DEFINED_ONLY() {
         return 'clear_defined_only';
     }
 
+    static get STRATEGY_COOKIE_TABLES() {
+        return 'cookie_tables';
+    }
+
     merge(options) {
-        if (options.hasOwnProperty('strategy') && -1 === [AutoClearOptions.STRATEGY_CLEAR_ALL_EXCEPT_DEFINED, AutoClearOptions.STRATEGY_CLEAR_DEFINED_ONLY].indexOf(options.strategy)) {
+        if (options.hasOwnProperty('strategy') && -1 === [AutoClearOptions.STRATEGY_CLEAR_ALL_EXCEPT_DEFINED, AutoClearOptions.STRATEGY_CLEAR_DEFINED_ONLY, AutoClearOptions.STRATEGY_COOKIE_TABLES].indexOf(options.strategy)) {
             throw new Error(`AutoClear strategy ${'string' === typeof options.strategy ? options.strategy : options.strategy.toString()} is not supported.`);
         }
 
