@@ -7,16 +7,25 @@ const integrateConsentApi = function (wrapper, cmpApiOptions) {
         const user = wrapper.user;
         const configurationExport = wrapper.configurationExport;
         const url = cmpApiOptions.url.replace(new RegExp('\/$'), '');
+        const userConsent = {};
 
         for (let storageName in consent) {
-            consent[storageName] = 'granted' === consent[storageName];
+            if (!wrapper._storagePool.has(storageName)) {
+                continue;
+            }
+
+            const storage = wrapper._storagePool.get(storageName);
+
+            if (storage.enabledByDefault || storage.displayInWidget || storage.syncConsentWith) {
+                userConsent[storageName] = 'granted' === consent[storageName];
+            }
         }
 
         fetch(`${url}/api/v${cmpApiOptions.version.toString()}/consent/${cmpApiOptions.project}/${user.identity.toString()}`, {
             method: 'put',
             body: JSON.stringify({
                 settingsChecksum: configurationExport.checksum,
-                consents: consent,
+                consents: userConsent,
                 attributes: user.attributes,
             }),
         }).then(response => {
@@ -58,13 +67,15 @@ const integrateCookiesApi = function (wrapper, cmpApiOptions) {
             let type = cookie.processingTime;
 
             if ('session' === type || 'persistent' === type) {
-                type = wrapper._dictionary.translate(locale, 'processing_time_' + type);
+                type = wrapper.translate(locale, 'processing_time_' + type);
             }
 
             return type;
         },
-        type: (cookie, locale) => wrapper._dictionary.translate(locale, 'cookie_type_' + cookie.cookieProvider.type),
+        provider: (cookie) => cookie.cookieProvider.name,
+        type: (cookie, locale) => wrapper.translate(locale, 'cookie_type_' + cookie.cookieProvider.type),
         link: (cookie) => cookie.cookieProvider.link,
+        category: (cookie) => cookie.category.name,
     };
     const headers = [];
 
@@ -124,7 +135,7 @@ const integrateCookiesApi = function (wrapper, cmpApiOptions) {
             const cookieTable = wrapper.cookieTables.getCookieTable(locale);
 
             for (let i in headers) {
-                cookieTable.addHeader(headers[i], wrapper._dictionary.translate(locale, 'cookie_table_col_' + headers[i]));
+                cookieTable.addHeader(headers[i], wrapper.translate(locale, 'cookie_table_col_' + headers[i]));
             }
 
             for (let i in json.data.cookies) {

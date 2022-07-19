@@ -49,8 +49,10 @@ class Catalogue {
         this.cookie_table_col_name = '';
         this.cookie_table_col_purpose = '';
         this.cookie_table_col_processing_time = '';
+        this.cookie_table_col_provider = '';
         this.cookie_table_col_type = '';
         this.cookie_table_col_link = '';
+        this.cookie_table_col_category = '';
 
         this.processing_time_session = '';
         this.processing_time_persistent = '';

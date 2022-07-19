@@ -37,8 +37,10 @@
     "cookie_table_col_name": "Název",
     "cookie_table_col_purpose": "Popis",
     "cookie_table_col_processing_time": "Expirace",
+    "cookie_table_col_provider": "Poskytovatel",
     "cookie_table_col_type": "Typ",
     "cookie_table_col_link": "Odkaz",
+    "cookie_table_col_category": "Kategorie",
 
     "processing_time_session": "Session",
     "processing_time_persistent": "Perzistentní",
