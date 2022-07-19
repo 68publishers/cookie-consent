@@ -21,7 +21,7 @@ class ThirdButtonAppender {
         button.setAttribute('id', 'c-t-bn');
         button.setAttribute('class', 'c-bn');
 
-        button.innerText = wrapper._dictionary.translate(
+        button.innerText = wrapper.translate(
             wrapper.unwrap().getConfig('current_lang'),
             'settings' === role ? 'consent_modal_secondary_btn_settings' : 'consent_modal_secondary_btn_accept_necessary'
         );

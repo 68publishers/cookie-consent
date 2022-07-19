@@ -44,7 +44,7 @@
                 project: 'demo',
                 consent_api_enabled: true,
                 cookies_api_enabled: true,
-                cookie_table_headers: ['name', 'purpose', 'processing_time', 'type', 'link'],
+                cookie_table_headers: ['name', 'purpose', 'processing_time', 'type', 'link', 'provider', 'category'],
             });
 
             CookieConsentWrapper.user.attributes = {
@@ -63,7 +63,9 @@
             });
 
             CookieConsentWrapper.setConsentModalOptions({
-                position: 'middle center'
+                position: 'middle center',
+                secondary_button_role: 'accept_necessary',
+                show_third_button: true,
             });
 
             CookieConsentWrapper.setSettingsModalOptions({
@@ -86,7 +88,7 @@
 
             CookieConsentWrapper.addStorage({
                 name: 'security_storage',
-                sync_consent_with: 'functionality_storage'
+                display_in_widget: false,
             });
 
             CookieConsentWrapper.addStorage({

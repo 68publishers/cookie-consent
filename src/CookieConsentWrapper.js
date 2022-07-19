@@ -99,6 +99,10 @@ class CookieConsentWrapper {
         this._eventTriggers[name] = new EventTrigger(name, storageNames, type);
     }
 
+    translate(locale, key) {
+        return this._dictionary.translate(locale, key);
+    }
+
     addTranslations(locale, translations) {
         this._dictionary.addTranslations(locale, translations || {});
     }
@@ -205,7 +209,7 @@ class CookieConsentWrapper {
 
             // re-translate modal trigger
             if (modalTriggerElements && modalTriggerElements.textElement) {
-                modalTriggerElements.textElement.innerHTML = self._dictionary.translate(self._cookieConsent.getConfig('current_lang'), 'modal_trigger_title');
+                modalTriggerElements.textElement.innerHTML = self.translate(self._cookieConsent.getConfig('current_lang'), 'modal_trigger_title');
             }
 
             self._initialized = true;

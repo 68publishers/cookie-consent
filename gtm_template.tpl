@@ -1598,6 +1598,14 @@ ___TEMPLATE_PARAMETERS___
                   {
                     "value": "link",
                     "displayValue": "Link"
+                  },
+                  {
+                    "value": "provider",
+                    "displayValue": "Provider"
+                  },
+                  {
+                    "value": "category",
+                    "displayValue": "Category"
                   }
                 ]
               }
