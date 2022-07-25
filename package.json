@@ -36,7 +36,7 @@
   "dependencies": {
     "crypto-js": "^4.1.1",
     "uuid": "^8.3.2",
-    "vanilla-cookieconsent": "^2.8.0",
+    "vanilla-cookieconsent": "^2.8.3",
     "whatwg-fetch": "^3.6.2"
   },
   "files": [
