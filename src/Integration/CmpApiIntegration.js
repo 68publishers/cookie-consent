@@ -74,7 +74,12 @@ const integrateCookiesApi = function (wrapper, cmpApiOptions) {
         },
         provider: (cookie) => cookie.cookieProvider.name,
         type: (cookie, locale) => wrapper.translate(locale, 'cookie_type_' + cookie.cookieProvider.type),
-        link: (cookie) => cookie.cookieProvider.link,
+        link: (cookie) => `<a href="${cookie.cookieProvider.link}" target="_blank" class="cc-link">${cookie.cookieProvider.link}</a>`,
+        link_find_out_more: (cookie, locale) => `
+            <a href="${cookie.cookieProvider.link}" target="_blank" class="cc-link">
+                ${wrapper.translate(locale, 'find_out_more')}
+            </a>
+        `,
         category: (cookie) => cookie.category.name,
     };
     const headers = [];

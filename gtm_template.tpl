@@ -1600,6 +1600,10 @@ ___TEMPLATE_PARAMETERS___
                     "displayValue": "Link"
                   },
                   {
+                    "value": "link_find_out_more",
+                    "displayValue": "Link (find out more)"
+                  },
+                  {
                     "value": "provider",
                     "displayValue": "Provider"
                   },
