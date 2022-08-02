@@ -40,11 +40,14 @@
     "cookie_table_col_provider": "Provider",
     "cookie_table_col_type": "Type",
     "cookie_table_col_link": "Link",
+    "cookie_table_col_link_find_out_more": "Link",
     "cookie_table_col_category": "Category",
 
     "processing_time_session": "Session",
     "processing_time_persistent": "Persistent",
 
     "cookie_type_1st_party": "1st party",
-    "cookie_type_3rd_party": "3rd party"
+    "cookie_type_3rd_party": "3rd party",
+
+    "find_out_more": "find out more"
 }

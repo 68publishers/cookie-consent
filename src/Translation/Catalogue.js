@@ -52,6 +52,7 @@ class Catalogue {
         this.cookie_table_col_provider = '';
         this.cookie_table_col_type = '';
         this.cookie_table_col_link = '';
+        this.cookie_table_col_link_find_out_more = '';
         this.cookie_table_col_category = '';
 
         this.processing_time_session = '';
@@ -59,6 +60,8 @@ class Catalogue {
 
         this.cookie_type_1st_party = '';
         this.cookie_type_3rd_party = '';
+
+        this.find_out_more = '';
     }
 
     get locale() {

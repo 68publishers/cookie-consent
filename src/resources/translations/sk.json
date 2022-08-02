@@ -40,11 +40,14 @@
   "cookie_table_col_provider": "Poskytovateľ",
   "cookie_table_col_type": "Typ",
   "cookie_table_col_link": "Odkaz",
+  "cookie_table_col_link_find_out_more": "Odkaz",
   "cookie_table_col_category": "Kategória",
 
   "processing_time_session": "Session",
   "processing_time_persistent": "Perzistentné",
 
   "cookie_type_1st_party": "1st party",
-  "cookie_type_3rd_party": "3rd party"
+  "cookie_type_3rd_party": "3rd party",
+
+  "find_out_more": "zistiť viac"
 }
