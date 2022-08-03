@@ -298,11 +298,12 @@ Then open the associated tag and update the value of the field `Package version`
 
 ## Development
 
-Firstly download the package:
+Firstly download the package and install dependencies:
 
 ```sh
 $ git clone https://github.com/68publishers/cookie-consent.git
 $ cd cookie-consent
+$ npm install
 ```
 
 Use predefined commands for the package build:
