@@ -13,6 +13,14 @@ class CmpApiOptions extends require('./AbstractOptions') {
 
         this.cookie_table_headers = [];
     }
+
+    resolveProject() {
+        if (this.project && '' !== this.project) {
+            return this.project;
+        }
+
+        return window.location.hostname.replace('www.','');
+    }
 }
 
 module.exports = CmpApiOptions;

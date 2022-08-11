@@ -7,6 +7,7 @@ const integrateConsentApi = function (wrapper, cmpApiOptions) {
         const user = wrapper.user;
         const configurationExport = wrapper.configurationExport;
         const url = cmpApiOptions.url.replace(new RegExp('\/$'), '');
+        const project = cmpApiOptions.resolveProject();
         const userConsent = {};
 
         for (let storageName in consent) {
@@ -21,7 +22,7 @@ const integrateConsentApi = function (wrapper, cmpApiOptions) {
             }
         }
 
-        fetch(`${url}/api/v${cmpApiOptions.version.toString()}/consent/${cmpApiOptions.project}/${user.identity.toString()}`, {
+        fetch(`${url}/api/v${cmpApiOptions.version.toString()}/consent/${project}/${user.identity.toString()}`, {
             method: 'put',
             body: JSON.stringify({
                 settingsChecksum: configurationExport.checksum,
@@ -39,7 +40,7 @@ const integrateConsentApi = function (wrapper, cmpApiOptions) {
                 return;
             }
 
-            fetch(`${url}/api/v${cmpApiOptions.version.toString()}/consent-settings/${cmpApiOptions.project}/${configurationExport.checksum}`, {
+            fetch(`${url}/api/v${cmpApiOptions.version.toString()}/consent-settings/${project}/${configurationExport.checksum}`, {
                 method: 'put',
                 body: JSON.stringify(configurationExport.configuration),
             }).then((response => {
@@ -123,8 +124,9 @@ const integrateCookiesApi = function (wrapper, cmpApiOptions) {
 
         fetchedLocales.push(locale);
         const url = cmpApiOptions.url.replace(new RegExp('\/$'), '');
+        const project = cmpApiOptions.resolveProject();
 
-        fetch(`${url}/api/v${cmpApiOptions.version.toString()}/cookies/${cmpApiOptions.project}?locale=${locale}`, {
+        fetch(`${url}/api/v${cmpApiOptions.version.toString()}/cookies/${project}?locale=${locale}`, {
             method: 'get',
         }).then(response => {
             return response.json();
@@ -160,7 +162,7 @@ const integrateCookiesApi = function (wrapper, cmpApiOptions) {
 }
 
 module.exports = function (wrapper, cmpApiOptions) {
-    if (!cmpApiOptions.url || !cmpApiOptions.project) {
+    if (!cmpApiOptions.url || !cmpApiOptions.resolveProject()) {
         return;
     }
 

@@ -1527,7 +1527,7 @@ ___TEMPLATE_PARAMETERS___
           {
             "type": "TEXT",
             "name": "cmp_api_project",
-            "displayName": "Project code",
+            "displayName": "Project code (optional)",
             "simpleValueType": true,
             "enablingConditions": [
               {
@@ -1536,11 +1536,7 @@ ___TEMPLATE_PARAMETERS___
                 "type": "EQUALS"
               }
             ],
-            "valueValidators": [
-              {
-                "type": "NON_EMPTY"
-              }
-            ]
+            "help": "The website domain will be used as the project code if the field is not filled."
           },
           {
             "type": "CHECKBOX",
@@ -1919,7 +1915,7 @@ setInWindow('cc_wrapper_config', {
   
   cmp_api_options: {
     url: data.cmp_api_enabled ? data.cmp_api_host : null,
-    project: data.cmp_api_enabled ? data.cmp_api_project : null,
+    project: data.cmp_api_enabled && data.cmp_api_project ? data.cmp_api_project : null,
     version: data.cmp_api_enabled ? data.cmp_api_version : 1,
     consent_api_enabled: data.cmp_api_enabled ? data.cmp_api_consent_api_enabled : false,
     cookies_api_enabled: data.cmp_api_enabled ? data.cmp_api_cookies_api_enabled : false,
