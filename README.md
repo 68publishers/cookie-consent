@@ -19,6 +19,7 @@ An extended integration of [orestbida/cookieconsent](https://github.com/orestbid
 * [Settings modal trigger](#settings-modal-trigger)
 * [Triggering tags based on the consent](#triggering-tags-based-on-the-consent)
 * [Accessing the wrapper in the JavaScript](#accessing-the-wrapper-in-the-javascript)
+* [Integration with CMP application](#integration-with-cmp-application)
 * [How the GTM integration works](#how-the-gtm-integration-works)
 * [How to update already published container](#how-to-update-already-published-containers)
 * [Development](#development)
@@ -48,40 +49,42 @@ The plugin is configurable using fields inside the tag definition.
 
 ### Basic options
 
-| Field | Description |
-| ------ | ------ |
-| Package version  | Version of the package `68publishers/cookie-consent`. Valid inputs are the `latest` or a version in formats `x.x.x`, `x.x.x-beta.x` and `x.x.x-alpha-x`. For available versions see the [releases](https://github.com/68publishers/cookie-consent/releases). |
-| Make consent required | The page will be blocked until a user action. |
-| Show the widget as soon as possible | The widget will be displayed automatically on the page load. You must trigger the widget manually by calling `CookieConsentWrapper.unwrap().show()` if the option is disabled. |
-| Hide from bots | Enable if you don't want the plugin to run when a bot/crawler/webdriver is detected. |
-| Revision | Revision number of your terms of use of cookies. For more information [see below](#how-to-manage-revisions). |
-| Delay | Number of milliseconds before showing the consent modal. |
+| Field                               | Description                                                                                                                                                                                                                                                  |
+|-------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Package version                     | Version of the package `68publishers/cookie-consent`. Valid inputs are the `latest` or a version in formats `x.x.x`, `x.x.x-beta.x` and `x.x.x-alpha-x`. For available versions see the [releases](https://github.com/68publishers/cookie-consent/releases). |
+| Make consent required               | The page will be blocked until a user action.                                                                                                                                                                                                                |
+| Show the widget as soon as possible | The widget will be displayed automatically on the page load. You must trigger the widget manually by calling `CookieConsentWrapper.unwrap().show()` if the option is disabled.                                                                               |
+| Hide from bots                      | Enable if you don't want the plugin to run when a bot/crawler/webdriver is detected.                                                                                                                                                                         |
+| Revision                            | Revision number of your terms of use of cookies. For more information [see below](#how-to-manage-revisions).                                                                                                                                                 |
+| Delay                               | Number of milliseconds before showing the consent modal.                                                                                                                                                                                                     |
 
 ### Consent & Setting modal options
 
 Both sections contain these fields: `Layout`, `Position`, `Transition`. These settings affect where modals appear and what shape they take.
 The behavior of the consent modal buttons can be configured through fields `Primary button role`, `Secondary button role` (accept necessary cookies or open the settings modal), and `Buttons order`.
-See the [widget documentation](https://github.com/orestbida/cookieconsent/tree/v2.7.1#layout-options--customization) for more details.
+See the [widget documentation](https://github.com/orestbida/cookieconsent/tree/v2.8.3#layout-options--customization) for more details.
+
+The consent modal has also an option `Show third button` that adds the third button to the modal. If the secondary button's role is `Open settings` the third button's role is `Accept necessary` and vice versa.
 
 The settings modal has one special option with the name `Settings modal trigger selector`. A value of the option can be CSS selector for automatic creation of the trigger button that opens the modal. Check the [example](#settings-modal-trigger).
 
 ### Cookies options
 
-| Field | Description |
-| ------ | ------ |
-| Cookie name | The name of a cookie value that holds information about the user's consent. |
-| Cookie expiration | Expiration of the cookie in days. |
-| Enable cookies auto-clear | All cookies will be deleted based on the user's consent and a selected strategy if the option is enabled. |
-| Cookies auto-clear strategy | Strategy for cookies auto-clear feature. |
-| Cookie names | Names of the cookies that will be deleted or kept (based on a selected strategy). |
+| Field                       | Description                                                                                               |
+|-----------------------------|-----------------------------------------------------------------------------------------------------------|
+| Cookie name                 | The name of a cookie value that holds information about the user's consent.                               |
+| Cookie expiration           | Expiration of the cookie in days.                                                                         |
+| Enable cookies auto-clear   | All cookies will be deleted based on the user's consent and a selected strategy if the option is enabled. |
+| Cookies auto-clear strategy | Strategy for cookies auto-clear feature.                                                                  |
+| Cookie names                | Names of the cookies that will be deleted or kept (based on a selected strategy).                         |
 
 The following strategies are implemented:
 
-1) `Clear all except defined` - All cookies except those you define in the field `Cookie names` will be deleted when the user denies any storage.
-2) `Clear defined only` - All cookies you defined in the field `Cookie names` will be deleted when the user denies any storage.
+1) `Clear all except defined`<sup>*</sup> - All cookies except those you define in the field `Cookie names` will be deleted when the user denies any storage.
+2) `Clear defined only`<sup>*</sup> - All cookies you defined in the field `Cookie names` will be deleted when the user denies any storage.
+3) `Use cookie tables` - Cookie clearing is based on cookie tables from the original [plugin](https://github.com/orestbida/cookieconsent). Integration of [CMP application](#integration-with-cmp-application) is required for this option.
 
-There is no need to define a name from the `Cookie name` field because this cookie is never automatically deleted.
-The option `autoclear_cookies` from the original [plugin](https://github.com/orestbida/cookieconsent) is not currently supported because cookie tables are not implemented in this package.
+<sup>*</sup> There is no need to define a name from the `Cookie name` field because this cookie is never automatically deleted.
 
 ### Storage options
 
@@ -95,14 +98,14 @@ Five types of storage are available:
 
 Each storage defines the name of a trigger that will be invoked if the user provides consent. It is not necessary to use or display each storage in the widget. Also, the consent for the storage can be synchronized with the consent of another storage.
 
-| Field | Description |
-| ------ | ------ |
-| Enabled by default | A storage has `granted` consent by default if the option is checked. Triggers will be invoked as soon as possible. |
-| Display in the widget | A storage will be displayed inside the settings modal if the option is checked. |
-| Readonly | A toggle button for storage inside the settings modal will be disabled if the option is checked. Commonly used for functionality storage. The option is available only if the option `Display in the widget` is checked. |
-| Synchronize consent with | The consent can be synchronized with another storage. The option is available only if the option `Display in the widget` is not checked. |
-| Show the modal again if storage is denied | The settings modal will be opened again after the specified number of days if the storage is denied. The option is available only if the option `Display in the widget` is not checked. |
-| Event trigger name | The name of an event trigger that will be invoked on `granted` consent with storage. The name may not be unique for each storage (unique triggers are invoked only). No trigger is invoked if the option has an empty value. |
+| Field                                     | Description                                                                                                                                                                                                                  |
+|-------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Enabled by default                        | A storage has `granted` consent by default if the option is checked. Triggers will be invoked as soon as possible.                                                                                                           |
+| Display in the widget                     | A storage will be displayed inside the settings modal if the option is checked.                                                                                                                                              |
+| Readonly                                  | A toggle button for storage inside the settings modal will be disabled if the option is checked. Commonly used for functionality storage. The option is available only if the option `Display in the widget` is checked.     |
+| Synchronize consent with                  | The consent can be synchronized with another storage. The option is available only if the option `Display in the widget` is not checked.                                                                                     |
+| Show the modal again if storage is denied | The settings modal will be opened again after the specified number of days if the storage is denied. The option is available only if the option `Display in the widget` is not checked.                                      |
+| Event trigger name                        | The name of an event trigger that will be invoked on `granted` consent with storage. The name may not be unique for each storage (unique triggers are invoked only). No trigger is invoked if the option has an empty value. |
 
 ### Event triggers based on composite consent
 
@@ -128,10 +131,10 @@ If you want to rewrite default translations or you want to add translations for 
 
 Locale detection can be affected with the following fields:
 
-| Field | Description |
-| ------ | ------ |
-| Locale detection strategy | `Browser` to get user's browser language or `Document` to read a value from `<html lang="...">` of the current page. |
-| Locale | You must define the website locale when the detection strategy is disabled. The locale must be one of the previously defined locales in the field `Locales`. |
+| Field                     | Description                                                                                                                                                  |
+|---------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Locale detection strategy | `Browser` to get user's browser language or `Document` to read a value from `<html lang="...">` of the current page.                                         |
+| Locale                    | You must define the website locale when the detection strategy is disabled. The locale must be one of the previously defined locales in the field `Locales`. |
 
 ### How to manage revisions
 
@@ -140,22 +143,22 @@ You can define a message that will be displayed in the consent modal's descripti
 
 <img src="docs/images/revision-message-translation.png" alt="Revision message translation" width="600">
 
-*<sup>Note: the <a href="https://github.com/orestbida/cookieconsent/tree/v2.7.1#how-to-enablemanage-revisions">cookieconsent plugin</a> uses the placeholder `{{revision_message}}` but this notation is used by GTM for variables so the package comes with the placeholder `[[revision_message]]` instead.</sup>*
+*<sup>Note: the <a href="https://github.com/orestbida/cookieconsent/tree/v2.8.3#how-to-enablemanage-revisions">cookieconsent plugin</a> uses the placeholder `{{revision_message}}` but this notation is used by GTM for variables so the package comes with the placeholder `[[revision_message]]` instead.</sup>*
 
 ### Stylesheets
 
-| Field | Description |
-| ------ | ------ |
+| Field                       | Description                                                                                                                                                                                  |
+|-----------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Include default stylesheets | The default stylesheet for the widget will be loaded into the page if the option is checked. We recommend keeping the option checked and adding custom stylesheets through the next options. |
-| External stylesheets | The list of custom CSS stylesheets. One URL per line. |
-| Internal stylesheet | Custom CSS rules that will be injected into the page after default stylesheets and other external stylesheets. |
+| External stylesheets        | The list of custom CSS stylesheets. One URL per line.                                                                                                                                        |
+| Internal stylesheet         | Custom CSS rules that will be injected into the page after default stylesheets and other external stylesheets.                                                                               |
 
 ### Page scripts
 
-| Field | Description |
-| ------ | ------ |
-| Manage page scripts | Enable if you want to easily manage existing `<script>` tags. |
-| Script selector | The name of a data attribute that is used for managed <script> tags. |
+| Field               | Description                                                          |
+|---------------------|----------------------------------------------------------------------|
+| Manage page scripts | Enable if you want to easily manage existing `<script>` tags.        |
+| Script selector     | The name of a data attribute that is used for managed <script> tags. |
 
 Managing page scripts is disabled by default. When the feature is enabled then the following notation can be used for scripts you want to manage:
 
@@ -247,7 +250,7 @@ Callbacks are attached with calling of the method `CookieConsentWrapper.on()`.
 
 ### Init event
 
-The only currently available event is `init`. A callback is invoked when the wrapper is fully initialized or directly if everything has been already initialized.
+A callback is invoked when the wrapper is fully initialized or directly if everything has been already initialized.
 
 ```html
 <script>
@@ -260,6 +263,67 @@ The only currently available event is `init`. A callback is invoked when the wra
     });
 </script>
 ```
+
+### Consent events
+
+```html
+<script>
+    CookieConsentWrapper.on('consent:first-action', function (consent) {
+        // called on the first user's action
+    });
+    CookieConsentWrapper.on('consent:accepted', function (consent) {
+      // called on every page load after the first user's action
+    });
+    CookieConsentWrapper.on('consent:changed', function (consent, changedCategories) {
+      // called when preferences changed
+    });
+</script>
+```
+
+### Locale event
+
+```html
+<script>
+    CookieConsentWrapper.on('locale:change', function (locale) {
+        // called when the plugin locale is changed through method `CookieConsentWrapper.changeLocale()`
+        console.log(locale + '!');
+    });
+    
+    // ...
+
+    CookieConsentWrapper.changeLocale('cs', true) // cs!
+    CookieConsentWrapper.changeLocale('en', true) // en!
+</script>
+```
+
+## Integration with CMP application
+
+The widget can be integrated with [the CMP application](https://github.com/68publishers/consent-management-platform).
+
+The first thing to do is to set up the user information under the `Integration` section. Each user must have an identity (ID).
+The default option is `Generated UUID`, however you can set a custom GTM variable that will return the ID of the current user of your website.
+
+The ID will be accessible in all your translations with placeholder `[[user_identity]]`.
+
+You can also set other attributes that will be sent to the CMP application along with the consents.
+
+<img src="docs/images/user-integration.png" alt="User integration" width="600">
+
+Configuration of the CMP application is easy, just set the URL of your application and the project code (if you leave it blank, the site domain is used as the code).
+
+<img src="docs/images/cmp-integration.png" alt="CMP integration" width="600">
+
+The configuration includes two options
+
+- Consent API enabled
+- Cookies API enabled
+
+If you check the `Cookies API enabled` option, the widget will automatically send consents to the CMP application.
+
+If you check the `Cookies API enabled` option then the widget will automatically pull all cookies from the CMP application for the project and creates cookie tables from them.
+Below this field you can define which columns the cookie table should contain.
+
+<img src="docs/images/widget-with-cookie-tables.png" alt="Widget with cookie tables" width="600">
 
 ## How the GTM integration works
 
@@ -280,13 +344,18 @@ The only currently available event is `init`. A callback is invoked when the wra
 
 - :fast_forward: The `CookieConsentWrapper` object is fully initialized
     - :fast_forward: The [original plugin](https://github.com/orestbida/cookieconsent) is initialized
-    - :fire: Callbacks for an [event](#init-event) `CookieConsentWrappe.on('init')` are fired
+    - :fire: Callbacks for an [event](#init-event) `CookieConsentWrapper.on('init')` are fired
     - :eye: The consent modal is shown if a user has not yet agreed to the use of cookies
+        - :fire: After user's action, callbacks for an [event](#consent-events) `CookieConsentWrapper.on('consent:first-action')` are fired
+        - :arrows_counterclockwise: The consent is sent into the CMP application
+    - :fire: Callbacks for an [event](#consent-events) `CookieConsentWrapper.on('consent:accepted')` are fired
 
 #### User updates his preferences through the setting modal
 
 - :arrows_counterclockwise: The consent update is sent into [native Google Consent API](https://developers.google.com/tag-platform/devguides/consent#gtag.js)
 - :fire: Custom triggers for newly granted storage types are fired
+- :fire: Callbacks for an [event](#consent-events) `CookieConsentWrapper.on('consent:changed')` are fired
+- :arrows_counterclockwise: The consent is sent into the CMP application
 
 ## How to update already published containers
 
