@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added the CMP application integration
+- Added the field `Show third button` in GTM template under the section `Consent modal options`.
+- Added the cookie auto-clear option `Use cookie tables`
+- Added events `consent:first-action`, `consent:accepted`, `consent:changed` and `locale:change`
+- Added mentions of new fields and events in README
+- Added the section `Integration with CMP application` in README
+- Added all new translations for locales `en`, `cs` and `sk`
+
+### Changed
+
+- Updated the original plugin to the version `^2.8.3`
+
 ## [0.3.8] - 2021-02-09
 
 ### Fixed
