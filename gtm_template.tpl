@@ -353,6 +353,13 @@ ___TEMPLATE_PARAMETERS___
       },
       {
         "type": "TEXT",
+        "name": "cookie_domain",
+        "displayName": "Cookie domain",
+        "simpleValueType": true,
+        "help": "The domain name for the cookie that holds information about the user\u0027s consent, for example \".example.com\". \n\nIf the value is empty, it is automatically set in a browser using the \u003ccode\u003ewindow.location.hostname\u003c/code\u003e variable."
+      },
+      {
+        "type": "TEXT",
         "name": "cookie_expiration",
         "displayName": "Cookie expiration",
         "simpleValueType": true,
@@ -1858,6 +1865,10 @@ if (data.hasOwnProperty('current_locale')) {
 
 if (data.hasOwnProperty('script_selector')) {
   pluginOptions.script_selector = data.script_selector;
+}
+
+if (data.hasOwnProperty('cookie_domain') && '' !== data.cookie_domain) {
+    pluginOptions.cookie_domain = data.cookie_domain;
 }
 
 // create auto-clear options
