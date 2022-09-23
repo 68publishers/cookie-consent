@@ -1,6 +1,6 @@
 {
   "name": "68publishers-cookie-consent",
-  "version": "0.4.0-beta.9",
+  "version": "0.4.0-beta.10",
   "description": "Cookie consent wrapper based on orestbida/cookieconsent with GTM integration.",
   "homepage": "http://www.68publishers.io/",
   "main": "index.js",
@@ -36,7 +36,7 @@
   "dependencies": {
     "crypto-js": "^4.1.1",
     "uuid": "^8.3.2",
-    "vanilla-cookieconsent": "^2.8.3",
+    "vanilla-cookieconsent": "^2.8.6",
     "whatwg-fetch": "^3.6.2"
   },
   "files": [
