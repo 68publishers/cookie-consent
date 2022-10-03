@@ -30,7 +30,15 @@ class PluginOptions extends require('./AbstractOptions') {
     }
 
     exportCookieConsentConfig() {
-        return {...this};
+        const config = {...this};
+        const configDomain = 0 === config.cookie_domain.indexOf('.') ? config.cookie_domain.substring(1) : config.cookie_domain;
+        const currentDomain = window.location.hostname;
+
+        if (-1 === currentDomain.indexOf(configDomain, currentDomain.length - configDomain.length)) {
+            config.cookie_domain = currentDomain;
+        }
+
+        return config;
     }
 }
 
