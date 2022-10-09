@@ -1,0 +1,36 @@
+{
+    "modal_trigger_title": "Cookieeinstellungen",
+
+    "consent_modal_title": "Wir verwenden Cookies ..",
+    "consent_modal_description": "Diese Webseite verwendet notwendige Cookies für Funktionalitäten und Marketingcookies um zu verstehen wie unsere Besucher mit dem Angebot hier interagieren. Letztere werden nur mit aktivem Einverständnis gesetzt.",
+    "consent_modal_primary_btn": "Einverstanden",
+    "consent_modal_secondary_btn_settings": "Anpassen",
+    "consent_modal_secondary_btn_accept_necessary": "Notwendige akzeptieren",
+
+    "settings_modal_title": "Cookieeinstellungen",
+    "settings_modal_save_settings_btn": "Einstellungen speichern",
+    "settings_modal_accept_all_btn": "Alle akzeptieren",
+    "settings_modal_reject_all_btn": "Notwendige akzeptieren",
+    "settings_modal_close_btn_label": "Schließen",
+
+    "settings_modal_before_consent_title": "Cookieverwendung",
+    "settings_modal_before_consent_description": "Wir wenden Cookies an für Basisfunktionen und um das Angebot zu erweitern. Jede Kategorie kann jederzeit aus und an geschaltet werden.",
+
+    "settings_modal_after_consent_title": "Mehr Informationen",
+    "settings_modal_after_consent_description": "Für weitere Fragen zu Cookies und Datenschutz bitte uns kontaktieren.",
+
+    "functionality_storage_title": "Funktionscookies",
+    "functionality_storage_description": "Notwendig für Basisfunktionen dieser Webseite. Ohen diese kann es sein, dass die Webseite nicht vollständig funktioniert.",
+
+    "personalization_storage_title": "Personalisierte Cookies",
+    "personalization_storage_description": "Können Third Party Cookies verwenden und personalisierten Inhalt anzuzeigen sowie den Besucher über verschiedene Webseiten und Geräte nachzuverfolgen.",
+
+    "security_storage_title": "Sicherheitscookies",
+    "security_storage_description": "Erlauben das Speichern von sicherheitsrelevanten Informationen, z.B. Anmeldung, Betrugsverbeugung und weiteres um Besucher zu schützen.",
+
+    "ad_storage_title": "Werbecookies",
+    "ad_storage_description": "Finden Anwendung bei uns oder unseren Partnern um personalisierte Werbung anzuzeigen. Ermöglicht es uns auch pseudoanonymisierte Profile - basierend auf den Interessen - zu erstellen. Damit ist keine direkte Identifikation einer Person möglich. Wird keine Zustimmung dafür gegeben, können keine interessensbezogenen Inhalte und Werbungen angezeigt werden.",
+
+    "analytics_storage_title": "Auswertungscookies",
+    "analytics_storage_description": "Auch genannt Analyticscookeis erlauben uns Leistungen udn Werbekampagnen dieser Webseite zu messen - basierend auf der Anzahl der Besuche und welche Seiten aufgerufen wurden. Die Anwendung erfolgt auf Basis zusammengefasster Daten, eine gezielte Besucher- oder Personenverfolgung ist damit nicht möglich. Wenn nicht erlaubt, verlieren wir die Möglichkeit der Leistungsmessung und Webseitenoptimierung."
+}
