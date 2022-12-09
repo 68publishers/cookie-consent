@@ -70,13 +70,14 @@ The settings modal has one special option with the name `Settings modal trigger 
 
 ### Cookies options
 
-| Field                       | Description                                                                                               |
-|-----------------------------|-----------------------------------------------------------------------------------------------------------|
-| Cookie name                 | The name of a cookie value that holds information about the user's consent.                               |
-| Cookie expiration           | Expiration of the cookie in days.                                                                         |
-| Enable cookies auto-clear   | All cookies will be deleted based on the user's consent and a selected strategy if the option is enabled. |
-| Cookies auto-clear strategy | Strategy for cookies auto-clear feature.                                                                  |
-| Cookie names                | Names of the cookies that will be deleted or kept (based on a selected strategy).                         |
+| Field                       | Description                                                                                                                                                                                                            |
+|-----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Cookie name                 | The name of a cookie value that holds information about the user's consent.                                                                                                                                            |
+| Cookie domain               | The domain name for the cookie that holds information about the user's consent, for example ".example.com". If the value is empty, it is automatically set in a browser using the "window.location.hostname" variable. |
+| Cookie expiration           | Expiration of the cookie in days.                                                                                                                                                                                      |
+| Enable cookies auto-clear   | All cookies will be deleted based on the user's consent and a selected strategy if the option is enabled.                                                                                                              |
+| Cookies auto-clear strategy | Strategy for cookies auto-clear feature.                                                                                                                                                                               |
+| Cookie names                | Names of the cookies that will be deleted or kept (based on a selected strategy).                                                                                                                                      |
 
 The following strategies are implemented:
 
