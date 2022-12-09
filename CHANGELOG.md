@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2022-12-09
+
 ### Added
 
 - Added the CMP application integration
@@ -22,25 +24,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated the original plugin to the version `^2.8.3`
 
-## [0.3.8] - 2021-02-09
+## [0.3.8] - 2022-02-09
 
 ### Fixed
 
 - The value of the key `data` from the cookie `cc-settings` could be null.
 
-## [0.3.7] - 2021-02-09
+## [0.3.7] - 2022-02-09
 
 ### Fixed
 
 - The data attribute `last_action_date` is automatically added into the `cc-settings` cookie for users that accepts/rejects consent before the plugin update.
 
-## [0.3.6] - 2021-02-07
+## [0.3.6] - 2022-02-07
 
 ### Added
 
 - Added fields `Show the modal again if storage is denied` for each storage in the GTM template. The settings modal can be opened again after the specified number of days if the storage is denied.
 
-## [0.3.5] - 2021-01-08
+## [0.3.5] - 2022-01-08
 
 ### Added
 
@@ -51,19 +53,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The original plugin is initialized directly if the DOM is loaded or inside a callback attached to an event `document.DOMContentLoaded` instead of `window.load`.
 
-## [0.3.4] - 2021-01-05
+## [0.3.4] - 2022-01-05
 
 ### Removed
 
 - Removed argument `wrapper` for an event `init`. Callbacks for the event now have no arguments now, please use directly `CookieConsentWrapper` inside a callback function.
 
-## [0.3.3] - 2021-01-05
+## [0.3.3] - 2022-01-05
 
 ### Changed
 
 - Default translations are now loaded also for locales that are consist of an `ISO 639-1` language code and an `ISO 3166-1` country code e.g. `en-US`.
 
-## [0.3.2] - 2021-01-03
+## [0.3.2] - 2022-01-03
 
 ### Added
 
@@ -224,7 +226,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first version of the package has been released.
 
-[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.3.8...main
+[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.4.0...main
+[0.4.0]: https://github.com/68publishers/cookie-consent/compare/v0.3.8...v0.4.0
 [0.3.8]: https://github.com/68publishers/cookie-consent/compare/v0.3.7...v0.3.8
 [0.3.7]: https://github.com/68publishers/cookie-consent/compare/v0.3.6...v0.3.7
 [0.3.6]: https://github.com/68publishers/cookie-consent/compare/v0.3.5...v0.3.6
