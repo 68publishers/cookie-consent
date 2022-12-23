@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.1] - 2022-12-23
+
+### Fixed
+
+- Fixed typo in the czech dictionary.
+
 ## [0.4.0] - 2022-12-09
 
 ### Added
@@ -226,7 +232,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first version of the package has been released.
 
-[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.4.0...main
+[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.4.1...main
+[0.4.1]: https://github.com/68publishers/cookie-consent/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/68publishers/cookie-consent/compare/v0.3.8...v0.4.0
 [0.3.8]: https://github.com/68publishers/cookie-consent/compare/v0.3.7...v0.3.8
 [0.3.7]: https://github.com/68publishers/cookie-consent/compare/v0.3.6...v0.3.7
