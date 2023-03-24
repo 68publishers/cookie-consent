@@ -126,6 +126,8 @@ The package comes with the default translations for the following languages:
 - [Slovak - sk](src/resources/translations/sk.json)
 - [Spanish - es](src/resources/translations/es.json)
 - [French - fr](src/resources/translations/fr.json)
+- [Italian - it](src/resources/translations/it.json)
+- [Turkish - tr](src/resources/translations/tr.json)
 
 Translations that will be loaded and accessible for the widget are taken from the field `Locales`. Each locale must be defined on a new line.
 If you want to rewrite default translations or you want to add translations for a new locale then you can define them in a table `Translations`.
