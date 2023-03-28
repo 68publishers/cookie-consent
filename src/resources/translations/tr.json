@@ -1,0 +1,53 @@
+{
+    "modal_trigger_title": "Çerez tercihleri",
+
+    "consent_modal_title": "Çerez kullanıyoruz!",
+    "consent_modal_description": "Bu web sitesi, düzgün çalışmasını sağlamak için temel çerezleri ve onunla nasıl etkileşimde bulunduğunuzu anlamak için izleme çerezlerini kullanır. İkincisi yalnızca sizin izninizle kurulacaktır",
+    "consent_modal_primary_btn": "Kabul ediyorum",
+    "consent_modal_secondary_btn_settings": "Özelleştir",
+    "consent_modal_secondary_btn_accept_necessary": "Gerekli kabul et",
+
+    "settings_modal_title": "Çerez ayarları",
+    "settings_modal_save_settings_btn": "Ayarları kaydet",
+    "settings_modal_accept_all_btn": "Tümünü kabul et",
+    "settings_modal_reject_all_btn": "Gerekli kabul et",
+    "settings_modal_close_btn_label": "Kapat",
+
+    "settings_modal_before_consent_title": "Çerezlerin kullanımı",
+    "settings_modal_before_consent_description": "Web sitesinin temel işlevselliğini sağlamak ve çevrimiçi deneyiminizi geliştirmek için çerezler kullanıyoruz. Her kategori için, istediğiniz zaman çerezleri kabul etmeyi veya reddetmeyi seçebilirsiniz.",
+
+    "settings_modal_after_consent_title": "Daha fazla bilgi",
+    "settings_modal_after_consent_description": "Çerez politikam ve seçimleriniz hakkında herhangi bir sorunuz varsa, lütfen bizimle iletişime geçin.",
+
+    "functionality_storage_title": "işlevsellik çerezleri",
+    "functionality_storage_description": "Bu çerezler web sitemizin düzgün çalışması için gereklidir. Bu çerezler olmadan web sitesi düzgün çalışmayabilir",
+
+    "personalization_storage_title": "Kişiselleştirme çerezleri",
+    "personalization_storage_description": "Kişiselleştirme çerezleri, içeriği kişiselleştirmeye ve kullanıcıları farklı web siteleri ve cihazlarda izlemeye yardımcı olmak için üçüncü taraf çerezleri kullanabilir",
+
+    "security_storage_title": "Güvenlik çerezleri",
+    "security_storage_description": "Güvenlik çerezleri, kimlik doğrulama, dolandırıcılık koruması ve kullanıcıyı korumaya yönelik diğer araçlar gibi güvenlikle ilgili bilgileri depolar",
+
+    "ad_storage_title": "Reklam çerezleri",
+    "ad_storage_description": "Reklam çerezleri, hem sitemizde hem de üçüncü taraf sitelerinde size alakalı içerik veya reklamlar göstermek için bizim tarafımızdan veya ortaklarımız tarafından kullanılır. Bu, ilgi alanlarınıza göre takma isimli profiller olarak adlandırılan profiller oluşturmamızı sağlar. Bu bilgilere dayanarak sizi doğrudan bir birey olarak tanımlamak genellikle mümkün değildir, çünkü yalnızca takma ad verilmiş veriler kullanılır. Onay vermezseniz, ilgi alanlarınıza göre uyarlanmış içerik ve reklamlar alamazsınız",
+
+    "analytics_storage_title": "Analytics çerezleri",
+    "analytics_storage_description": "Analitik çerezler, web sitemizin ve reklam kampanyalarımızın performansını ölçmemizi sağlar. Bunları, web sitemize yapılan ziyaretlerin sayısını ve ziyaret kaynaklarını belirlemek için kullanırız. Bu çerezler aracılığıyla elde edilen verileri, web sitemizin belirli kullanıcılarını tanımlayan tanımlayıcılar kullanmadan toplu olarak işleriz. Ziyaretinizle bağlantılı olarak analitik çerezlerin kullanımını devre dışı bırakırsanız, performansı analiz etme ve önlemlerimizi optimize etme yeteneğimizi kaybederiz",
+
+    "cookie_table_col_name": "İsim",
+    "cookie_table_col_purpose": "Açıklama",
+    "cookie_table_col_processing_time": "Sona erme",
+    "cookie_table_col_provider": "Provider",
+    "cookie_table_col_type": "Tür",
+    "cookie_table_col_link": "Bağlantı",
+    "cookie_table_col_link_find_out_more": "Link",
+    "cookie_table_col_category": "Kategori",
+
+    "processing_time_session": "Oturum",
+    "processing_time_persistent": "Kalıcı",
+
+    "cookie_type_1st_party" : "Aday çerez",
+    "cookie_type_3rd_party" : "Üçüncü Taraf Çerezi",
+
+    "find_out_more" : "Daha fazlasını öğrenin"
+}
