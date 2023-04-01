@@ -2,6 +2,7 @@
 
 require('vanilla-cookieconsent');
 
+const version = require('./version.json').version;
 const Config = require('./Config/Config');
 const Storage = require('./Storage/Storage');
 const StoragePool = require('./Storage/StoragePool');
@@ -34,12 +35,17 @@ class CookieConsentWrapper {
         this._cookieConsent = null;
     }
 
+    get version() {
+        return version;
+    }
+
     get user() {
         return this._user;
     }
 
     get configurationExport() {
         let configuration = {
+            version: this.version,
             config: this._config,
             storages: {},
             dictionary: this._dictionary._catalogues,
