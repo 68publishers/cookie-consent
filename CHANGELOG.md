@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.3] - 2023-04-01
+
+### Added
+
+- added getter `CookieConsentWrapper.version`
+- the version is also exported via `CookieConsentWrapper.configurationExport`
+
 ## [0.4.3] - 2023-03-28
 
 ### Added
