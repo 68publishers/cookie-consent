@@ -1687,10 +1687,12 @@ const temporaryWrapper = (function() {
 setInWindow('CookieConsentWrapper', temporaryWrapper, false);
 
 // parse consents from cookies
-let consentCookie = getCookieValues(data.cookie_name);
+let consentCookie = getCookieValues(data.cookie_name)[0] || null;
 
-consentCookie = JSON.parse(consentCookie[0] || '{}');
-consentCookie = consentCookie.hasOwnProperty('level') && consentCookie.level.length ? consentCookie.level : [];
+if (null !== consentCookie) {
+    consentCookie = JSON.parse(consentCookie);
+    consentCookie = consentCookie.hasOwnProperty('level') && consentCookie.level.length ? consentCookie.level : [];
+}
 
 // build storage pool & event triggers
 const storagePool = {};
@@ -1777,13 +1779,15 @@ const acceptedStorageNames = [];
 for (let key in storagePool) {
   const storage = storagePool[key];
   
-  let defaultStorageConsent = -1 !== consentCookie.indexOf(storage.name) || storage.enabled_by_default ? 'granted' : 'denied';
+    let defaultStorageConsent = ((null === consentCookie && storage.enabled_by_default) || (null !== consentCookie && -1 !== consentCookie.indexOf(storage.name))) ? 'granted' : 'denied';
+
   
   // if consent is denied then check "sync_consent_with" property
   if ('denied' === defaultStorageConsent && storage.hasOwnProperty('sync_consent_with') && storagePool.hasOwnProperty(storage.sync_consent_with)) {
     const delegatedStorage = storagePool[storage.sync_consent_with];
     
-    defaultStorageConsent = -1 !== consentCookie.indexOf(delegatedStorage.name) || delegatedStorage.enabled_by_default ? 'granted' : 'denied';
+    defaultStorageConsent = ((null === consentCookie && delegatedStorage.enabled_by_default) || (null !== consentCookie && -1 !== consentCookie.indexOf(delegatedStorage.name))) ? 'granted' : 'denied';
+
   }
 
   defaultConsents[storage.name] = defaultStorageConsent;
