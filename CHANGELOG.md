@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added missing translation keys in the GTM template.
+
 ## [0.4.5] - 2023-04-26
 
 ### Added

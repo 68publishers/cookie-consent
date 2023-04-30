@@ -1321,6 +1321,58 @@ ___TEMPLATE_PARAMETERS___
                 {
                   "value": "consent_modal_secondary_btn_accept_necessary",
                   "displayValue": "consent_modal_secondary_btn_accept_necessary"
+                },
+                {
+                  "value": "cookie_table_col_name",
+                  "displayValue": "cookie_table_col_name"
+                },
+                {
+                  "value": "cookie_table_col_purpose",
+                  "displayValue": "cookie_table_col_purpose"
+                },
+                {
+                  "value": "cookie_table_col_processing_time",
+                  "displayValue": "cookie_table_col_processing_time"
+                },
+                {
+                  "value": "cookie_table_col_provider",
+                  "displayValue": "cookie_table_col_provider"
+                },
+                {
+                  "value": "cookie_table_col_type",
+                  "displayValue": "cookie_table_col_type"
+                },
+                {
+                  "value": "cookie_table_col_link",
+                  "displayValue": "cookie_table_col_link"
+                },
+                {
+                  "value": "cookie_table_col_link_find_out_more",
+                  "displayValue": "cookie_table_col_link_find_out_more"
+                },
+                {
+                  "value": "cookie_table_col_category",
+                  "displayValue": "cookie_table_col_category"
+                },
+                {
+                  "value": "processing_time_session",
+                  "displayValue": "processing_time_session"
+                },
+                {
+                  "value": "processing_time_persistent",
+                  "displayValue": "processing_time_persistent"
+                },
+                {
+                  "value": "cookie_type_1st_party",
+                  "displayValue": "cookie_type_1st_party"
+                },
+                {
+                  "value": "cookie_type_3rd_party",
+                  "displayValue": "cookie_type_3rd_party"
+                },
+                {
+                  "value": "find_out_more",
+                  "displayValue": "find_out_more"
                 }
               ],
               "simpleValueType": true
@@ -1779,7 +1831,7 @@ const acceptedStorageNames = [];
 for (let key in storagePool) {
   const storage = storagePool[key];
   
-    let defaultStorageConsent = ((null === consentCookie && storage.enabled_by_default) || (null !== consentCookie && -1 !== consentCookie.indexOf(storage.name))) ? 'granted' : 'denied';
+  let defaultStorageConsent = ((null === consentCookie && storage.enabled_by_default) || (null !== consentCookie && -1 !== consentCookie.indexOf(storage.name))) ? 'granted' : 'denied';
 
   
   // if consent is denied then check "sync_consent_with" property
