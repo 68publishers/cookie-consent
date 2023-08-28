@@ -132,6 +132,7 @@ The package comes with the default translations for the following languages:
 - [Polish - pl](src/resources/translations/pl.json)
 - [Romanian - ro](src/resources/translations/ro.json)
 - [Slovenian - sl](src/resources/translations/sl.json)
+- [Finnish - fi](src/resources/translations/fi.json)
 
 Translations that will be loaded and accessible for the widget are taken from the field `Locales`. Each locale must be defined on a new line.
 If you want to rewrite default translations or you want to add translations for a new locale then you can define them in a table `Translations`.
@@ -267,7 +268,7 @@ A callback is invoked when the wrapper is fully initialized or directly if every
         if (CookieConsentWrapper.allowedCategory('analytics_storage')) {
             // check if the analytics_storage is granted
         }
-        
+
         CookieConsentWrapper.unwrap(); // get the original cookie consent plugin
     });
 </script>
@@ -297,7 +298,7 @@ A callback is invoked when the wrapper is fully initialized or directly if every
         // called when the plugin locale is changed through method `CookieConsentWrapper.changeLocale()`
         console.log(locale + '!');
     });
-    
+
     // ...
 
     CookieConsentWrapper.changeLocale('cs', true) // cs!
