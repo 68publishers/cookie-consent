@@ -1,5 +1,7 @@
 'use strict';
 
+const ccVersion = require('vanilla-cookieconsent/package.json').version;
+
 class UiOptions extends require('./AbstractOptions') {
     constructor() {
         super();
@@ -12,7 +14,7 @@ class UiOptions extends require('./AbstractOptions') {
     get defaultStylesheets() {
         if (true === this.include_default_stylesheets) {
             return [
-                'https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v2.7.1/dist/cookieconsent.css'
+                `https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@${ccVersion}/dist/cookieconsent.css`
             ];
         }
 
