@@ -133,6 +133,7 @@ The package comes with the default translations for the following languages:
 - [Romanian - ro](src/resources/translations/ro.json)
 - [Slovenian - sl](src/resources/translations/sl.json)
 - [Finnish - fi](src/resources/translations/fi.json)
+- [Dutch - nl](src/resources/translations/nl.json)
 
 Translations that will be loaded and accessible for the widget are taken from the field `Locales`. Each locale must be defined on a new line.
 If you want to rewrite default translations or you want to add translations for a new locale then you can define them in a table `Translations`.
