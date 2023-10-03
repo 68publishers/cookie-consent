@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.7] - 2023-10-04
+
+### Added
+
+- Added default translations for `Dutch` (`nl`) language.
+
+### Changed
+
+- Updated all dependencies including the original plugin (`vanilla-cookieconsent@^2.9.2`).
+- The wrapper now includes CSS styles of the original plugin corresponding to its version.
+
+### Fixed
+
+- Fixed npm audit vulnerability.
+
 ## [0.4.6] - 2023-09-01
 
 ### Added
@@ -273,7 +288,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first version of the package has been released.
 
-[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.4.6...main
+[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.4.7...main
+[0.4.7]: https://github.com/68publishers/cookie-consent/compare/v0.4.6...v0.4.7
 [0.4.6]: https://github.com/68publishers/cookie-consent/compare/v0.4.5...v0.4.6
 [0.4.5]: https://github.com/68publishers/cookie-consent/compare/v0.4.4...v0.4.5
 [0.4.4]: https://github.com/68publishers/cookie-consent/compare/v0.4.3...v0.4.4
