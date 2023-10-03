@@ -2,7 +2,7 @@
 
 require('vanilla-cookieconsent');
 
-const version = require('./version.json').version;
+const version = require('../package.json').version;
 const Config = require('./Config/Config');
 const Storage = require('./Storage/Storage');
 const StoragePool = require('./Storage/StoragePool');

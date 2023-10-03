@@ -12,8 +12,7 @@
     "build:dev": "webpack --config webpack.config.dev.js --progress --profile",
     "build:prod": "webpack --config webpack.config.prod.js --progress --profile",
     "start:dev": "webpack --config webpack.config.dev.js --progress --profile && webpack-dev-server --config webpack.config.dev.js",
-    "prepublish": "npm run build:prod",
-    "postversion": "cross-var echo '{\"version\":\"$npm_package_version\"}' > ./src/version.json"
+    "prepublish": "npm run build:prod"
   },
   "keywords": [
     "68publishers",
@@ -35,7 +34,6 @@
     "webpack-dev-server": "^4.6.0"
   },
   "dependencies": {
-    "cross-var": "^1.1.0",
     "crypto-js": "^4.1.1",
     "uuid": "^8.3.2",
     "vanilla-cookieconsent": "^2.8.6",
