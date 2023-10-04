@@ -24,6 +24,7 @@ const integrateConsentApi = function (wrapper, cmpApiOptions) {
 
         fetch(`${url}/api/v${cmpApiOptions.version.toString()}/consent/${project}/${user.identity.toString()}`, {
             method: 'put',
+            credentials: 'omit',
             body: JSON.stringify({
                 settingsChecksum: configurationExport.checksum,
                 consents: userConsent,
@@ -136,6 +137,7 @@ const integrateCookiesApi = function (wrapper, cmpApiOptions) {
 
         fetch(`${url}/api/v${cmpApiOptions.version.toString()}/cookies/${project}?${queryComponents.join('&')}`, {
             method: 'get',
+            credentials: 'omit',
         }).then(response => {
             return response.json();
         }).then(json => {
