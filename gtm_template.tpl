@@ -1599,6 +1599,39 @@ ___TEMPLATE_PARAMETERS___
           },
           {
             "type": "CHECKBOX",
+            "name": "cmp_api_default_environment",
+            "checkboxText": "Default environment",
+            "simpleValueType": true,
+            "defaultValue": true
+          },
+          {
+            "type": "TEXT",
+            "name": "cmp_api_environment_code",
+            "displayName": "Environment code",
+            "simpleValueType": true,
+            "enablingConditions": [
+              {
+                "paramName": "cmp_api_default_environment",
+                "paramValue": false,
+                "type": "EQUALS"
+              }
+            ],
+            "help": "Environment code from the CMP. A GTM variable that returns string or null (default environment) can be used.",
+            "valueValidators": [
+              {
+                "type": "NON_EMPTY",
+                "enablingConditions": [
+                  {
+                    "paramName": "cmp_api_default_environment",
+                    "paramValue": false,
+                    "type": "EQUALS"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "CHECKBOX",
             "name": "cmp_api_consent_api_enabled",
             "checkboxText": "Consent API enabled",
             "simpleValueType": true,
@@ -1984,6 +2017,7 @@ setInWindow('cc_wrapper_config', {
     url: data.cmp_api_enabled ? data.cmp_api_host : null,
     project: data.cmp_api_enabled && data.cmp_api_project ? data.cmp_api_project : null,
     version: data.cmp_api_enabled ? data.cmp_api_version : 1,
+    environment: data.cmp_api_default_environment ? null : data.cmp_api_environment_code,
     consent_api_enabled: data.cmp_api_enabled ? data.cmp_api_consent_api_enabled : false,
     cookies_api_enabled: data.cmp_api_enabled ? data.cmp_api_cookies_api_enabled : false,
     cookie_table_headers: cookieTableHeaders
