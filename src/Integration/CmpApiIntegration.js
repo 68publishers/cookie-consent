@@ -28,6 +28,7 @@ const integrateConsentApi = function (wrapper, cmpApiOptions) {
                 settingsChecksum: configurationExport.checksum,
                 consents: userConsent,
                 attributes: user.attributes,
+                environment: cmpApiOptions.environment,
             }),
         }).then(response => {
             return response.json();
@@ -125,8 +126,15 @@ const integrateCookiesApi = function (wrapper, cmpApiOptions) {
         fetchedLocales.push(locale);
         const url = cmpApiOptions.url.replace(new RegExp('\/$'), '');
         const project = cmpApiOptions.resolveProject();
+        const queryComponents = [
+            `locale=${locale}`,
+        ];
 
-        fetch(`${url}/api/v${cmpApiOptions.version.toString()}/cookies/${project}?locale=${locale}`, {
+        if ('string' === typeof cmpApiOptions.environment) {
+            queryComponents.push(`environment=${cmpApiOptions.environment}`);
+        }
+
+        fetch(`${url}/api/v${cmpApiOptions.version.toString()}/cookies/${project}?${queryComponents.join('&')}`, {
             method: 'get',
         }).then(response => {
             return response.json();
