@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added fields `Integration > CMP API > Default environment` and `Integration > CMP API > Environment code` in the GTM template.
+- Added option `evironment` in the `CmpApiOptions`. The environment is taken into account in the integration with CMP.
+- Added getter `CookieConsentWrapper.consentCookieData` that returns data from the consent cookie (`cc-settings` by default) as an object or null if the consent doesn't exists.
+
+### Changed
+
+- Credentials are now omitted in CPM integration requests.
+
 ## [0.4.7] - 2023-10-04
 
 ### Added
