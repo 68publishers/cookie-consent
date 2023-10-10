@@ -1602,7 +1602,14 @@ ___TEMPLATE_PARAMETERS___
             "name": "cmp_api_default_environment",
             "checkboxText": "Default environment",
             "simpleValueType": true,
-            "defaultValue": true
+            "defaultValue": true,
+            "enablingConditions": [
+              {
+                "paramName": "cmp_api_enabled",
+                "paramValue": true,
+                "type": "EQUALS"
+              }
+            ]
           },
           {
             "type": "TEXT",
@@ -2017,7 +2024,7 @@ setInWindow('cc_wrapper_config', {
     url: data.cmp_api_enabled ? data.cmp_api_host : null,
     project: data.cmp_api_enabled && data.cmp_api_project ? data.cmp_api_project : null,
     version: data.cmp_api_enabled ? data.cmp_api_version : 1,
-    environment: data.cmp_api_default_environment ? null : data.cmp_api_environment_code,
+    environment: data.cmp_api_enabled ? (data.cmp_api_default_environment ? null : data.cmp_api_environment_code) : null,
     consent_api_enabled: data.cmp_api_enabled ? data.cmp_api_consent_api_enabled : false,
     cookies_api_enabled: data.cmp_api_enabled ? data.cmp_api_cookies_api_enabled : false,
     cookie_table_headers: cookieTableHeaders
