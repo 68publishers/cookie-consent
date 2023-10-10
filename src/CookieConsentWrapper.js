@@ -69,6 +69,28 @@ class CookieConsentWrapper {
         return this._cookieTables;
     }
 
+    get consentCookieData() {
+        const cookieName = this._config.pluginOptions.cookie_name;
+        let cookieValue = document.cookie.match("(^|;)\\s*" + cookieName + "\\s*=\\s*([^;]+)");
+        cookieValue = cookieValue ? cookieValue.pop() : null;
+
+        if (null === cookieValue) {
+            return null;
+        }
+
+        try{
+            cookieValue = JSON.parse(cookieValue)
+        } catch (e) {
+            try {
+                cookieValue = JSON.parse(decodeURIComponent(cookieValue))
+            } catch (e) {
+                cookieValue = null;
+            }
+        }
+
+        return cookieValue;
+    }
+
     setStaticUserIdentity(id) {
         this._user = this.user.withStaticIdentity(id);
     }
