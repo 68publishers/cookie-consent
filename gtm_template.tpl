@@ -2024,7 +2024,7 @@ setInWindow('cc_wrapper_config', {
     url: data.cmp_api_enabled ? data.cmp_api_host : null,
     project: data.cmp_api_enabled && data.cmp_api_project ? data.cmp_api_project : null,
     version: data.cmp_api_enabled ? data.cmp_api_version : 1,
-    environment: data.cmp_api_enabled ? (data.cmp_api_default_environment ? null : data.cmp_api_environment_code) : null,
+    environment: data.cmp_api_enabled ? (data.cmp_api_default_environment ? 'default' : data.cmp_api_environment_code) : null,
     consent_api_enabled: data.cmp_api_enabled ? data.cmp_api_consent_api_enabled : false,
     cookies_api_enabled: data.cmp_api_enabled ? data.cmp_api_cookies_api_enabled : false,
     cookie_table_headers: cookieTableHeaders
