@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.8] - 2024-02-15
+
 ### Added
 
 - Added fields `Integration > CMP API > Default environment` and `Integration > CMP API > Environment code` in the GTM template.
@@ -298,7 +300,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first version of the package has been released.
 
-[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.4.7...main
+[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.4.8...HEAD
+[0.4.8]: https://github.com/68publishers/cookie-consent/compare/v0.4.7...v0.4.8
 [0.4.7]: https://github.com/68publishers/cookie-consent/compare/v0.4.6...v0.4.7
 [0.4.6]: https://github.com/68publishers/cookie-consent/compare/v0.4.5...v0.4.6
 [0.4.5]: https://github.com/68publishers/cookie-consent/compare/v0.4.4...v0.4.5
