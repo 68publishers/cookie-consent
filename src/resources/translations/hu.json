@@ -31,6 +31,12 @@
     "ad_storage_title": "Hirdetési sütik",
     "ad_storage_description": "A hirdetési sütiket mi vagy partnereink arra használjuk, hogy releváns tartalmat vagy hirdetéseket jelenítsünk meg Önnek mind a mi oldalunkon, mind harmadik felek oldalain. Ez lehetővé teszi számunkra, hogy az Ön érdeklődési körén alapuló profilokat, úgynevezett álnevesített profilokat hozzunk létre. Ezen információk alapján általában nem lehetséges Önt személyként közvetlenül azonosítani, mivel csak álnevesített adatokat használunk. Hacsak nem adja kifejezett hozzájárulását, nem kap az Ön érdeklődési köréhez igazított tartalmakat és hirdetéseket.",
 
+    "ad_user_data_title": "Ad user data",
+    "ad_user_data_description": "",
+
+    "ad_personalization_title": "Ad personalization",
+    "ad_personalization_description": "",
+
     "analytics_storage_title": "Analitikai sütik",
     "analytics_storage_description": "Az analitikai sütik lehetővé teszik számunkra, hogy mérjük weboldalunk és reklámkampányaink teljesítményét. Ezeket arra használjuk, hogy meghatározzuk a weboldalunk látogatásainak számát és forrásait. Az ezeken a cookie-kon keresztül kapott adatokat összesített formában, a weboldalunk konkrét felhasználóira utaló azonosítók használata nélkül dolgozzuk fel. Ha Ön letiltja az analitikai sütik használatát a látogatásával kapcsolatban, elveszítjük a teljesítményelemzés és az intézkedéseink optimalizálásának lehetőségét.",
 

@@ -31,6 +31,12 @@
     "ad_storage_title": "Cookie-uri publicitare",
     "ad_storage_description": "Cookie-urile publicitare sunt utilizate de noi sau de partenerii noștri pentru a vă arăta conținut relevant sau reclame relevante atât pe site-ul nostru, cât și pe site-urile unor terțe părți. Acest lucru ne permite să creăm profiluri bazate pe interesele dumneavoastră, așa-numitele profiluri pseudonimizate. Pe baza acestor informații, în general, nu este posibil să vă identificăm în mod direct ca persoană, deoarece sunt utilizate doar date pseudonimizate. Cu excepția cazului în care vă exprimați consimțământul, nu veți primi conținut și reclame adaptate la interesele dvs.",
 
+    "ad_user_data_title": "Ad user data",
+    "ad_user_data_description": "",
+
+    "ad_personalization_title": "Ad personalization",
+    "ad_personalization_description": "",
+
     "analytics_storage_title": "Cookie-uri de analiză",
     "analytics_storage_description": "Cookie-urile de analiză ne permit să măsurăm performanța site-ului nostru web și a campaniilor noastre publicitare. Le folosim pentru a determina numărul de vizite și sursele vizitelor pe site-ul nostru web. Prelucrăm datele obținute prin intermediul acestor module cookie în mod agregat, fără a utiliza identificatori care să indice anumiți utilizatori ai site-ului nostru web. Dacă dezactivați utilizarea modulelor cookie de analiză în legătură cu vizita dvs., pierdem capacitatea de a analiza performanța și de a optimiza măsurile noastre.",
 

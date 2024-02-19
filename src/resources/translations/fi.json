@@ -31,6 +31,12 @@
     "ad_storage_title": "Mainosevästeet",
     "ad_storage_description": "Me tai kumppanimme käytämme mainosevästeitä näyttääkseen sinulle asiaankuuluvaa sisältöä tai mainoksia sekä sivustollamme että kolmansien osapuolien sivustoilla. Näin voimme luoda kiinnostuksen kohteidesi perusteella profiileja, niin kutsuttuja pseudonyymiprofiileja. Näiden tietojen perusteella sinua ei yleensä voida suoraan tunnistaa henkilöksi, koska käytetään vain pseudonyymejä tietoja. Ellet anna suostumustasi, et saa sisältöä ja mainoksia, jotka on räätälöity kiinnostuksesi mukaan.",
 
+    "ad_user_data_title": "Ad user data",
+    "ad_user_data_description": "",
+
+    "ad_personalization_title": "Ad personalization",
+    "ad_personalization_description": "",
+
     "analytics_storage_title": "Analyysievästeet",
     "analytics_storage_description": "Analyysievästeiden avulla voimme mitata verkkosivustomme ja mainoskampanjoidemme tehokkuutta. Käytämme niitä määrittääksemme käyntien määrän ja käyntien lähteet verkkosivustollamme. Käsittelemme näiden evästeiden kautta saatuja tietoja koottuna käyttämättä tunnisteita, jotka osoittavat verkkosivustomme tiettyihin käyttäjiin. Jos poistat analytiikkaevästeiden käytön käytöstä vierailusi yhteydessä, menetämme kyvyn analysoida suorituskykyä ja optimoida sivuston toimintaa.",
 

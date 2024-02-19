@@ -31,6 +31,12 @@
     "ad_storage_title" : "Cookies publicitaires",
     "ad_storage_description" : " Les cookies publicitaires sont utilisés par nous ou nos partenaires pour vous montrer des contenus ou des publicités pertinents à la fois sur notre site et sur des sites tiers. Cela nous permet de créer des profils basés sur vos intérêts, appelés profils pseudonymisés. Sur la base de ces informations, il n'est généralement pas possible de vous identifier directement en tant que personne, car seules des données pseudonymisées sont utilisées. Si vous n'y consentez pas, vous ne recevrez pas de contenus et de publicités adaptés à vos centres d'intérêt.",
 
+    "ad_user_data_title": "Ad user data",
+    "ad_user_data_description": "",
+
+    "ad_personalization_title": "Ad personalization",
+    "ad_personalization_description": "",
+
     "analytics_storage_title" : "Analytics cookies",
     "analytics_storage_description" : " Les cookies analytiques nous permettent de mesurer la performance de notre site web et de nos campagnes publicitaires. Nous les utilisons pour déterminer le nombre de visites et les sources de visites sur notre site web. Nous traitons les données obtenues par le biais de ces cookies de manière agrégée, sans utiliser d'identifiants permettant d'identifier des utilisateurs spécifiques de notre site web. Si vous désactivez l'utilisation des cookies analytiques en relation avec votre visite, nous perdons la possibilité d'analyser les performances et d'optimiser nos mesures.",
 

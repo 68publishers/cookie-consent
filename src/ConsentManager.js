@@ -198,7 +198,7 @@ class ConsentManager {
                 continue;
             }
 
-            if ('number' !== typeof storage.showModalAgainExpiration) {
+            if ('number' !== typeof storage.showModalAgainExpiration || 0 >= storage.showModalAgainExpiration) {
                 continue;
             }
 
