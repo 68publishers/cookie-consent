@@ -31,6 +31,12 @@
     "ad_storage_title": "Ciasteczka reklamowe",
     "ad_storage_description": "Reklamowe pliki cookie są wykorzystywane przez nas lub naszych partnerów do pokazywania Ci odpowiednich treści lub reklam zarówno na naszej stronie, jak i na stronach osób trzecich. Dzięki temu możemy tworzyć profile oparte na Państwa zainteresowaniach, tzw. profile pseudonimizowane. Na podstawie tych informacji zasadniczo nie jest możliwa bezpośrednia identyfikacja Państwa jako osoby, ponieważ wykorzystywane są tylko dane pseudonimowe. O ile nie wyrażą Państwo zgody, nie będą Państwo otrzymywać treści i reklam dostosowanych do Państwa zainteresowań.",
 
+    "ad_user_data_title": "Ad user data",
+    "ad_user_data_description": "",
+
+    "ad_personalization_title": "Ad personalization",
+    "ad_personalization_description": "",
+
     "analytics_storage_title": "Ciasteczka analityczne",
     "analytics_storage_description": "Analityczne pliki cookie pozwalają nam mierzyć wydajność naszej strony internetowej i naszych kampanii reklamowych. Wykorzystujemy je do określenia liczby wizyt i źródeł odwiedzin naszej strony internetowej. Dane uzyskane za pośrednictwem tych plików cookie przetwarzamy w sposób zagregowany, bez użycia identyfikatorów wskazujących na konkretnych użytkowników naszej strony internetowej. Jeśli wyłączysz stosowanie plików cookie analitycznych w odniesieniu do swojej wizyty, tracimy możliwość analizy wydajności i optymalizacji naszych działań.",
 

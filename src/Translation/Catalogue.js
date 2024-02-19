@@ -43,6 +43,12 @@ class Catalogue {
         this.ad_storage_title = '';
         this.ad_storage_description = '';
 
+        this.ad_user_data_title = '';
+        this.ad_user_data_description = '';
+
+        this.ad_personalization_title = '';
+        this.ad_personalization_description = '';
+
         this.analytics_storage_title = '';
         this.analytics_storage_description = '';
 

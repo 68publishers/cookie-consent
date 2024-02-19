@@ -31,6 +31,12 @@
     "ad_storage_title": "Ad cookies",
     "ad_storage_description": "Advertising cookies are used by us or our partners to show you relevant content or advertisements both on our site and on third party sites. This enables us to create profiles based on your interests, so-called pseudonymised profiles. Based on this information, it is generally not possible to directly identify you as a person, as only pseudonymised data is used. Unless you express your consent, you will not receive content and advertisements tailored to your interests.",
 
+    "ad_user_data_title": "Ad user data",
+    "ad_user_data_description": "",
+
+    "ad_personalization_title": "Ad personalization",
+    "ad_personalization_description": "",
+
     "analytics_storage_title": "Analytics cookies",
     "analytics_storage_description": "Analytics cookies allow us to measure the performance of our website and our advertising campaigns. We use them to determine the number of visits and sources of visits to our website. We process the data obtained through these cookies in aggregate, without using identifiers that point to specific users of our website. If you disable the use of analytics cookies in relation to your visit, we lose the ability to analyse performance and optimise our measures.",
 
