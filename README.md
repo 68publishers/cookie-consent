@@ -22,6 +22,7 @@ An extended integration of [orestbida/cookieconsent](https://github.com/orestbid
 * [Integration with CMP application](#integration-with-cmp-application)
 * [How the GTM integration works](#how-the-gtm-integration-works)
 * [How to update already published container](#how-to-update-already-published-containers)
+  * [Migration from v0.4 to v0.5](#migration-from-v04-to-v05)
 * [Development](#development)
 * [License](#license)
 
@@ -89,24 +90,29 @@ The following strategies are implemented:
 
 ### Storage options
 
-Five types of storage are available:
+Seven types of storage are available:
 
 - Functionality storage
 - Security storage
 - Personalization storage
 - Ad storage
+- Ad user data
+- Ad personalization
 - Analytics storage
 
 Each storage defines the name of a trigger that will be invoked if the user provides consent. It is not necessary to use or display each storage in the widget. Also, the consent for the storage can be synchronized with the consent of another storage.
 
-| Field                                     | Description                                                                                                                                                                                                                  |
-|-------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Enabled by default                        | A storage has `granted` consent by default if the option is checked. Triggers will be invoked as soon as possible.                                                                                                           |
-| Display in the widget                     | A storage will be displayed inside the settings modal if the option is checked.                                                                                                                                              |
-| Readonly                                  | A toggle button for storage inside the settings modal will be disabled if the option is checked. Commonly used for functionality storage. The option is available only if the option `Display in the widget` is checked.     |
-| Synchronize consent with                  | The consent can be synchronized with another storage. The option is available only if the option `Display in the widget` is not checked.                                                                                     |
-| Show the modal again if storage is denied | The settings modal will be opened again after the specified number of days if the storage is denied. The option is available only if the option `Display in the widget` is not checked.                                      |
-| Event trigger name                        | The name of an event trigger that will be invoked on `granted` consent with storage. The name may not be unique for each storage (unique triggers are invoked only). No trigger is invoked if the option has an empty value. |
+| Field                                                        | Description                                                                                                                                                                                                                                        |
+|--------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Visibility and default state                                 | Defines whether the storage should be visible in the widget and what its default value is.                                                                                                                                                         |
+| &nbsp;&nbsp;&nbsp;- Visible, Enabled by default              | Storage is visible in the widget and is enabled by default.                                                                                                                                                                                        |
+| &nbsp;&nbsp;&nbsp;- Visible & Readonly, Enabled by default   | Storage is visible in the widget, it is always enabled and cannot be disabled (usually used for `Functionality storage`).                                                                                                                          |
+| &nbsp;&nbsp;&nbsp;- Visible, Disabled by default             | Storage is visible in the widget and is disabled by default.                                                                                                                                                                                       |
+| &nbsp;&nbsp;&nbsp;- Hidden, Synchronized                     | Storage is not visible in the widget and the consent is synchronized with another storage.                                                                                                                                                         |
+| &nbsp;&nbsp;&nbsp;- Hidden, Disabled always                  | Storage is not visible in the widget and is always disabled. Use for storages that are not used by the application at all.                                                                                                                         |
+| Synchronize consent with                                     | The consent can be synchronized with another storage. The option is available only if the option `Visibility and default state` is set to `Hidden, Synchronized`.                                                                                  |
+| If the storage is denied show the modal again after `x` days | The settings modal will be opened again after the specified number of days if the storage is denied. The option is available only if the option `Display in the widget` is set to `Visible, Enabled by default` or `Visible, Disabled by default`. |
+| Event trigger name                                           | The name of an event trigger that will be invoked on `granted` consent with storage. The name may not be unique for each storage (unique triggers are invoked only). No trigger is invoked if the option has an empty value.                       |
 
 ### Event triggers based on composite consent
 
@@ -375,6 +381,10 @@ If you want to update to the newer version please firstly look into [releases](h
 For update, you must reimport the Template in your GTM in the same way how you imported it for the first time. The template will be updated but existing configurations inside tags will be kept. Of course, if the Template wasn't changed between releases then you can skip this step.
 
 Then open the associated tag and update the value of the field `Package version`.
+
+### Migration from v0.4 to v0.5
+
+For more detailed information on migrating from `0.4.x` to `0.5.x`, please continue to the page [Migration from v0.4 to v0.5](docs/migration-from-0.4-to-0.5.md).
 
 ## Development
 
