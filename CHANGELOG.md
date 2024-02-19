@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added new storages `ad_user_data` and `ad_personalization` in the GTM template (Google Consent Mode v2 integration).
+- Added new translation keys `ad_user_data_title`, `ad_user_data_description`, `ad_personalization_title` and `ad_personalization_description`.
+- Added the [Migration from v0.4 to v0.5](docs/migration-from-0.4-to-0.5.md) guide
+
+### Changed
+
+- Changed the way to configure storages (more information in the [Migration from v0.4 to v0.5](docs/migration-from-0.4-to-0.5.md) guide).
+- Updated README.
+
 ## [0.4.8] - 2024-02-15
 
 ### Added
