@@ -555,7 +555,7 @@ ___TEMPLATE_PARAMETERS___
           {
             "type": "TEXT",
             "name": "functionality_storage_show_again_expiration",
-            "displayName": "If the storage is denied show the model again after",
+            "displayName": "If the storage is denied show the modal again after",
             "simpleValueType": true,
             "defaultValue": 0,
             "enablingConditions": [
@@ -675,7 +675,7 @@ ___TEMPLATE_PARAMETERS___
           {
             "type": "TEXT",
             "name": "security_storage_show_again_expiration",
-            "displayName": "If the storage is denied show the model again after",
+            "displayName": "If the storage is denied show the modal again after",
             "simpleValueType": true,
             "defaultValue": 0,
             "enablingConditions": [
@@ -795,7 +795,7 @@ ___TEMPLATE_PARAMETERS___
           {
             "type": "TEXT",
             "name": "personalization_storage_show_again_expiration",
-            "displayName": "If the storage is denied show the model again after",
+            "displayName": "If the storage is denied show the modal again after",
             "simpleValueType": true,
             "defaultValue": 0,
             "enablingConditions": [
@@ -915,7 +915,7 @@ ___TEMPLATE_PARAMETERS___
           {
             "type": "TEXT",
             "name": "ad_storage_show_again_expiration",
-            "displayName": "If the storage is denied show the model again after",
+            "displayName": "If the storage is denied show the modal again after",
             "simpleValueType": true,
             "defaultValue": 0,
             "enablingConditions": [
@@ -1035,7 +1035,7 @@ ___TEMPLATE_PARAMETERS___
           {
             "type": "TEXT",
             "name": "ad_user_data_show_again_expiration",
-            "displayName": "If the storage is denied show the model again after",
+            "displayName": "If the storage is denied show the modal again after",
             "simpleValueType": true,
             "defaultValue": 0,
             "enablingConditions": [
@@ -1155,7 +1155,7 @@ ___TEMPLATE_PARAMETERS___
           {
             "type": "TEXT",
             "name": "ad_personalization_show_again_expiration",
-            "displayName": "If the storage is denied show the model again after",
+            "displayName": "If the storage is denied show the modal again after",
             "simpleValueType": true,
             "defaultValue": 0,
             "enablingConditions": [
@@ -1275,7 +1275,7 @@ ___TEMPLATE_PARAMETERS___
           {
             "type": "TEXT",
             "name": "analytics_storage_show_again_expiration",
-            "displayName": "If the storage is denied show the model again after",
+            "displayName": "If the storage is denied show the modal again after",
             "simpleValueType": true,
             "defaultValue": 0,
             "enablingConditions": [
