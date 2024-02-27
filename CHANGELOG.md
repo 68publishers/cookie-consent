@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.1] - 2024-02-28
+
 ### Added
 
 - Added default translations for `Croatian` (`hr`).
@@ -325,7 +327,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first version of the package has been released.
 
-[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.4.8...HEAD
+[unreleased]: https://github.com/68publishers/cookie-consent/compare/v0.5.1...HEAD
+[0.5.1]: https://github.com/68publishers/cookie-consent/compare/v0.5.0...v0.5.1
+[0.5.0]: https://github.com/68publishers/cookie-consent/compare/v0.4.8...v0.5.0
 [0.4.8]: https://github.com/68publishers/cookie-consent/compare/v0.4.7...v0.4.8
 [0.4.7]: https://github.com/68publishers/cookie-consent/compare/v0.4.6...v0.4.7
 [0.4.6]: https://github.com/68publishers/cookie-consent/compare/v0.4.5...v0.4.6
