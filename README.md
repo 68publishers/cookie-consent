@@ -8,7 +8,7 @@ An extended integration of [orestbida/cookieconsent](https://github.com/orestbid
 <br>
 
 - :white_check_mark: Easy configurable GTM template
-- :white_check_mark: Five configurable storages standardized by Google
+- :white_check_mark: Configurable storages standardized by Google
 - :white_check_mark: Possibility to synchronize consents between more storages
 - :white_check_mark: Default translations
 
@@ -90,7 +90,7 @@ The following strategies are implemented:
 
 ### Storage options
 
-Seven types of storage are available:
+The following types of storage are available:
 
 - Functionality storage
 - Security storage
@@ -140,6 +140,11 @@ The package comes with the default translations for the following languages:
 - [Slovenian - sl](src/resources/translations/sl.json)
 - [Finnish - fi](src/resources/translations/fi.json)
 - [Dutch - nl](src/resources/translations/nl.json)
+- [Croatian - hr](src/resources/translations/hr.json)
+- [Italian - it](src/resources/translations/it.json)
+- [Norwegian - no](src/resources/translations/no.json)
+- [Swedish - sv](src/resources/translations/se.json)
+- [Ukrainian - uk](src/resources/translations/ua.json)
 
 Translations that will be loaded and accessible for the widget are taken from the field `Locales`. Each locale must be defined on a new line.
 If you want to rewrite default translations or you want to add translations for a new locale then you can define them in a table `Translations`.
