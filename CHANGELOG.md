@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2024-02-27
+
 ### Added
 
 - Added new storages `ad_user_data` and `ad_personalization` in the GTM template (Google Consent Mode v2 integration).
