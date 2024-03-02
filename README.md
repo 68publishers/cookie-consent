@@ -340,7 +340,7 @@ The configuration includes two options
 - Consent API enabled
 - Cookies API enabled
 
-If you check the `Cookies API enabled` option, the widget will automatically send consents to the CMP application.
+If you check the `Consent API enabled` option, the widget will automatically send consents to the CMP application.
 
 If you check the `Cookies API enabled` option then the widget will automatically pull all cookies from the CMP application for the project and creates cookie tables from them.
 Below this field you can define which columns the cookie table should contain.
