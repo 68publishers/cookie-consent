@@ -87,7 +87,7 @@ const integrateCookiesApi = function (wrapper, cmpApiOptions) {
     };
     const headers = [];
 
-    for (let i in cmpApiOptions.cookie_table_headers) {
+    for (let i = 0; i < cmpApiOptions.cookie_table_headers.length; i++) {
         const header = cmpApiOptions.cookie_table_headers[i];
 
         if (!columnMappers.hasOwnProperty(header)) {
@@ -151,11 +151,11 @@ const integrateCookiesApi = function (wrapper, cmpApiOptions) {
 
             const cookieTable = wrapper.cookieTables.getCookieTable(locale);
 
-            for (let i in headers) {
+            for (let i = 0; i < headers.length; i++) {
                 cookieTable.addHeader(headers[i], wrapper.translate(locale, 'cookie_table_col_' + headers[i]));
             }
 
-            for (let i in json.data.cookies) {
+            for (let i = 0; i < json.data.cookies.length; i++) {
                 const cookie = json.data.cookies[i];
                 cookieTable.addRow(cookie.category.code, cookieToRow(cookie, locale));
             }
