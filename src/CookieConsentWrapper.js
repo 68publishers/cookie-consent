@@ -69,6 +69,17 @@ class CookieConsentWrapper {
         return this._cookieTables;
     }
 
+    get consentCookieValue() {
+        if (!this._cookieConsent.validConsent()) {
+            return null;
+        }
+
+        const cookieName = this._config.pluginOptions.cookie_name;
+        let cookieValue = document.cookie.match("(^|;)\\s*" + cookieName + "\\s*=\\s*([^;]+)");
+
+        return cookieValue ? cookieValue.pop() : null;
+    }
+
     get consentCookieData() {
         const cookieName = this._config.pluginOptions.cookie_name;
         let cookieValue = document.cookie.match("(^|;)\\s*" + cookieName + "\\s*=\\s*([^;]+)");

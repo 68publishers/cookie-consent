@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.3] - 2024-05-10
+
+### Added
+
+- Added field `User RFC cookie` into the GTM template.
+- Added property `CookieConsentWrapper.consentCookieValue` that returns raw consent value as a string or null if no consent exists.
+
 ## [0.5.2] - 2024-04-04
 
 ### Fixed

@@ -467,6 +467,14 @@ ___TEMPLATE_PARAMETERS___
         ],
         "help": "One name per line.",
         "lineCount": 3
+      },
+      {
+        "type": "CHECKBOX",
+        "name": "use_rfc_cookie",
+        "checkboxText": "Use RFC cookie",
+        "simpleValueType": true,
+        "defaultValue": false,
+        "help": "The cookie value will be encoded using the \u003ccode\u003eencodeURIComponent\u003c/code\u003e function (so the cookie value will be RFC compliant) if the option is enabled. Otherwise, the cookie will contain plain JSON."
       }
     ]
   },
@@ -2073,12 +2081,12 @@ const temporaryWrapper = (function () {
 
 setInWindow('CookieConsentWrapper', temporaryWrapper, false);
 
-// parse consents from cookies
-let consentCookie = getCookieValues(data.cookie_name)[0] || null;
+// parse consents from cookies, values are automatically decoded using decodeURIComponent function if the second argument is true
+let consentCookie = getCookieValues(data.cookie_name, true)[0] || null;
 
 if (null !== consentCookie) {
   consentCookie = JSON.parse(consentCookie);
-  consentCookie = consentCookie.hasOwnProperty('level') && consentCookie.level.length ? consentCookie.level : [];
+  consentCookie = consentCookie && consentCookie.hasOwnProperty('categories') && consentCookie.categories.length ? consentCookie.categories : [];
 }
 
 // build storage pool & event triggers
@@ -2274,7 +2282,8 @@ const pluginOptions = {
   revision: makeInteger(data.revision),
   delay: makeInteger(data.delay),
   auto_language: 'disabled' !== data.locale_detection_strategy ? data.locale_detection_strategy : null,
-  page_scripts: data.page_scripts
+  page_scripts: data.page_scripts,
+  use_rfc_cookie: data.use_rfc_cookie
 };
 
 if (data.hasOwnProperty('current_locale')) {
