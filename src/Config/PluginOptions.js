@@ -16,12 +16,12 @@ class PluginOptions extends require('./AbstractOptions') {
         this.auto_language = 'document';
         this.page_scripts = false;
         this.script_selector = 'data-cookiecategory';
+        this.cookie_domain = window.location.hostname;
+        this.use_rfc_cookie = false;
 
         // another options for the original plugin
         this.cookie_path = '/';
-        this.cookie_domain = window.location.hostname;
         this.cookie_same_site = 'Lax';
-        this.use_rfc_cookie = false;
         this.remove_cookie_tables = false;
 
         // unsupported options (custom reimplementation)
