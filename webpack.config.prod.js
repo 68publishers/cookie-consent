@@ -47,7 +47,14 @@ module.exports = {
     optimization: {
         minimize: true,
         minimizer: [
-            new TerserWebpackPlugin(),
+            new TerserWebpackPlugin({
+                terserOptions: {
+                    format: {
+                        comments: false,
+                    },
+                },
+                extractComments: false,
+            }),
             new JsonMinimizerPlugin(),
         ],
     },
