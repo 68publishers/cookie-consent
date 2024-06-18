@@ -11,8 +11,7 @@
   "scripts": {
     "build:dev": "webpack --config webpack.config.dev.js --progress --profile",
     "build:prod": "webpack --config webpack.config.prod.js --progress --profile",
-    "start:dev": "webpack --config webpack.config.dev.js --progress --profile && webpack-dev-server --config webpack.config.dev.js",
-    "prepublish": "npm run build:prod"
+    "start:dev": "webpack --config webpack.config.dev.js --progress --profile && webpack-dev-server --config webpack.config.dev.js"
   },
   "keywords": [
     "68publishers",

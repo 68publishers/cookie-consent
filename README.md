@@ -425,10 +425,10 @@ $ npm run build:dev # or prod
 ```
 
 Paths of output files are:
- - `~/build/cookie-consent.js` (dev mode)
+ - `~/demo/cookie-consent.js` (dev mode)
  - `~/dist/cookie-consent.min.js` (production mode)
 
-A simple demo page without real GTM is located in `~/build/index.html`. To show the demo in your browser run:
+A simple demo page without real GTM is located in `~/demo/index.html`. To show the demo in your browser run:
 
 ```sh
 $ npm run start:dev
