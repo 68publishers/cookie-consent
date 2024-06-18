@@ -8,27 +8,45 @@ class CookieConsentWrapperFactory {
             throw new Error('the window is not accessible.');
         }
 
-        const cookieConsentWrapper = new CookieConsentWrapper(this._createGtagFunction());
+        const cookieConsentWrapper = new CookieConsentWrapper(this.#createGtagFunction());
         const wrapperConfig = window.cc_wrapper_config || {};
 
-        this._setupUser(cookieConsentWrapper, wrapperConfig);
-        this._setupPluginOptions(cookieConsentWrapper, wrapperConfig);
-        this._setupAutoClearOptions(cookieConsentWrapper, wrapperConfig);
-        this._setupConsentModalOptions(cookieConsentWrapper, wrapperConfig);
-        this._setupSettingsModalOptions(cookieConsentWrapper, wrapperConfig);
-        this._setupUiOptions(cookieConsentWrapper, wrapperConfig);
-        this._setupStoragePool(cookieConsentWrapper, wrapperConfig);
-        this._setupEventTriggers(cookieConsentWrapper, wrapperConfig);
-        this._setupLocales(cookieConsentWrapper, wrapperConfig);
-        this._setupTranslations(cookieConsentWrapper, wrapperConfig);
-        this._setupCmpApiOptions(cookieConsentWrapper, wrapperConfig);
+        this.#setupUser(cookieConsentWrapper, wrapperConfig);
+        this.#setupPluginOptions(cookieConsentWrapper, wrapperConfig);
+        this.#setupAutoClearOptions(cookieConsentWrapper, wrapperConfig);
+        this.#setupConsentModalOptions(cookieConsentWrapper, wrapperConfig);
+        this.#setupSettingsModalOptions(cookieConsentWrapper, wrapperConfig);
+        this.#setupUiOptions(cookieConsentWrapper, wrapperConfig);
+        this.#setupStoragePool(cookieConsentWrapper, wrapperConfig);
+        this.#setupEventTriggers(cookieConsentWrapper, wrapperConfig);
+        this.#setupLocales(cookieConsentWrapper, wrapperConfig);
+        this.#setupTranslations(cookieConsentWrapper, wrapperConfig);
+        this.#setupCmpApiOptions(cookieConsentWrapper, wrapperConfig);
+
+        if ('cookieConsentWrapperEvents' in window) {
+            for (let i = 0; i < window.cookieConsentWrapperEvents.length; i++) {
+                const eventArgs = window.cookieConsentWrapperEvents[i];
+
+                if (eventArgs[0] && eventArgs[1]) {
+                    cookieConsentWrapper.on(eventArgs[0], eventArgs[1], eventArgs[2] || null);
+                }
+            }
+
+            window.cookieConsentWrapperEvents = {
+                push: eventArgs => {
+                    if (eventArgs[0] && eventArgs[1]) {
+                        cookieConsentWrapper.on(eventArgs[0], eventArgs[1], eventArgs[2] || null);
+                    }
+                },
+            }
+        }
 
         cookieConsentWrapper.init(window, document);
 
         return cookieConsentWrapper;
     }
 
-    _createGtagFunction() {
+    #createGtagFunction() {
         let gtag = window.gtag;
 
         if (!gtag) {
@@ -42,7 +60,7 @@ class CookieConsentWrapperFactory {
         return gtag;
     }
 
-    _setupUser(wrapper, wrapperConfig) {
+    #setupUser(wrapper, wrapperConfig) {
         if (wrapperConfig.hasOwnProperty('user_options') && 'object' === typeof wrapperConfig.user_options) {
             if (wrapperConfig.user_options.hasOwnProperty('identity') && wrapperConfig.user_options.identity) {
                 wrapper.setStaticUserIdentity(wrapperConfig.user_options.identity);
@@ -54,37 +72,37 @@ class CookieConsentWrapperFactory {
         }
     }
 
-    _setupPluginOptions(wrapper, wrapperConfig) {
+    #setupPluginOptions(wrapper, wrapperConfig) {
         if (wrapperConfig.hasOwnProperty('plugin_options') && 'object' === typeof wrapperConfig.plugin_options) {
             wrapper.setPluginOptions(wrapperConfig.plugin_options);
         }
     }
 
-    _setupAutoClearOptions(wrapper, wrapperConfig) {
+    #setupAutoClearOptions(wrapper, wrapperConfig) {
         if (wrapperConfig.hasOwnProperty('auto_clear_options') && 'object' === typeof wrapperConfig.auto_clear_options) {
             wrapper.setAutoClearOptions(wrapperConfig.auto_clear_options);
         }
     }
 
-    _setupConsentModalOptions(wrapper, wrapperConfig) {
+    #setupConsentModalOptions(wrapper, wrapperConfig) {
         if (wrapperConfig.hasOwnProperty('consent_modal_options') && 'object' === typeof wrapperConfig.consent_modal_options) {
             wrapper.setConsentModalOptions(wrapperConfig.consent_modal_options);
         }
     }
 
-    _setupSettingsModalOptions(wrapper, wrapperConfig) {
+    #setupSettingsModalOptions(wrapper, wrapperConfig) {
         if (wrapperConfig.hasOwnProperty('settings_modal_options') && 'object' === typeof wrapperConfig.settings_modal_options) {
             wrapper.setSettingsModalOptions(wrapperConfig.settings_modal_options);
         }
     }
 
-    _setupUiOptions(wrapper, wrapperConfig) {
+    #setupUiOptions(wrapper, wrapperConfig) {
         if (wrapperConfig.hasOwnProperty('ui_options') && 'object' === typeof wrapperConfig.ui_options) {
             wrapper.setUiOptions(wrapperConfig.ui_options);
         }
     }
 
-    _setupStoragePool(wrapper, wrapperConfig) {
+    #setupStoragePool(wrapper, wrapperConfig) {
         if (wrapperConfig.hasOwnProperty('storage_pool') && Array.isArray(wrapperConfig.storage_pool)) {
             const storagePool = wrapperConfig.storage_pool;
 
@@ -98,7 +116,7 @@ class CookieConsentWrapperFactory {
         }
     }
 
-    _setupEventTriggers(wrapper, wrapperConfig) {
+    #setupEventTriggers(wrapper, wrapperConfig) {
         if (wrapperConfig.hasOwnProperty('event_triggers') && Array.isArray(wrapperConfig.event_triggers)) {
             const eventTriggers = wrapperConfig.event_triggers;
 
@@ -114,7 +132,7 @@ class CookieConsentWrapperFactory {
         }
     }
 
-    _setupLocales(wrapper, wrapperConfig) {
+    #setupLocales(wrapper, wrapperConfig) {
         if (wrapperConfig.hasOwnProperty('locales') && Array.isArray(wrapperConfig.locales)) {
             const locales = wrapperConfig.locales;
             let localeKey;
@@ -124,12 +142,12 @@ class CookieConsentWrapperFactory {
                     continue;
                 }
 
-                wrapper.loadTranslations(locales[localeKey]);
+                void wrapper.loadTranslations(locales[localeKey]);
             }
         }
     }
 
-    _setupTranslations(wrapper, wrapperConfig) {
+    #setupTranslations(wrapper, wrapperConfig) {
         if (wrapperConfig.hasOwnProperty('translations') && 'object' === typeof wrapperConfig.translations) {
             const translations = wrapperConfig.translations;
             let locale;
@@ -144,7 +162,7 @@ class CookieConsentWrapperFactory {
         }
     }
 
-    _setupCmpApiOptions(wrapper, wrapperConfig) {
+    #setupCmpApiOptions(wrapper, wrapperConfig) {
         if (wrapperConfig.hasOwnProperty('cmp_api_options') && 'object' === typeof wrapperConfig.cmp_api_options) {
             wrapper.setCmpApiOptions(wrapperConfig.cmp_api_options);
         }

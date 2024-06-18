@@ -8,6 +8,20 @@ class Dictionary {
         this._placeholders = {};
     }
 
+    loadTranslations(locale, url, override = false) {
+        let catalogue;
+
+        if (!this._catalogues.hasOwnProperty(locale)) {
+            catalogue = new Catalogue(locale);
+
+            this._catalogues[locale] = catalogue;
+        } else {
+            catalogue = this._catalogues[locale];
+        }
+
+        return catalogue.loadFromUrl(url, override);
+    }
+
     addTranslations(locale, translations = {}) {
         let catalogue;
 
@@ -36,7 +50,7 @@ class Dictionary {
         return key;
     }
 
-    exportTranslations(storagePool, config) {
+    async exportTranslations(storagePool, config) {
         const dictionary = {};
         let key;
         let catalogue;
@@ -47,7 +61,7 @@ class Dictionary {
             }
 
             catalogue = this._catalogues[key];
-            dictionary[catalogue.locale] = catalogue.exportTranslations(storagePool, config, this._placeholders);
+            dictionary[catalogue.locale] = await catalogue.exportTranslations(storagePool, config, this._placeholders);
         }
 
         return dictionary;

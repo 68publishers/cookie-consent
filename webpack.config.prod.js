@@ -1,5 +1,7 @@
 const path = require('path');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
+const JsonMinimizerPlugin = require('json-minimizer-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     mode: "production",
@@ -13,7 +15,7 @@ module.exports = {
         rules: [
             {
                 loader:  'babel-loader',
-                test: /\.js$/,
+                test: /\.js$/i,
                 include: [
                     path.resolve(__dirname, 'src')
                 ],
@@ -22,7 +24,7 @@ module.exports = {
                         '@babel/preset-env'
                     ]
                 },
-            }
+            },
         ],
     },
     resolve: {
@@ -30,11 +32,23 @@ module.exports = {
             'node_modules',
             path.resolve(__dirname, 'src')
         ],
-        extensions: [".js", ".json", ".jsx", ".css"],
+        extensions: [".js"],
     },
+    plugins: [
+        new CopyPlugin({
+            patterns: [
+                {
+                    from: './src/resources/translations/*.json',
+                    to: path.resolve(__dirname, 'dist', 'translations', '[name][ext]'),
+                },
+            ],
+        }),
+    ],
     optimization: {
+        minimize: true,
         minimizer: [
-            new TerserWebpackPlugin()
+            new TerserWebpackPlugin(),
+            new JsonMinimizerPlugin(),
         ],
     },
 };

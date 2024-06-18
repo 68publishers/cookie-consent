@@ -1,4 +1,5 @@
 const path = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     mode: "development",
@@ -12,7 +13,7 @@ module.exports = {
         rules: [
             {
                 loader:  'babel-loader',
-                test: /\.js$/,
+                test: /\.js$/i,
                 include: [
                     path.resolve(__dirname, 'src')
                 ],
@@ -21,7 +22,7 @@ module.exports = {
                         '@babel/preset-env'
                     ]
                 },
-            }
+            },
         ],
     },
     resolve: {
@@ -29,8 +30,18 @@ module.exports = {
             'node_modules',
             path.resolve(__dirname, 'src')
         ],
-        extensions: [".js", ".json", ".jsx", ".css"],
+        extensions: [".js"],
     },
+    plugins: [
+        new CopyPlugin({
+            patterns: [
+                {
+                    from: './src/resources/translations/*.json',
+                    to: path.resolve(__dirname, 'build', 'translations', '[name][ext]'),
+                },
+            ],
+        }),
+    ],
     devServer: {
         static: {
             directory: path.join(__dirname, 'build'),
