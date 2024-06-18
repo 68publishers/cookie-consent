@@ -5,7 +5,7 @@ module.exports = {
     mode: "development",
     entry: './index.js',
     output: {
-        path: path.resolve(__dirname, 'build'),
+        path: path.resolve(__dirname, 'demo'),
         filename: 'cookie-consent.js',
         library: 'CookieConsentWrapper'
     },
@@ -37,14 +37,14 @@ module.exports = {
             patterns: [
                 {
                     from: './src/resources/translations/*.json',
-                    to: path.resolve(__dirname, 'build', 'translations', '[name][ext]'),
+                    to: path.resolve(__dirname, 'demo', 'translations', '[name][ext]'),
                 },
             ],
         }),
     ],
     devServer: {
         static: {
-            directory: path.join(__dirname, 'build'),
+            directory: path.join(__dirname, 'demo'),
         },
         compress: true,
         port: 3000
