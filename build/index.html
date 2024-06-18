@@ -5,9 +5,10 @@
         <title>Cookie consent wrapper</title>
         <script>
             function logEvent(line) {
-                var code = document.createElement('pre');
+                const code = document.createElement('pre');
                 code.innerText = line;
-                code.style = 'padding: 10px 0';
+                code.style.paddingtop = '10px';
+                code.style.paddingBottom = '10px';
 
                 document.getElementById('event-log').appendChild(code);
             }
@@ -17,98 +18,118 @@
                     logEvent('DataLayer push: ' + JSON.stringify(args));
                 }
             };
+
+            window.cc_wrapper_config = {
+                /*cmp_api_options: {
+                    url: 'http://localhost:8888/',
+                    project: 'demo',
+                    consent_api_enabled: true,
+                    cookies_api_enabled: true,
+                    cookie_table_headers: ['name', 'purpose', 'processing_time', 'type', 'link', 'provider', 'category'],
+                },
+                user_options: {
+                    attributes: {
+                        email: 'test@example.com',
+                    },
+                },*/
+                plugin_options: {
+                    cookie_name: 'consent-settings',
+                    force_consent: true,
+                    page_scripts: true,
+                },
+                auto_clear_options: {
+                    enabled: true,
+                    strategy: 'clear_all_except_defined',
+                },
+                consent_modal_options: {
+                    position: 'middle center',
+                    secondary_button_role: 'accept_necessary',
+                    show_third_button: true,
+                },
+                settings_modal_options: {
+                    modal_trigger_selector: 'footer .footer-item',
+                },
+                locales: [
+                    'en',
+                ],
+                storage_pool: [
+                    {
+                        name: 'functionality_storage',
+                        enabled_by_default: true,
+                        display_in_widget: true,
+                        readonly: true,
+                    },
+                    {
+                        name: 'personalization_storage',
+                        sync_consent_with: 'functionality_storage',
+                    },
+                    {
+                        name: 'security_storage',
+                        display_in_widget: false,
+                    },
+                    {
+                        name: 'ad_storage',
+                        display_in_widget: true
+                    },
+                    {
+                        name: 'analytics_storage',
+                        display_in_widget: true
+                    },
+                ],
+                event_triggers: [
+                    {
+                        name: 'functionality_storage_event',
+                        storage_names: ['functionality_storage'],
+                        type: 'or',
+                    },
+                    {
+                        name: 'personalization_storage_event',
+                        storage_names: ['personalization_storage'],
+                        type: 'or',
+                    },
+                    {
+                        name: 'security_storage_event',
+                        storage_names: ['security_storage'],
+                        type: 'or',
+                    },
+                    {
+                        name: 'ad_storage_event',
+                        storage_names: ['ad_storage'],
+                        type: 'or',
+                    },
+                    {
+                        name: 'analytics_storage_event',
+                        storage_names: ['analytics_storage'],
+                        type: 'or',
+                    },
+                    {
+                        name: 'fb_pixel_event',
+                        storage_names: ['ad_storage', 'analytics_storage'],
+                        type: 'and',
+                    },
+                ],
+            };
+
+            window.cookieConsentWrapperEvents = window.cookieConsentWrapperEvents || [];
+
+            window.cookieConsentWrapperEvents.push(['init', function () {
+                logEvent('CookieConsentWrapper initialized.');
+            }]);
+
+            window.cookieConsentWrapperEvents.push(['consent:first-action', function (consent) {
+                logEvent('Event consent:first-action triggered. ' + JSON.stringify(consent));
+            }]);
+
+            window.cookieConsentWrapperEvents.push(['consent:accepted', function (consent) {
+                logEvent('Event consent:accepted triggered. ' + JSON.stringify(consent));
+            }]);
+
+            window.cookieConsentWrapperEvents.push(['consent:changed', function (consent, changed) {
+                logEvent('Event consent:changed triggered. ' + JSON.stringify(consent) + ', ' + JSON.stringify(changed));
+            }]);
         </script>
 
         <script src="./cookie-consent.js" type="text/javascript"></script>
-
-        <script>
-            CookieConsentWrapper.on('init', function () {
-                logEvent('CookieConsentWrapper initialized.');
-            });
-
-            CookieConsentWrapper.on('consent:first-action', function (consent) {
-                logEvent('Event consent:first-action triggered. ' + JSON.stringify(consent));
-            });
-
-            CookieConsentWrapper.on('consent:accepted', function (consent) {
-                logEvent('Event consent:accepted triggered. ' + JSON.stringify(consent));
-            });
-
-            CookieConsentWrapper.on('consent:changed', function (consent, changed) {
-                logEvent('Event consent:changed triggered. ' + JSON.stringify(consent) + ', ' + JSON.stringify(changed));
-            });
-
-            // CMP integration
-            /*CookieConsentWrapper.setCmpApiOptions({
-                url: 'http://localhost:8888/',
-                project: 'demo',
-                consent_api_enabled: true,
-                cookies_api_enabled: true,
-                cookie_table_headers: ['name', 'purpose', 'processing_time', 'type', 'link', 'provider', 'category'],
-            });
-
-            CookieConsentWrapper.user.attributes = {
-                email: 'test@example.com'
-            };*/
-
-            CookieConsentWrapper.setPluginOptions({
-                cookie_name: 'consent-settings',
-                force_consent: true,
-                page_scripts: true
-            });
-
-            CookieConsentWrapper.setAutoClearOptions({
-                enabled: true,
-                strategy: 'clear_all_except_defined',
-            });
-
-            CookieConsentWrapper.setConsentModalOptions({
-                position: 'middle center',
-                secondary_button_role: 'accept_necessary',
-                show_third_button: true,
-            });
-
-            CookieConsentWrapper.setSettingsModalOptions({
-                modal_trigger_selector: 'footer .footer-item'
-            });
-
-            CookieConsentWrapper.loadTranslations('en');
-
-            CookieConsentWrapper.addStorage({
-                name: 'functionality_storage',
-                enabled_by_default: true,
-                display_in_widget: true,
-                readonly: true
-            });
-
-            CookieConsentWrapper.addStorage({
-                name: 'personalization_storage',
-                sync_consent_with: 'functionality_storage'
-            });
-
-            CookieConsentWrapper.addStorage({
-                name: 'security_storage',
-                display_in_widget: false,
-            });
-
-            CookieConsentWrapper.addStorage({
-                name: 'ad_storage',
-                display_in_widget: true
-            });
-
-            CookieConsentWrapper.addStorage({
-                name: 'analytics_storage',
-                display_in_widget: true
-            });
-
-            CookieConsentWrapper.addEventTrigger('functionality_storage_event', ['functionality_storage']);
-            CookieConsentWrapper.addEventTrigger('personalization_storage_event', ['personalization_storage']);
-            CookieConsentWrapper.addEventTrigger('security_storage_event', ['security_storage']);
-            CookieConsentWrapper.addEventTrigger('ad_storage_event', ['ad_storage']);
-            CookieConsentWrapper.addEventTrigger('analytics_storage_event', ['analytics_storage']);
-
-            CookieConsentWrapper.addEventTrigger('fb_pixel_event', ['ad_storage', 'analytics_storage'], 'and');
-        </script>
     </head>
     <body>
         <main style="max-width: 800px; margin: 0 auto; padding: 20px">

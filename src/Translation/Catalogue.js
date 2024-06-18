@@ -1,6 +1,8 @@
 'use strict';
 
 class Catalogue {
+    #promises = {};
+
     constructor(locale) {
         this._locale = locale;
 
@@ -74,6 +76,25 @@ class Catalogue {
         return this._locale;
     }
 
+    loadFromUrl(url, override = false) {
+        if (url in this.#promises) {
+            return;
+        }
+
+        return this.#promises[url] = fetch(url)
+            .then(res => res.json())
+            .then(translations => {
+                this.merge(translations, override);
+                delete this.#promises[url];
+
+                return translations;
+            })
+            .catch(err => {
+                console.warn(`CookieConsentWrapper: Unable to load translations from ${url}`, err);
+                delete this.#promises[url];
+            })
+    }
+
     translate(key, placeholders = {}) {
         if (!this.hasOwnProperty(key)) {
             return key;
@@ -92,17 +113,23 @@ class Catalogue {
         return translation;
     }
 
-    merge(translations) {
+    merge(translations, override = true) {
         let property;
 
         for (property in translations) {
-            if (translations.hasOwnProperty(property) && this.hasOwnProperty(property)) {
+            if (this.hasOwnProperty(property) && (override || '' === this[property])) {
                 this[property] = translations[property];
             }
         }
     }
 
-    exportTranslations(storagePool, config, placeholders = {}) {
+    async exportTranslations(storagePool, config, placeholders = {}) {
+        const promises = Object.values(this.#promises);
+
+        if (promises.length) {
+            await Promise.all(promises);
+        }
+
         const blocks = [];
 
         if ('' !== this.settings_modal_before_consent_title || '' !== this.settings_modal_before_consent_description) {

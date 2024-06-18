@@ -1433,7 +1433,7 @@ ___TEMPLATE_PARAMETERS___
             "type": "NON_EMPTY"
           }
         ],
-        "help": "One per line."
+        "help": "One locale per line. Alternatively, the URL from which the translations are to be downloaded can also be entered.\nFor example, \u003cstrong\u003ehttps://www.example.com/cc-translations/en.json\u003c/strong\u003e will download the file as an \u003cstrong\u003een\u003c/strong\u003e dictionary."
       },
       {
         "type": "SELECT",

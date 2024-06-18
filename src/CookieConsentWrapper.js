@@ -33,6 +33,14 @@ class CookieConsentWrapper {
         this._user = User.createDefault();
 
         this._cookieConsent = null;
+        this._scriptBasePath = '';
+
+        if (document.currentScript && document.currentScript.src) {
+            const url = new URL(document.currentScript.src, window.location.origin);
+            const pathname = url.pathname.substring(0, url.pathname.lastIndexOf('/'));
+
+            this._scriptBasePath = url.origin + pathname;
+        }
     }
 
     get version() {
@@ -146,17 +154,21 @@ class CookieConsentWrapper {
         this._dictionary.addTranslations(locale, translations || {});
     }
 
-    loadTranslations(locale) {
-        const localeIso639 = 2 < locale.length ? locale[0] + locale[1] : locale;
-        let translations;
+    loadTranslations(localeOrUrl, override = false) {
+        let url = null;
+        let locale = null;
 
-        try {
-            translations = require(`./resources/translations/${localeIso639}`);
-        } catch (e) {
-            translations = {};
+        if (localeOrUrl.startsWith('https://') || localeOrUrl.startsWith('http://')) {
+            locale = localeOrUrl.split('/').pop().split('.').shift();
+            locale = 2 < locale.length ? locale[0] + locale[1] : locale;
+            url = localeOrUrl;
+        } else {
+            locale = localeOrUrl;
+            locale = 2 < locale.length ? locale[0] + locale[1] : locale;
+            url = `${this._scriptBasePath}/translations/${locale}.json`;
         }
 
-        this.addTranslations(locale, translations);
+        return this._dictionary.loadTranslations(locale, url, override);
     }
 
     unwrap() {
@@ -203,7 +215,7 @@ class CookieConsentWrapper {
 
         this._initializationTriggered = true;
 
-        const documentLoadedCallback = function () {
+        const documentLoadedCallback = async function () {
             // load stylesheets
             StylesheetLoader.loadFromConfig(document, self._config.uiOptions);
 
@@ -218,7 +230,7 @@ class CookieConsentWrapper {
             config.onAccept = () => consentManager.onAccept();
             config.onChange = (cookie, changedCategories) => consentManager.onChange(cookie, changedCategories);
 
-            config.languages = self._dictionary
+            config.languages = await self._dictionary
                 .addPlaceholder('user_identity', self.user.identity.toString())
                 .exportTranslations(self._storagePool, self._config);
 
@@ -256,7 +268,7 @@ class CookieConsentWrapper {
         };
 
         if ('loading' !== document.readyState) {
-            documentLoadedCallback();
+            void documentLoadedCallback();
         } else {
             document.addEventListener('DOMContentLoaded', documentLoadedCallback);
         }

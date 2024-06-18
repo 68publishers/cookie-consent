@@ -147,7 +147,14 @@ The package comes with the default translations for the following languages:
 - [Ukrainian - uk](src/resources/translations/ua.json)
 
 Translations that will be loaded and accessible for the widget are taken from the field `Locales`. Each locale must be defined on a new line.
-If you want to rewrite default translations or you want to add translations for a new locale then you can define them in a table `Translations`.
+Alternatively, from version `1.0.0`, the URL from which the translations are to be downloaded can also be entered.
+
+<img src="docs/images/locale-options.png" alt="Locale options" width="600">
+
+In the example above, the default translations for the English language are downloaded and the translations for the German language are downloaded from the URL `https://www.example.com/public/cc-translations/de.json`.
+A translation file must always be in JSON format and its name must match a locale.
+
+If you want to rewrite default translations, or you want to add translations for a new locale then you can define them in a table `Translations`.
 
 ### Locale detection
 
@@ -268,7 +275,9 @@ And a tag that is fired with the trigger:
 ## Accessing the wrapper in the JavaScript
 
 The wrapper is accessible in the `window` under the name `CookieConsentWrapper`. The recommended way how to manipulate with it is through event callbacks because the wrapper may not be fully initialized at the time your script is executed.
-Callbacks are attached with calling of the method `CookieConsentWrapper.on()`.
+Callbacks are attached with calling of the method `CookieConsentWrapper.on()`, however since the version `1.0.0` the preferred method is to use the `window.cookieConsentWrapperEvents` variable.
+
+The use of the variable avoids the situation when the wrapper does not exist in the window yet.
 
 ### Init event
 
@@ -276,13 +285,15 @@ A callback is invoked when the wrapper is fully initialized or directly if every
 
 ```html
 <script>
-    CookieConsentWrapper.on('init', function () {
+    window.cookieConsentWrapperEvents = window.cookieConsentWrapperEvents || [];
+
+    window.cookieConsentWrapperEvents.push(['init', function () {
         if (CookieConsentWrapper.allowedCategory('analytics_storage')) {
             // check if the analytics_storage is granted
         }
 
         CookieConsentWrapper.unwrap(); // get the original cookie consent plugin
-    });
+    }]);
 </script>
 ```
 
@@ -290,15 +301,19 @@ A callback is invoked when the wrapper is fully initialized or directly if every
 
 ```html
 <script>
-    CookieConsentWrapper.on('consent:first-action', function (consent) {
+    window.cookieConsentWrapperEvents = window.cookieConsentWrapperEvents || [];
+
+    window.cookieConsentWrapperEvents.push(['consent:first-action', function (consent) {
         // called on the first user's action
-    });
-    CookieConsentWrapper.on('consent:accepted', function (consent) {
-      // called on every page load after the first user's action
-    });
-    CookieConsentWrapper.on('consent:changed', function (consent, changedCategories) {
-      // called when preferences changed
-    });
+    }]);
+
+    window.cookieConsentWrapperEvents.push(['consent:accepted', function (consent) {
+        // called on every page load after the first user's action
+    }]);
+
+    window.cookieConsentWrapperEvents.push(['consent:changed', function (consent, changedCategories) {
+        // called when preferences changed
+    }]);
 </script>
 ```
 
@@ -306,10 +321,12 @@ A callback is invoked when the wrapper is fully initialized or directly if every
 
 ```html
 <script>
-    CookieConsentWrapper.on('locale:change', function (locale) {
+    window.cookieConsentWrapperEvents = window.cookieConsentWrapperEvents || [];
+
+    window.cookieConsentWrapperEvents.push(['locale:change', function (locale) {
         // called when the plugin locale is changed through method `CookieConsentWrapper.changeLocale()`
         console.log(locale + '!');
-    });
+    }]);
 
     // ...
 
