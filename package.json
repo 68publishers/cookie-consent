@@ -43,6 +43,7 @@
   "files": [
     "src",
     "index.js",
-    "dist/cookie-consent.min.js"
+    "dist/cookie-consent.min.js",
+    "dist/translations/*"
   ]
 }
