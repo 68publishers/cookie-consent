@@ -76,11 +76,42 @@ export class Catalogue {
 
     loadFromUrl(url, override = false) {
         if (url in this.#promises) {
-            return;
+            return true;
         }
 
-        return this.#promises[url] = fetch(url)
-            .then(res => res.json())
+        let scriptUrl = url.endsWith('.js') ? url : (url + '.js');
+        let script = document.head.querySelector(`script[src='${scriptUrl}']`);
+        let promise;
+
+        if (script) {
+            if (window.cookieConsentWrapperTranslations && scriptUrl in window.cookieConsentWrapperTranslations) {
+                this.merge(window.cookieConsentWrapperTranslations[scriptUrl], override);
+
+                return true;
+            }
+
+            url = scriptUrl;
+            promise = new Promise((resolve, reject) => {
+                const loadListener = () => {
+                    script.removeEventListener('load', loadListener);
+                    script.removeEventListener('error', errorListener);
+                    resolve(window.cookieConsentWrapperTranslations[scriptUrl]);
+                };
+                const errorListener = () => {
+                    script.removeEventListener('load', loadListener);
+                    script.removeEventListener('error', errorListener);
+                    reject(new Error(`Unable to load script: ${scriptUrl}`));
+                };
+
+                script.addEventListener('load', loadListener);
+                script.addEventListener('error', errorListener);
+            });
+        } else {
+            promise = fetch(url)
+                .then(res => res.json());
+        }
+
+        return this.#promises[url] = promise
             .then(translations => {
                 this.merge(translations, override);
                 delete this.#promises[url];

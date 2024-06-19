@@ -9,6 +9,7 @@ export class CookieConsentWrapperFactory {
         const cookieConsentWrapper = new CookieConsentWrapper(this.#createGtagFunction());
         const wrapperConfig = window.cc_wrapper_config || {};
 
+        this.#setupLocales(cookieConsentWrapper, wrapperConfig);
         this.#setupUser(cookieConsentWrapper, wrapperConfig);
         this.#setupPluginOptions(cookieConsentWrapper, wrapperConfig);
         this.#setupAutoClearOptions(cookieConsentWrapper, wrapperConfig);
@@ -17,7 +18,6 @@ export class CookieConsentWrapperFactory {
         this.#setupUiOptions(cookieConsentWrapper, wrapperConfig);
         this.#setupStoragePool(cookieConsentWrapper, wrapperConfig);
         this.#setupEventTriggers(cookieConsentWrapper, wrapperConfig);
-        this.#setupLocales(cookieConsentWrapper, wrapperConfig);
         this.#setupTranslations(cookieConsentWrapper, wrapperConfig);
         this.#setupCmpApiOptions(cookieConsentWrapper, wrapperConfig);
 
