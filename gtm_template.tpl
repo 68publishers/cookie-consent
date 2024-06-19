@@ -2376,13 +2376,18 @@ const cookieConsentWrapperScript = scriptBaseUrl + 'cookie-consent.min.js';
 
 for (let localeKey in locales) {
   let locale = locales[localeKey];
+  let localeScript;
 
   if (0 === locale.lastIndexOf('https://', 0) || 0 === locale.lastIndexOf('http://', 0)) {
-    continue;
+    if (-1 === locale.indexOf('.js', locale.length - 3)) {
+      continue;
+    }
+    
+    localeScript = locale;
+  } else {
+    locale = 2 < locale.length ? locale[0] + locale[1] : locale;
+    localeScript = scriptBaseUrl + 'translations/' + locale + '.json.js';
   }
-
-  locale = 2 < locale.length ? locale[0] + locale[1] : locale;
-  const localeScript = scriptBaseUrl + 'translations/' + locale + '.json.js';
 
   if (queryPermission('inject_script', localeScript)) {
     injectScript(localeScript, data.gtmOnSuccess, data.gtmOnFailure);
