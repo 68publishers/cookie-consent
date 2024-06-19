@@ -22,8 +22,6 @@ export class User {
 
     set attributes(attributes) {
         this._attributes = attributes;
-
-        return this;
     }
 
     addAttribute(name, value) {

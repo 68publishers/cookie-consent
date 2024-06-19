@@ -20,7 +20,7 @@ export class ConsentModalOptions extends AbstractOptions {
             layout: this.layout,
             position: this.position,
             transition: this.transition,
-            swap_buttons: this.swap_buttons
+            swap_buttons: this.swap_buttons,
         };
     }
 }

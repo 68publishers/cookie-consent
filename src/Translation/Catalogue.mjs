@@ -94,7 +94,7 @@ export class Catalogue {
     }
 
     translate(key, placeholders = {}) {
-        if (!this.hasOwnProperty(key)) {
+        if (!(key in this)) {
             return key;
         }
 
@@ -115,7 +115,7 @@ export class Catalogue {
         let property;
 
         for (property in translations) {
-            if (this.hasOwnProperty(property) && (override || '' === this[property])) {
+            if (property in this && (override || '' === this[property])) {
                 this[property] = translations[property];
             }
         }
@@ -144,7 +144,7 @@ export class Catalogue {
         for (storageKey in storageArr) {
             storage = storageArr[storageKey];
 
-            if (!storage.displayInWidget || !this.hasOwnProperty(storage.name + '_title')) {
+            if (!storage.displayInWidget || !((storage.name + '_title') in this)) {
                 continue;
             }
 

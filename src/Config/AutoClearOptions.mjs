@@ -22,7 +22,7 @@ export class AutoClearOptions extends AbstractOptions {
     }
 
     merge(options) {
-        if (options.hasOwnProperty('strategy') && -1 === [AutoClearOptions.STRATEGY_CLEAR_ALL_EXCEPT_DEFINED, AutoClearOptions.STRATEGY_CLEAR_DEFINED_ONLY, AutoClearOptions.STRATEGY_COOKIE_TABLES].indexOf(options.strategy)) {
+        if ('strategy' in options && -1 === [AutoClearOptions.STRATEGY_CLEAR_ALL_EXCEPT_DEFINED, AutoClearOptions.STRATEGY_CLEAR_DEFINED_ONLY, AutoClearOptions.STRATEGY_COOKIE_TABLES].indexOf(options.strategy)) {
             throw new Error(`AutoClear strategy ${'string' === typeof options.strategy ? options.strategy : options.strategy.toString()} is not supported.`);
         }
 

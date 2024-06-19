@@ -11,7 +11,9 @@
   "scripts": {
     "build:dev": "webpack --config webpack.config.dev.mjs --progress --profile",
     "build:prod": "webpack --config webpack.config.prod.mjs --progress --profile",
-    "start:dev": "webpack --config webpack.config.dev.mjs --progress --profile && webpack-dev-server --config webpack.config.dev.mjs"
+    "start:dev": "webpack --config webpack.config.dev.mjs --progress --profile && webpack-dev-server --config webpack.config.dev.mjs",
+    "eslint:fix": "eslint ./index.mjs ./src --fix",
+    "eslint": "eslint ./index.mjs ./src"
   },
   "keywords": [
     "68publishers",
@@ -25,8 +27,12 @@
     "@babel/core": "^7.16.0",
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.16.4",
+    "@eslint/eslintrc": "^3.1.0",
+    "@eslint/js": "^9.5.0",
     "babel-loader": "^8.2.3",
     "copy-webpack-plugin": "^12.0.2",
+    "eslint": "^9.5.0",
+    "globals": "^15.6.0",
     "json-minimizer-webpack-plugin": "^5.0.0",
     "terser-webpack-plugin": "^5.2.5",
     "webpack": "^5.65.0",

@@ -3,7 +3,7 @@ export class AbstractOptions {
         let property;
 
         for (property in options) {
-            if (this.hasOwnProperty(property)) {
+            if (property in this) {
                 this[property] = options[property];
             }
         }

@@ -1,6 +1,6 @@
 export class StorageConfig {
     constructor(config) {
-        if (!config.hasOwnProperty('name') || '' === config.name) {
+        if (!('name' in config) || '' === config.name) {
             throw new Error('Missing required property "name".')
         }
 

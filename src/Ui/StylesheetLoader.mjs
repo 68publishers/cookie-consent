@@ -13,18 +13,10 @@ export class StylesheetLoader {
         externalStylesheets = [...externalStylesheets, ...uiOptions.external_stylesheets];
 
         for (stylesheetKey in externalStylesheets) {
-            if (!externalStylesheets.hasOwnProperty(stylesheetKey)) {
-                continue;
-            }
-
             loader.loadExternal(externalStylesheets[stylesheetKey]);
         }
 
         for (stylesheetKey in internalStylesheets) {
-            if (!internalStylesheets.hasOwnProperty(stylesheetKey)) {
-                continue;
-            }
-
             loader.loadInternal(internalStylesheets[stylesheetKey]);
         }
     }

@@ -20,7 +20,7 @@ export class CookieTable {
     }
 
     getRows(storageName) {
-        if (!this._bodies.hasOwnProperty(storageName)) {
+        if (!(storageName in this._bodies)) {
             return [];
         }
 
@@ -28,7 +28,7 @@ export class CookieTable {
     }
 
     addRow(storageName, row) {
-        if (!this._bodies.hasOwnProperty(storageName)) {
+        if (!(storageName in this._bodies)) {
             this._bodies[storageName] = new CookieTableBody();
         }
 
