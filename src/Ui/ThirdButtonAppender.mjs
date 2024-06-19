@@ -21,7 +21,7 @@ export class ThirdButtonAppender {
 
         button.innerText = wrapper.translate(
             wrapper.unwrap().getConfig('current_lang'),
-            'settings' === role ? 'consent_modal_secondary_btn_settings' : 'consent_modal_secondary_btn_accept_necessary'
+            'settings' === role ? 'consent_modal_secondary_btn_settings' : 'consent_modal_secondary_btn_accept_necessary',
         );
 
         button.addEventListener('click', function (e) {

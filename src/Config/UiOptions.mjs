@@ -15,7 +15,7 @@ export class UiOptions extends AbstractOptions {
     get defaultStylesheets() {
         if (true === this.include_default_stylesheets) {
             return [
-                `https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@${ccVersion}/dist/cookieconsent.css`
+                `https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@${ccVersion}/dist/cookieconsent.css`,
             ];
         }
 

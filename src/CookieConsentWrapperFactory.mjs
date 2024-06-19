@@ -51,7 +51,7 @@ export class CookieConsentWrapperFactory {
             window.dataLayer = window.dataLayer || [];
 
             gtag = function gtag() {
-                dataLayer.push(arguments);
+                window.dataLayer.push(arguments);
             }
         }
 

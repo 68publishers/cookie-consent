@@ -6,7 +6,7 @@ export class EventBus {
             return {
                 getNextIdentifier: function () {
                     return lastId++;
-                }
+                },
             }
         })();
 
@@ -23,7 +23,7 @@ export class EventBus {
         this._listeners[event] = this._listeners[event] || {};
         this._listeners[event][id] = {
             callback: callback,
-            scope: scope
+            scope: scope,
         };
 
         return function () {
@@ -39,10 +39,6 @@ export class EventBus {
         let listener;
 
         for (listenerId in listeners) {
-            if (!listeners.hasOwnProperty(listenerId)) {
-                continue;
-            }
-
             listener = listeners[listenerId];
 
             listener.callback.call(listener.scope, ...args);

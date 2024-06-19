@@ -100,10 +100,10 @@ export class CookieConsentWrapper {
 
         try{
             cookieValue = JSON.parse(cookieValue)
-        } catch (e) {
+        } catch (e) { // eslint-disable-line no-unused-vars
             try {
                 cookieValue = JSON.parse(decodeURIComponent(cookieValue))
-            } catch (e) {
+            } catch (e) { // eslint-disable-line no-unused-vars
                 cookieValue = null;
             }
         }
@@ -221,7 +221,7 @@ export class CookieConsentWrapper {
             StylesheetLoader.loadFromConfig(document, self._config.uiOptions);
 
             // init cookie consent
-            self._cookieConsent = initCookieConsent();
+            self._cookieConsent = window.initCookieConsent();
 
             const consentManager = new ConsentManager(self._cookieConsent, self._eventBus, self._config, self._storagePool, Object.values(self._eventTriggers), self._gtag);
 

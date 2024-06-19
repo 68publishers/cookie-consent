@@ -20,7 +20,7 @@ export class Config {
 
         config['gui_options'] = {
             consent_modal: this.consentModalOptions.exportCookieConsentConfig(),
-            settings_modal: this.settingsModalOptions.exportCookieConsentConfig()
+            settings_modal: this.settingsModalOptions.exportCookieConsentConfig(),
         };
 
         if (this.autoClearOptions.enabled && AutoClearOptions.STRATEGY_COOKIE_TABLES === this.autoClearOptions.strategy) {

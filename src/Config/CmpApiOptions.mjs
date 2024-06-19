@@ -20,6 +20,6 @@ export class CmpApiOptions extends AbstractOptions {
             return this.project;
         }
 
-        return window.location.hostname.replace('www.','');
+        return window.location.hostname.replace('www.', '');
     }
 }

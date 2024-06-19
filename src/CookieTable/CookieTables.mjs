@@ -6,7 +6,7 @@ export class CookieTables {
     }
 
     getCookieTable(locale) {
-        if (!this._cookieTables.hasOwnProperty(locale)) {
+        if (!(locale in this._cookieTables)) {
             this._cookieTables[locale] = new CookieTable();
         }
 
@@ -15,7 +15,7 @@ export class CookieTables {
 
     appendCookieTables(languagesConfig) {
         for (let locale in languagesConfig) {
-            if (!this._cookieTables.hasOwnProperty(locale)) {
+            if (!(locale in this._cookieTables)) {
                 continue;
             }
 
@@ -31,7 +31,7 @@ export class CookieTables {
             for (let blockIndex in config.settings_modal.blocks) {
                 const block = config.settings_modal.blocks[blockIndex];
 
-                if (!block.hasOwnProperty('toggle') || !block.toggle.hasOwnProperty('value')) {
+                if (!('toggle' in block) || !('value' in block.toggle)) {
                     continue;
                 }
 

@@ -2,7 +2,7 @@ const integrateConsentApi = function (wrapper, cmpApiOptions) {
     const run = (consent) => {
         const user = wrapper.user;
         const configurationExport = wrapper.configurationExport;
-        const url = cmpApiOptions.url.replace(new RegExp('\/$'), '');
+        const url = cmpApiOptions.url.replace(new RegExp('/$'), '');
         const project = cmpApiOptions.resolveProject();
         const userConsent = {};
 
@@ -34,7 +34,7 @@ const integrateConsentApi = function (wrapper, cmpApiOptions) {
                 return Promise.reject(json);
             }
 
-            if (!json.hasOwnProperty('data') || !json.data.hasOwnProperty('consentSettingsExists') || true === json.data.consentSettingsExists) {
+            if (!('data' in json) || !('consentSettingsExists' in json.data) || true === json.data.consentSettingsExists) {
                 return;
             }
 
@@ -86,7 +86,7 @@ const integrateCookiesApi = function (wrapper, cmpApiOptions) {
     for (let i = 0; i < cmpApiOptions.cookie_table_headers.length; i++) {
         const header = cmpApiOptions.cookie_table_headers[i];
 
-        if (!columnMappers.hasOwnProperty(header)) {
+        if (!(header in columnMappers)) {
             console.warn(`Cookie header "${header}" is not allowed.`);
 
             continue;
@@ -120,7 +120,7 @@ const integrateCookiesApi = function (wrapper, cmpApiOptions) {
         }
 
         fetchedLocales.push(locale);
-        const url = cmpApiOptions.url.replace(new RegExp('\/$'), '');
+        const url = cmpApiOptions.url.replace(new RegExp('/$'), '');
         const project = cmpApiOptions.resolveProject();
         const queryComponents = [
             `locale=${locale}`,
@@ -140,7 +140,7 @@ const integrateCookiesApi = function (wrapper, cmpApiOptions) {
                 return Promise.reject(json);
             }
 
-            if (!json.hasOwnProperty('data') || !json.data.hasOwnProperty('cookies') || 0 >= json.data.cookies.length) {
+            if (!('data' in json) || !('cookies' in json.data) || 0 >= json.data.cookies.length) {
                 return;
             }
 

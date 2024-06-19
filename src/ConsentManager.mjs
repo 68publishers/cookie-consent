@@ -38,7 +38,7 @@ export class ConsentManager {
 
         if (0 < changedCategories.length) {
             for (let changedCategoryKey in changedCategories) {
-                if (!consent.hasOwnProperty(changedCategories[changedCategoryKey])) {
+                if (!(changedCategories[changedCategoryKey] in consent)) {
                     continue;
                 }
 
@@ -155,7 +155,7 @@ export class ConsentManager {
             value: {
                 last_action_date: (new Date()).toJSON(),
             },
-            mode: 'update'
+            mode: 'update',
         });
     }
 

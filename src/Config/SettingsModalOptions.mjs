@@ -14,7 +14,7 @@ export class SettingsModalOptions extends AbstractOptions {
         return {
             layout: this.layout,
             position: this.position,
-            transition: this.transition
+            transition: this.transition,
         };
     }
 }
