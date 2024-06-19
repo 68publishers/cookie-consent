@@ -48,6 +48,23 @@ export default {
                     from: './src/resources/translations/*.json',
                     to: path.resolve(__dirname, 'dist', 'translations', '[name][ext]'),
                 },
+                {
+                    from: './src/resources/translations/*.json',
+                    to: path.resolve(__dirname, 'dist', 'translations', '[name][ext].js'),
+                    transform: {
+                        transformer(content) {
+                            let json = JSON.parse(content.toString());
+                            json = JSON.stringify(json)
+                                .replace(/\u2028/g, '\\u2028')
+                                .replace(/\u2029/g, '\\u2029');
+
+                            let code = 'window.cookieConsentWrapperTranslations = window.cookieConsentWrapperTranslations || {};';
+                            code += `window.cookieConsentWrapperTranslations[document.currentScript.src] = ${json};`;
+
+                            return Promise.resolve(Buffer.from(code, 'utf-8'));
+                        },
+                    },
+                },
             ],
         }),
     ],

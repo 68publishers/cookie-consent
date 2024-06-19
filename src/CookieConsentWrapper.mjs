@@ -156,8 +156,8 @@ export class CookieConsentWrapper {
     }
 
     loadTranslations(localeOrUrl, override = false) {
-        let url = null;
-        let locale = null;
+        let url;
+        let locale;
 
         if (localeOrUrl.startsWith('https://') || localeOrUrl.startsWith('http://')) {
             locale = localeOrUrl.split('/').pop().split('.').shift();
