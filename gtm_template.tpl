@@ -2318,6 +2318,8 @@ if (data.cmp_api_enabled && data.cmp_api_cookies_api_enabled) {
   }
 }
 
+const locales = data.locales;
+
 // setup wrapper config
 setInWindow('cc_wrapper_config', {
   plugin_options: pluginOptions,
@@ -2369,7 +2371,25 @@ setInWindow('cc_wrapper_config', {
 
 // inject cookie consent wrapper
 const packageVersion = 'latest' === data.package_version ? '' : '@' + data.package_version;
-const cookieConsentWrapperScript = 'https://unpkg.com/68publishers-cookie-consent' + packageVersion + '/dist/cookie-consent.min.js';
+const scriptBaseUrl = 'https://unpkg.com/68publishers-cookie-consent' + packageVersion + '/dist/';
+const cookieConsentWrapperScript = scriptBaseUrl + 'cookie-consent.min.js';
+
+for (let localeKey in locales) {
+  let locale = locales[localeKey];
+
+  if (0 === locale.lastIndexOf('https://', 0) || 0 === locale.lastIndexOf('http://', 0)) {
+    continue;
+  }
+
+  locale = 2 < locale.length ? locale[0] + locale[1] : locale;
+  const localeScript = scriptBaseUrl + 'translations/' + locale + '.json.js';
+
+  if (queryPermission('inject_script', localeScript)) {
+    injectScript(localeScript, data.gtmOnSuccess, data.gtmOnFailure);
+  } else {
+    data.gtmOnFailure();
+  }
+}
 
 if (queryPermission('inject_script', cookieConsentWrapperScript)) {
   injectScript(cookieConsentWrapperScript, function () {
