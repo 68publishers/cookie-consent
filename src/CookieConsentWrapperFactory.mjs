@@ -29,14 +29,14 @@ export class CookieConsentWrapperFactory {
                     cookieConsentWrapper.on(eventArgs[0], eventArgs[1], eventArgs[2] || null);
                 }
             }
+        }
 
-            window.cookieConsentWrapperEvents = {
-                push: eventArgs => {
-                    if (eventArgs[0] && eventArgs[1]) {
-                        cookieConsentWrapper.on(eventArgs[0], eventArgs[1], eventArgs[2] || null);
-                    }
-                },
-            }
+        window.cookieConsentWrapperEvents = {
+            push: eventArgs => {
+                if (eventArgs[0] && eventArgs[1]) {
+                    cookieConsentWrapper.on(eventArgs[0], eventArgs[1], eventArgs[2] || null);
+                }
+            },
         }
 
         cookieConsentWrapper.init(window, document);
