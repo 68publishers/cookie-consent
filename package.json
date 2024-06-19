@@ -3,15 +3,15 @@
   "version": "1.0.0-beta.1",
   "description": "Cookie consent wrapper based on orestbida/cookieconsent with GTM integration.",
   "homepage": "http://www.68publishers.io/",
-  "main": "index.js",
+  "main": "index.mjs",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/68publishers/cookie-consent"
   },
   "scripts": {
-    "build:dev": "webpack --config webpack.config.dev.js --progress --profile",
-    "build:prod": "webpack --config webpack.config.prod.js --progress --profile",
-    "start:dev": "webpack --config webpack.config.dev.js --progress --profile && webpack-dev-server --config webpack.config.dev.js"
+    "build:dev": "webpack --config webpack.config.dev.mjs --progress --profile",
+    "build:prod": "webpack --config webpack.config.prod.mjs --progress --profile",
+    "start:dev": "webpack --config webpack.config.dev.mjs --progress --profile && webpack-dev-server --config webpack.config.dev.mjs"
   },
   "keywords": [
     "68publishers",
@@ -28,7 +28,6 @@
     "babel-loader": "^8.2.3",
     "copy-webpack-plugin": "^12.0.2",
     "json-minimizer-webpack-plugin": "^5.0.0",
-    "path": "^0.12.7",
     "terser-webpack-plugin": "^5.2.5",
     "webpack": "^5.65.0",
     "webpack-cli": "^4.9.1",
@@ -37,12 +36,11 @@
   "dependencies": {
     "crypto-js": "^4.1.1",
     "uuid": "^8.3.2",
-    "vanilla-cookieconsent": "^2.8.6",
-    "whatwg-fetch": "^3.6.2"
+    "vanilla-cookieconsent": "^2.8.6"
   },
   "files": [
     "src",
-    "index.js",
+    "index.mjs",
     "dist/cookie-consent.min.js",
     "dist/translations/*"
   ]
