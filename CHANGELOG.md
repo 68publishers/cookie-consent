@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added safe `CookieConsentWrapper` events attaching via window variable `window.cookieConsentWrapperEvents`.
+- DX: Added Eslint.
+- DX: Added GitHub Actions.
+
+### Changed
+
+- Default translations are loaded dynamically based on the settings in the GTM "Locales" field.
+- Added ability to load custom default translations in `.json` and `.js` format.
+- Reduced compiled cookie-consent script size.
+- Updated GTM template.
+- Updated README.
+- DX: Rewritten from CommonJS to ESM.
+
 ## [0.5.3] - 2024-05-10
 
 ### Added
