@@ -63,6 +63,14 @@ ___TEMPLATE_PARAMETERS___
   },
   {
     "type": "CHECKBOX",
+    "name": "init_after_dom_content_loaded",
+    "checkboxText": "Init widget after DOMContentLoaded",
+    "simpleValueType": true,
+    "help": "The widget is initialized as soon as possible by default. If the option is enabled, initialization will wait until the DOMContentLoaded event.",
+    "defaultValue": false
+  },
+  {
+    "type": "CHECKBOX",
     "name": "hide_from_bots",
     "checkboxText": "Hide from bots",
     "simpleValueType": true,
@@ -2276,6 +2284,7 @@ for (userAttributeKey in userAttributesData) {
 const pluginOptions = {
   force_consent: data.force_consent,
   autorun: data.autorun,
+  init_after_dom_content_loaded: data.init_after_dom_content_loaded,
   hide_from_bots: data.hide_from_bots,
   cookie_name: data.cookie_name,
   cookie_expiration: makeInteger(data.cookie_expiration),

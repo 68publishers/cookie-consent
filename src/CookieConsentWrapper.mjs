@@ -216,7 +216,7 @@ export class CookieConsentWrapper {
 
         this._initializationTriggered = true;
 
-        const documentLoadedCallback = async function () {
+        const doInitCookieConsent = async function () {
             // load stylesheets
             StylesheetLoader.loadFromConfig(document, self._config.uiOptions);
 
@@ -237,15 +237,6 @@ export class CookieConsentWrapper {
 
             self._cookieTables.appendCookieTables(config.languages);
 
-            let modalTriggerElements;
-
-            // load modal trigger, must be created before cookieconsent.run()
-            if (document && 'string' === typeof self._config.settingsModalOptions.modal_trigger_selector) {
-                const modalTriggerFactory = new ModalTriggerFactory(document, self._dictionary);
-
-                modalTriggerElements = modalTriggerFactory.create(self._config.settingsModalOptions.modal_trigger_selector, self._config.pluginOptions.current_lang || document.documentElement.lang);
-            }
-
             integrateCmpApi(self, self._config.cmpApiOptions);
 
             if (self._config.consentModalOptions.show_third_button) {
@@ -259,19 +250,41 @@ export class CookieConsentWrapper {
             // run cookie consent
             self._cookieConsent.run(config);
 
-            // re-translate modal trigger
-            if (modalTriggerElements && modalTriggerElements.textElement) {
-                modalTriggerElements.textElement.innerHTML = self.translate(self._cookieConsent.getConfig('current_lang'), 'modal_trigger_title');
-            }
-
             self._initialized = true;
             self._eventBus.dispatch(Events.ON_INIT);
         };
 
+        const doInitSettingsModalTrigger = () => {
+            if (!document || 'string' !== typeof self._config.settingsModalOptions.modal_trigger_selector) {
+                return;
+            }
+
+            const modalTriggerFactory = new ModalTriggerFactory(document, self._dictionary);
+            const modalTriggerElements = modalTriggerFactory.create(
+                self._config.settingsModalOptions.modal_trigger_selector,
+                self._config.pluginOptions.current_lang || document.documentElement.lang,
+            );
+
+            // re-translate modal trigger
+            if (modalTriggerElements && modalTriggerElements.textElement) {
+                modalTriggerElements.textElement.innerHTML = self.translate(self._cookieConsent.getConfig('current_lang'), 'modal_trigger_title');
+            }
+        };
+
+        let initPromise = null;
+
+        if (!this._config.pluginOptions.init_after_dom_content_loaded) {
+            initPromise = doInitCookieConsent();
+        }
+
         if ('loading' !== document.readyState) {
-            void documentLoadedCallback();
+            null === initPromise && (initPromise = doInitCookieConsent());
+            initPromise.then(doInitSettingsModalTrigger);
         } else {
-            document.addEventListener('DOMContentLoaded', documentLoadedCallback);
+            document.addEventListener('DOMContentLoaded', () => {
+                null === initPromise && (initPromise = doInitCookieConsent());
+                initPromise.then(doInitSettingsModalTrigger);
+            });
         }
     }
 }
