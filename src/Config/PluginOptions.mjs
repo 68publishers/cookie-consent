@@ -19,6 +19,9 @@ export class PluginOptions extends AbstractOptions {
         this.cookie_domain = window.location.hostname;
         this.use_rfc_cookie = false;
 
+        // options managed by the GTM template without association with the original plugin:
+        this.init_after_dom_content_loaded = false;
+
         // another options for the original plugin
         this.cookie_path = '/';
         this.cookie_same_site = 'Lax';
@@ -31,6 +34,8 @@ export class PluginOptions extends AbstractOptions {
 
     exportCookieConsentConfig() {
         const config = {...this};
+        delete config.init_after_dom_content_loaded;
+
         const configDomain = 0 === config.cookie_domain.indexOf('.') ? config.cookie_domain.substring(1) : config.cookie_domain;
         const currentDomain = window.location.hostname;
 

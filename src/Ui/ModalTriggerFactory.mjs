@@ -41,8 +41,12 @@ export class ModalTriggerFactory {
 
         lastLinkElement.innerHTML = this._dictionary.translate(locale, 'modal_trigger_title');
 
-        link.setAttribute('data-cc', 'c-settings');
         link.setAttribute('href', '#cookie-settings');
+
+        link.addEventListener('click', event => {
+            event.preventDefault();
+            window.CookieConsentWrapper.unwrap().showSettings(0);
+        });
 
         item.parentNode.appendChild(newItem);
 

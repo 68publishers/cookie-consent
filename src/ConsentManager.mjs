@@ -14,44 +14,50 @@ export class ConsentManager {
     }
 
     onFirstAction(userPreferences) {
-        if ('all' !== userPreferences.accept_type && 0 < userPreferences.rejected_categories.length) {
-            this._autoClearCookies();
-        }
+        setTimeout(() => {
+            if ('all' !== userPreferences.accept_type && 0 < userPreferences.rejected_categories.length) {
+                this._autoClearCookies();
+            }
 
-        const consent = this._updateConsent();
-        this.first_action_triggered = true;
+            const consent = this._updateConsent();
+            this.first_action_triggered = true;
 
-        this._updateLastActionDate();
-        this._eventBus.dispatch(Events.ON_CONSENT_FIRST_ACTION, consent);
+            this._updateLastActionDate();
+            this._eventBus.dispatch(Events.ON_CONSENT_FIRST_ACTION, consent);
+        }, 0);
     }
 
     onAccept() {
-        const consent = this.first_action_triggered ? this._getContent() : this._updateConsent();
-        this.first_action_triggered = false;
+        setTimeout(() => {
+            const consent = this.first_action_triggered ? this._getContent() : this._updateConsent();
+            this.first_action_triggered = false;
 
-        this._showModalAgainIfAnyStorageIsExpired();
-        this._eventBus.dispatch(Events.ON_CONSENT_ACCEPTED, consent);
+            this._showModalAgainIfAnyStorageIsExpired();
+            this._eventBus.dispatch(Events.ON_CONSENT_ACCEPTED, consent);
+        }, 0);
     }
 
     onChange(cookie, changedCategories) {
-        const consent = this._updateConsent();
+        setTimeout(() => {
+            const consent = this._updateConsent();
 
-        if (0 < changedCategories.length) {
-            for (let changedCategoryKey in changedCategories) {
-                if (!(changedCategories[changedCategoryKey] in consent)) {
-                    continue;
-                }
+            if (0 < changedCategories.length) {
+                for (let changedCategoryKey in changedCategories) {
+                    if (!(changedCategories[changedCategoryKey] in consent)) {
+                        continue;
+                    }
 
-                if ('denied' === consent[changedCategories[changedCategoryKey]]) {
-                    this._autoClearCookies();
+                    if ('denied' === consent[changedCategories[changedCategoryKey]]) {
+                        this._autoClearCookies();
 
-                    break;
+                        break;
+                    }
                 }
             }
-        }
 
-        this._updateLastActionDate();
-        this._eventBus.dispatch(Events.ON_CONSENT_CHANGED, consent, changedCategories);
+            this._updateLastActionDate();
+            this._eventBus.dispatch(Events.ON_CONSENT_CHANGED, consent, changedCategories);
+        }, 0);
     }
 
     _getContent() {
