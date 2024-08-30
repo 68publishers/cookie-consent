@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added GTM template field "Init widget after DOMContentLoaded".
 
 ### Changed
+- Moved the package under the organization - `@68publishers/cookie-consent`.
 - The widget is now initialized as soon as possible instead of waiting for DOMContentLoaded event. This behavior can be changed back via the new option "Init widget after DOMContentLoaded".
 - Improved Interaction to Next Paint (INP) metric when a user gives a consent.
 - Updated README.
