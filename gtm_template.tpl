@@ -2380,7 +2380,7 @@ setInWindow('cc_wrapper_config', {
 
 // inject cookie consent wrapper
 const packageVersion = 'latest' === data.package_version ? '' : '@' + data.package_version;
-const scriptBaseUrl = 'https://unpkg.com/68publishers-cookie-consent' + packageVersion + '/dist/';
+const scriptBaseUrl = 'https://unpkg.com/@68publishers/cookie-consent' + packageVersion + '/dist/';
 const cookieConsentWrapperScript = scriptBaseUrl + 'cookie-consent.min.js';
 
 for (let localeKey in locales) {
