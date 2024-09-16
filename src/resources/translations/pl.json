@@ -5,12 +5,12 @@
     "consent_modal_description": "Ta strona internetowa wykorzystuje istotne pliki cookie w celu zapewnienia jej prawidłowego działania oraz pliki cookie śledzące, aby zrozumieć, jak użytkownik wchodzi w interakcje z nią. Te ostatnie będą ustawiane tylko po wyrażeniu zgody.",
     "consent_modal_primary_btn": "Zgadzam się",
     "consent_modal_secondary_btn_settings": "Dostosuj",
-    "consent_modal_secondary_btn_accept_necessary": "Zaakceptuj konieczne",
+    "consent_modal_secondary_btn_accept_necessary": "Zaakceptuj wymagane",
 
     "settings_modal_title": "Ustawienia plików cookie",
     "settings_modal_save_settings_btn": "Zapisz ustawienia",
     "settings_modal_accept_all_btn": "Zaakceptuj wszystkie",
-    "settings_modal_reject_all_btn": "Zaakceptuj wymagane",
+    "settings_modal_reject_all_btn": "Odrzuć wszystkie",
     "settings_modal_close_btn_label": "Zamknij",
 
     "settings_modal_before_consent_title": "Wykorzystanie plików cookie",
