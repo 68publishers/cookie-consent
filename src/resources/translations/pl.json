@@ -1,23 +1,23 @@
 {
     "modal_trigger_title": "Ustawienia plików cookie",
 
-    "consent_modal_title": "Używamy plików cookies!",
+    "consent_modal_title": "Używamy plików cookie",
     "consent_modal_description": "Ta strona internetowa wykorzystuje istotne pliki cookie w celu zapewnienia jej prawidłowego działania oraz pliki cookie śledzące, aby zrozumieć, jak użytkownik wchodzi w interakcje z nią. Te ostatnie będą ustawiane tylko po wyrażeniu zgody.",
     "consent_modal_primary_btn": "Zgadzam się",
     "consent_modal_secondary_btn_settings": "Dostosuj",
-    "consent_modal_secondary_btn_accept_necessary": "Przyjmować konieczne",
+    "consent_modal_secondary_btn_accept_necessary": "Zaakceptuj konieczne",
 
     "settings_modal_title": "Ustawienia plików cookie",
     "settings_modal_save_settings_btn": "Zapisz ustawienia",
-    "settings_modal_accept_all_btn": "Przyjmij wszystkie",
-    "settings_modal_reject_all_btn": "Przyjmować konieczne",
+    "settings_modal_accept_all_btn": "Zaakceptuj wszystkie",
+    "settings_modal_reject_all_btn": "Zaakceptuj wymagane",
     "settings_modal_close_btn_label": "Zamknij",
 
     "settings_modal_before_consent_title": "Wykorzystanie plików cookie",
     "settings_modal_before_consent_description": "Używamy plików cookie, aby zapewnić podstawowe funkcje strony internetowej i poprawić Twoje doświadczenie online. Dla każdej kategorii możesz wybrać opcję opt-in/out, kiedy tylko chcesz.",
 
     "settings_modal_after_consent_title": "Więcej informacji",
-    "settings_modal_after_consent_description": "W przypadku jakichkolwiek zapytań związanych z moją polityką dotyczącą plików cookies i Twoich wyborów, proszę o kontakt.",
+    "settings_modal_after_consent_description": "W przypadku jakichkolwiek pytań związanych z naszą polityką dotyczącą plików cookies i Twoich wyborów, prosimy o kontakt.",
 
     "functionality_storage_title": "Pliki cookie związane z funkcjonalnością",
     "functionality_storage_description": "Te pliki cookie są niezbędne do prawidłowego funkcjonowania naszej strony internetowej. Bez tych plików cookie strona może nie działać prawidłowo.",
@@ -29,7 +29,7 @@
     "security_storage_description": "Pliki cookie dotyczące bezpieczeństwa umożliwiają przechowywanie informacji związanych z bezpieczeństwem, takich jak uwierzytelnianie, ochrona przed oszustwami i inne środki ochrony użytkownika.",
 
     "ad_storage_title": "Ciasteczka reklamowe",
-    "ad_storage_description": "Reklamowe pliki cookie są wykorzystywane przez nas lub naszych partnerów do pokazywania Ci odpowiednich treści lub reklam zarówno na naszej stronie, jak i na stronach osób trzecich. Dzięki temu możemy tworzyć profile oparte na Państwa zainteresowaniach, tzw. profile pseudonimizowane. Na podstawie tych informacji zasadniczo nie jest możliwa bezpośrednia identyfikacja Państwa jako osoby, ponieważ wykorzystywane są tylko dane pseudonimowe. O ile nie wyrażą Państwo zgody, nie będą Państwo otrzymywać treści i reklam dostosowanych do Państwa zainteresowań.",
+    "ad_storage_description": "Reklamowe pliki cookie są wykorzystywane przez nas lub naszych partnerów do pokazywania użytkownikom odpowiednich treści lub reklam zarówno na naszej stronie, jak i na stronach osób trzecich. Dzięki temu możemy tworzyć profile oparte na Państwa zainteresowaniach, tzw. profile pseudonimizowane. Na podstawie tych informacji zasadniczo nie jest możliwa bezpośrednia identyfikacja Państwa jako osoby, ponieważ wykorzystywane są tylko dane pseudonimowe. O ile nie wyrażą Państwo zgody, nie będą Państwo otrzymywać treści i reklam dostosowanych do Państwa zainteresowań.",
 
     "ad_user_data_title": "Ad user data",
     "ad_user_data_description": "",
@@ -52,8 +52,8 @@
     "processing_time_session": "Sesja",
     "processing_time_persistent": "Trwały",
 
-    "cookie_type_1st_party": "1. przyjęcie",
-    "cookie_type_3rd_party": "strona trzecia",
+    "cookie_type_1st_party": "ciasteczka własne (1st party)",
+    "cookie_type_3rd_party": "ciasteczka stron trzecich (3rd party)",
 
-    "find_out_more": "dowiedzieć się więcej"
+    "find_out_more": "dowiedz się więcej"
 }
