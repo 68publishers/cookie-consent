@@ -55,6 +55,7 @@
     "src",
     "index.mjs",
     "dist/cookie-consent.min.js",
+    "dist/cookie-consent.css",
     "dist/translations/*"
   ]
 }
