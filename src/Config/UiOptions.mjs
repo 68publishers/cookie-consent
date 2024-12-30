@@ -1,11 +1,10 @@
 import { AbstractOptions } from './AbstractOptions.mjs';
-import ccPkg from 'vanilla-cookieconsent/package.json';
-
-const ccVersion = ccPkg.version;
 
 export class UiOptions extends AbstractOptions {
-    constructor() {
+    constructor(scriptBasePath) {
         super();
+
+        this._scriptBasePath = scriptBasePath;
 
         this.include_default_stylesheets = true;
         this.external_stylesheets = [];
@@ -15,7 +14,7 @@ export class UiOptions extends AbstractOptions {
     get defaultStylesheets() {
         if (true === this.include_default_stylesheets) {
             return [
-                `https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@${ccVersion}/dist/cookieconsent.css`,
+                `${this._scriptBasePath}/cookie-consent.css`,
             ];
         }
 

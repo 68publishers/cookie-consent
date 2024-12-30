@@ -1,0 +1,5 @@
+@import 'vanilla-cookieconsent/src/cookieconsent.css';
+
+#s-bl table thead tr th[scope="col"]:first-child, #s-bl table tbody tr td:first-child {
+    display: none !important;
+}

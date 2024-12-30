@@ -1,3 +1,5 @@
+import 'core-js/modules/esnext.regexp.escape.js'
+
 const integrateConsentApi = function (wrapper, cmpApiOptions) {
     const run = (consent) => {
         const user = wrapper.user;
@@ -103,6 +105,13 @@ const integrateCookiesApi = function (wrapper, cmpApiOptions) {
     const cookieToRow = (cookie, locale) => {
         const row = {};
 
+        if (cookie.name.includes('*')) {
+            row._name = '^' + cookie.name.split('*').map(s => RegExp.escape(s)).join('.+') + '$';
+            row.is_regex = true;
+        } else {
+            row._name = cookie.name;
+        }
+
         for (let i in headers) {
             const header = headers[i];
             const mapper = columnMappers[header] || function () { return ''; };
@@ -145,6 +154,8 @@ const integrateCookiesApi = function (wrapper, cmpApiOptions) {
             }
 
             const cookieTable = wrapper.cookieTables.getCookieTable(locale);
+
+            cookieTable.addHeader('_name', '_name');
 
             for (let i = 0; i < headers.length; i++) {
                 cookieTable.addHeader(headers[i], wrapper.translate(locale, 'cookie_table_col_' + headers[i]));
