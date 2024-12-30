@@ -24,14 +24,6 @@ export class CookieConsentWrapper {
         this._initializationTriggered = false;
         this._initialized = false;
         this._gtag = gtag;
-        this._config = new Config();
-        this._storagePool = new StoragePool();
-        this._dictionary = new Dictionary();
-        this._eventBus = new EventBus();
-        this._cookieTables = new CookieTables();
-        this._eventTriggers = {};
-        this._user = User.createDefault();
-
         this._cookieConsent = null;
         this._scriptBasePath = '';
 
@@ -41,6 +33,14 @@ export class CookieConsentWrapper {
 
             this._scriptBasePath = url.origin + pathname;
         }
+
+        this._config = new Config(this._scriptBasePath);
+        this._storagePool = new StoragePool();
+        this._dictionary = new Dictionary();
+        this._eventBus = new EventBus();
+        this._cookieTables = new CookieTables();
+        this._eventTriggers = {};
+        this._user = User.createDefault();
     }
 
     get version() {

@@ -6,11 +6,11 @@ import { AutoClearOptions } from './AutoClearOptions.mjs';
 import { CmpApiOptions } from './CmpApiOptions.mjs';
 
 export class Config {
-    constructor() {
+    constructor(scriptBasePath) {
         this.pluginOptions = new PluginOptions();
         this.consentModalOptions = new ConsentModalOptions();
         this.settingsModalOptions = new SettingsModalOptions();
-        this.uiOptions = new UiOptions();
+        this.uiOptions = new UiOptions(scriptBasePath);
         this.autoClearOptions = new AutoClearOptions();
         this.cmpApiOptions = new CmpApiOptions();
     }
@@ -23,9 +23,7 @@ export class Config {
             settings_modal: this.settingsModalOptions.exportCookieConsentConfig(),
         };
 
-        if (this.autoClearOptions.enabled && AutoClearOptions.STRATEGY_COOKIE_TABLES === this.autoClearOptions.strategy) {
-            config['autoclear_cookies'] = true;
-        }
+        config['autoclear_cookies'] = this.autoClearOptions.enabled && AutoClearOptions.STRATEGY_COOKIE_TABLES === this.autoClearOptions.strategy;
 
         return config;
     }

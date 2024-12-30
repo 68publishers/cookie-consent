@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url';
 import TerserWebpackPlugin from 'terser-webpack-plugin';
 import JsonMinimizerPlugin from 'json-minimizer-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -21,16 +22,35 @@ export default {
     module: {
         rules: [
             {
-                loader:  'babel-loader',
                 test: /\.(mjs|js)$/i,
+                loader:  'babel-loader',
                 include: [
                     path.resolve(__dirname, 'src')
                 ],
                 options: {
                     presets: [
-                        '@babel/preset-env'
-                    ]
+                        ['@babel/preset-env', {
+                            useBuiltIns: 'usage',
+                            corejs: {
+                                version: '3.39',
+                            },
+                            targets: "defaults",
+                        }]
+                    ],
                 },
+            },
+            {
+                test: /\.css$/i,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            importLoaders: 1
+                        }
+                    },
+                    'postcss-loader',
+                ]
             },
         ],
     },
@@ -39,7 +59,7 @@ export default {
             'node_modules',
             path.resolve(__dirname, 'src')
         ],
-        extensions: ['.mjs', '.js'],
+        extensions: ['.mjs', '.js', '.css'],
     },
     plugins: [
         new CopyPlugin({
@@ -66,6 +86,9 @@ export default {
                     },
                 },
             ],
+        }),
+        new MiniCssExtractPlugin({
+            filename: 'cookie-consent.css',
         }),
     ],
     optimization: {
