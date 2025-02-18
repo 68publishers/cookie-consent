@@ -262,7 +262,7 @@ export class CookieConsentWrapper {
             const modalTriggerFactory = new ModalTriggerFactory(document, self._dictionary);
             const modalTriggerElements = modalTriggerFactory.create(
                 self._config.settingsModalOptions.modal_trigger_selector,
-                self._config.pluginOptions.current_lang || document.documentElement.lang,
+                self._config.pluginOptions.current_lang || document.documentElement.lang.split('-')[0],
             );
 
             // re-translate modal trigger
