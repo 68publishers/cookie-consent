@@ -185,7 +185,9 @@ export class Catalogue {
                 toggle: {
                     value: storage.name,
                     enabled: storage.enabledByDefault,
-                    readonly: storage.readonly,
+                    // Mark storages that are "visible & disabled & readonly" as non-readonly because the original plugin accepts readonly storages automatically.
+                    // These type of storages are marked in UI as readonly (disabled) in the CookieConsentWrapper
+                    readonly: storage.readonly && storage.enabledByDefault,
                 },
             });
         }
