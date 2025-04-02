@@ -223,6 +223,57 @@ export class CookieConsentWrapper {
             // init cookie consent
             self._cookieConsent = window.initCookieConsent();
 
+            const runOriginal = self._cookieConsent.run;
+            const updateLanguageOriginal = self._cookieConsent.updateLanguage;
+            const acceptOriginal = self._cookieConsent.accept;
+
+            const processVisibleReadonlyDisabledStorages = () => {
+                const container = document.getElementById('s-bl');
+
+                if (!container) {
+                    return;
+                }
+
+                const storages = self._storagePool.findVisibleReadonlyDisabled();
+
+                for (let i in storages) {
+                    const storage = storages[i];
+                    const input = container.querySelector(`input[value="${storage.name}"].c-tgl`);
+                    const span = container.querySelector(`input[value="${storage.name}"].c-tgl ~ .c-tg`);
+
+                    if (!input || !span) {
+                        continue;
+                    }
+
+                    input.disabled = true;
+                    !span.classList.contains('c-ro') && (span.classList.add('c-ro'));
+                }
+            };
+
+            self._cookieConsent.run = (function (config) {
+                runOriginal(config);
+                processVisibleReadonlyDisabledStorages();
+            }).bind(self._cookieConsent);
+
+            self._cookieConsent.updateLanguage = (function (lang, force) {
+                updateLanguageOriginal(lang, force);
+                processVisibleReadonlyDisabledStorages();
+            }).bind(self._cookieConsent);
+
+            self._cookieConsent.accept = (function (_categories, _exclusions) {
+                const storages = self._storagePool.findVisibleReadonlyDisabled().map(storage => storage.name);
+
+                if (0 < storages.length) {
+                    _exclusions = Array.isArray(_exclusions) ? _exclusions : [];
+
+                    for (let i in storages) {
+                        -1 === _exclusions.indexOf(storages[i]) && (_exclusions.push(storages[i]));
+                    }
+                }
+
+                acceptOriginal(_categories, _exclusions);
+            }).bind(self._cookieConsent);
+
             const consentManager = new ConsentManager(self._cookieConsent, self._eventBus, self._config, self._storagePool, Object.values(self._eventTriggers), self._gtag);
 
             // build cookie consent config

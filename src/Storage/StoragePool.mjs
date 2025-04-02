@@ -22,4 +22,9 @@ export class StoragePool {
     all() {
         return Object.values(this._items);
     }
+
+    findVisibleReadonlyDisabled() {
+        return Object.values(this._items)
+            .filter(storage => storage.displayInWidget && !storage.enabledByDefault && storage.readonly);
+    }
 }
