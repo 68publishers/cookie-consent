@@ -496,7 +496,7 @@ ___TEMPLATE_PARAMETERS___
         "type": "SELECT",
         "name": "functionality_storage_visibility",
         "displayName": "Visibility and default state",
-        "macrosInSelect": false,
+        "macrosInSelect": true,
         "selectItems": [
           {
             "value": "visible_enabled",
@@ -517,6 +517,10 @@ ___TEMPLATE_PARAMETERS___
           {
             "value": "hidden_disabled",
             "displayValue": "Hidden, Disabled always"
+          },
+          {
+            "value": "visible_readonly_disabled",
+            "displayValue": "Visible \u0026 Readonly, Disabled always"
           }
         ],
         "simpleValueType": true,
@@ -616,7 +620,7 @@ ___TEMPLATE_PARAMETERS___
         "type": "SELECT",
         "name": "security_storage_visibility",
         "displayName": "Visibility and default state",
-        "macrosInSelect": false,
+        "macrosInSelect": true,
         "selectItems": [
           {
             "value": "visible_enabled",
@@ -637,6 +641,10 @@ ___TEMPLATE_PARAMETERS___
           {
             "value": "hidden_disabled",
             "displayValue": "Hidden, Disabled always"
+          },
+          {
+            "value": "visible_readonly_disabled",
+            "displayValue": "Visible \u0026 Readonly, Disabled always"
           }
         ],
         "simpleValueType": true,
@@ -736,7 +744,7 @@ ___TEMPLATE_PARAMETERS___
         "type": "SELECT",
         "name": "personalization_storage_visibility",
         "displayName": "Visibility and default state",
-        "macrosInSelect": false,
+        "macrosInSelect": true,
         "selectItems": [
           {
             "value": "visible_enabled",
@@ -757,6 +765,10 @@ ___TEMPLATE_PARAMETERS___
           {
             "value": "hidden_disabled",
             "displayValue": "Hidden, Disabled always"
+          },
+          {
+            "value": "visible_readonly_disabled",
+            "displayValue": "Visible \u0026 Readonly, Disabled always"
           }
         ],
         "simpleValueType": true,
@@ -856,7 +868,7 @@ ___TEMPLATE_PARAMETERS___
         "type": "SELECT",
         "name": "ad_storage_visibility",
         "displayName": "Visibility and default state",
-        "macrosInSelect": false,
+        "macrosInSelect": true,
         "selectItems": [
           {
             "value": "visible_enabled",
@@ -877,6 +889,10 @@ ___TEMPLATE_PARAMETERS___
           {
             "value": "hidden_disabled",
             "displayValue": "Hidden, Disabled always"
+          },
+          {
+            "value": "visible_readonly_disabled",
+            "displayValue": "Visible \u0026 Readonly, Disabled always"
           }
         ],
         "simpleValueType": true,
@@ -976,7 +992,7 @@ ___TEMPLATE_PARAMETERS___
         "type": "SELECT",
         "name": "ad_user_data_visibility",
         "displayName": "Visibility and default state",
-        "macrosInSelect": false,
+        "macrosInSelect": true,
         "selectItems": [
           {
             "value": "visible_enabled",
@@ -997,6 +1013,10 @@ ___TEMPLATE_PARAMETERS___
           {
             "value": "hidden_disabled",
             "displayValue": "Hidden, Disabled always"
+          },
+          {
+            "value": "visible_readonly_disabled",
+            "displayValue": "Visible \u0026 Readonly, Disabled always"
           }
         ],
         "simpleValueType": true,
@@ -1096,7 +1116,7 @@ ___TEMPLATE_PARAMETERS___
         "type": "SELECT",
         "name": "ad_personalization_visibility",
         "displayName": "Visibility and default state",
-        "macrosInSelect": false,
+        "macrosInSelect": true,
         "selectItems": [
           {
             "value": "visible_enabled",
@@ -1117,6 +1137,10 @@ ___TEMPLATE_PARAMETERS___
           {
             "value": "hidden_disabled",
             "displayValue": "Hidden, Disabled always"
+          },
+          {
+            "value": "visible_readonly_disabled",
+            "displayValue": "Visible \u0026 Readonly, Disabled always"
           }
         ],
         "simpleValueType": true,
@@ -1216,7 +1240,7 @@ ___TEMPLATE_PARAMETERS___
         "type": "SELECT",
         "name": "analytics_storage_visibility",
         "displayName": "Visibility and default state",
-        "macrosInSelect": false,
+        "macrosInSelect": true,
         "selectItems": [
           {
             "value": "visible_enabled",
@@ -1237,6 +1261,10 @@ ___TEMPLATE_PARAMETERS___
           {
             "value": "hidden_disabled",
             "displayValue": "Hidden, Disabled always"
+          },
+          {
+            "value": "visible_readonly_disabled",
+            "displayValue": "Visible \u0026 Readonly, Disabled always"
           }
         ],
         "simpleValueType": true,
@@ -2108,6 +2136,7 @@ const VisibilityMap = {
   visibleDisabled: 'visible_disabled',
   hiddenSynchronized: 'hidden_synchronized',
   hiddenDisabled: 'hidden_disabled',
+  visibleReadonlyDisabled: 'visible_readonly_disabled',
 };
 
 const VisibilityResolver = {
@@ -2115,10 +2144,10 @@ const VisibilityResolver = {
     return -1 !== [VisibilityMap.visibleEnabled, VisibilityMap.visibleReadonlyEnabled].indexOf(v);
   },
   isDisplayInWidget: v => {
-    return -1 !== [VisibilityMap.visibleEnabled, VisibilityMap.visibleReadonlyEnabled, VisibilityMap.visibleDisabled].indexOf(v);
+    return -1 !== [VisibilityMap.visibleEnabled, VisibilityMap.visibleReadonlyEnabled, VisibilityMap.visibleDisabled, VisibilityMap.visibleReadonlyDisabled].indexOf(v);
   },
   isReadonly: v => {
-    return VisibilityMap.visibleReadonlyEnabled === v;
+    return -1 !== [VisibilityMap.visibleReadonlyEnabled, VisibilityMap.visibleReadonlyDisabled].indexOf(v);
   },
   canSynchronizeConsent: v => {
     return VisibilityMap.hiddenSynchronized === v;
