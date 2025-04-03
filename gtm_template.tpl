@@ -47,8 +47,8 @@ ___TEMPLATE_PARAMETERS___
   },
   {
     "type": "TEXT",
-    "name": "package_destination",
-    "displayName": "Package destination",
+    "name": "package_source",
+    "displayName": "Package source",
     "simpleValueType": true,
     "help": "The URL where the package files are hosted. If the field is not filled , the \u003cstrong\u003eunpkg.com\u003c/strong\u003e CDN is used. To use a different CDN or self-hosting, the field value needs to be set to the URL that leads to the package root (dist folder in the repository). The variable \u003cem\u003e{version}\u003c/em\u003e can be used, which will be replaced by the value from the \u003cem\u003e\"Package version\"\u003c/em\u003e field."
   },
@@ -2415,7 +2415,7 @@ setInWindow('cc_wrapper_config', {
 }, true);
 
 // inject cookie consent wrapper
-let scriptBaseUrl = data.package_destination ? data.package_destination : 'https://unpkg.com/@68publishers/cookie-consent@{version}/dist/';
+let scriptBaseUrl = data.package_source ? data.package_source : 'https://unpkg.com/@68publishers/cookie-consent@{version}/dist/';
 scriptBaseUrl = scriptBaseUrl.replace('{version}', data.package_version);
 
 if (scriptBaseUrl.indexOf('/', scriptBaseUrl.length - 1) < 0) {
