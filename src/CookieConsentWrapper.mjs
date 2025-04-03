@@ -246,6 +246,7 @@ export class CookieConsentWrapper {
                     }
 
                     input.disabled = true;
+                    input.checked = false;
                     !span.classList.contains('c-ro') && (span.classList.add('c-ro'));
                 }
             };
