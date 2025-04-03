@@ -16,7 +16,7 @@ An extended integration of [orestbida/cookieconsent](https://github.com/orestbid
 
 * [Integration into the GTM](#integration-into-the-gtm)
 * [Configuration](#configuration)
-* [About the package destination](#about-the-package-destination)
+* [Using other CDN or self-hosted](#using-other-cdn-or-self-hosted)
 * [Settings modal trigger](#settings-modal-trigger)
 * [Triggering tags based on the consent](#triggering-tags-based-on-the-consent)
 * [Accessing the wrapper in the JavaScript](#accessing-the-wrapper-in-the-javascript)
@@ -54,7 +54,7 @@ The plugin is configurable using fields inside the tag definition.
 | Field                               | Description                                                                                                                                                                                                                                                  |
 |-------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Package version                     | Version of the package `68publishers/cookie-consent`. Valid inputs are the `latest` or a version in formats `x.x.x`, `x.x.x-beta.x` and `x.x.x-alpha-x`. For available versions see the [releases](https://github.com/68publishers/cookie-consent/releases). |
-| Package destination                 | The URL where the package files are hosted. If the field is not filled, the **unpkg.com** CDN is used. To use a different CDN or self-hosting, please read the [About the package destination](#about-the-package-destination) section                       |
+| Package source                      | The URL where the package files are hosted. If the field is not filled, the **unpkg.com** CDN is used. To use a different source, please read the [Using other CDN or self-hosted](#using-other-CDN-or-self-hosted)                                          |
 | Make consent required               | The page will be blocked until a user action.                                                                                                                                                                                                                |
 | Show the widget as soon as possible | The widget will be displayed automatically on the page load. You must trigger the widget manually by calling `CookieConsentWrapper.unwrap().show()` if the option is disabled.                                                                               |
 | Init widget after DOMContentLoaded  | The widget is initialized as soon as possible by default. If the option is enabled, initialization will wait until the `DOMContentLoaded` event.                                                                                                             |
@@ -204,9 +204,9 @@ Managing page scripts is disabled by default. When the feature is enabled then t
 </script>
 ```
 
-## About the package destination
+## Using other CDN or self-hosted
 
-The configuration gives the option to set the URL from which the package files (js, css and translation files) will be loaded via the `Package destination` field.
+The configuration gives the option to set the URL from which the package files (js, css and translation files) will be loaded via the `Package source` field.
 
 If the field is left blank, the `unpkg.com` CDN is used. Alternatively, `jsDelivr.com` can be used by entering the following URL:
 ```
@@ -214,16 +214,16 @@ https://cdn.jsdelivr.net/npm/@68publishers/cookie-consent@{version}/dist/
 ```
 The `{version}` placeholder is automatically replaced with the value from the `Package version` field.
 
-### Self-hosted package files
+### Self-hosted package
 
 It is possible to host package files at any URL. To do this, the following steps are required:
 
-- The complete contents of the [dist](./dist) folder must be accessible from that URL.
-- The "Package destination" field needs to be set correctly.
-- It is necessary to modify the "Inject script" permissions in the GTM template.
+1. The complete contents of the [dist](./dist) folder must be accessible from that URL.
+2. The "Package source" field needs to be set correctly.
+3. It is necessary to modify the "Inject script" permissions in the GTM template.
 
-For example, if the package files are available at the URL https://www.example.com/static/cookie-consent/, the `Package destination` field needs to be set to `https://www.example.com/static/cookie-consent/`.
-Of course, the placeholder `{version}` can also be used in the field.
+For example, if the package files are available at the URL https://www.example.com/static/cookie-consent/, the `Package source` field needs to be set to `https://www.example.com/static/cookie-consent/`.
+Also, the placeholder `{version}` can be used in the field.
 
 Next, the GTM template needs to be modified. In the "Permissions" tab, it is necessary to add the URL `https://www.example.com/` in the "Inject scripts" section.
 
@@ -430,13 +430,13 @@ Below this field you can define which columns the cookie table should contain.
 
 ## How to update already published containers
 
-If you want to update to the newer version please firstly look into [releases](https://github.com/68publishers/cookie-consent/releases) to see what has changed until the release that you using.
+If you want to update to the newer version please firstly look into [releases](https://github.com/68publishers/cookie-consent/releases) to see what has changed until the release that you are using.
 
 For update, you must reimport the Template in your GTM in the same way how you imported it for the first time. The template will be updated but existing configurations inside tags will be kept. Of course, if the Template wasn't changed between releases then you can skip this step.
 
 Then open the associated tag and update the value of the field `Package version`.
 
-If the package files are [self-hosted](#self-hosted-package-files), it is necessary to re-edit the template permissions.
+If the package files are [self-hosted](#self-hosted-package), it is necessary to re-edit the Injects scripts in template permissions.
 
 ### Migration from v0.4 to v0.5
 
