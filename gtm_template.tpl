@@ -46,6 +46,13 @@ ___TEMPLATE_PARAMETERS___
     "defaultValue": "latest"
   },
   {
+    "type": "TEXT",
+    "name": "package_destination",
+    "displayName": "Package destination",
+    "simpleValueType": true,
+    "help": "The URL where the package files are hosted. If the field is not filled , the \u003cstrong\u003eunpkg.com\u003c/strong\u003e CDN is used. To use a different CDN or self-hosting, the field value needs to be set to the URL that leads to the package root (dist folder in the repository). The variable \u003cem\u003e{version}\u003c/em\u003e can be used, which will be replaced by the value from the \u003cem\u003e\"Package version\"\u003c/em\u003e field."
+  },
+  {
     "type": "CHECKBOX",
     "name": "force_consent",
     "checkboxText": "Make consent required",
@@ -2408,8 +2415,13 @@ setInWindow('cc_wrapper_config', {
 }, true);
 
 // inject cookie consent wrapper
-const packageVersion = 'latest' === data.package_version ? '' : '@' + data.package_version;
-const scriptBaseUrl = 'https://unpkg.com/@68publishers/cookie-consent' + packageVersion + '/dist/';
+let scriptBaseUrl = data.package_destination ? data.package_destination : 'https://unpkg.com/@68publishers/cookie-consent@{version}/dist/';
+scriptBaseUrl = scriptBaseUrl.replace('{version}', data.package_version);
+
+if (scriptBaseUrl.indexOf('/', scriptBaseUrl.length - 1) < 0) {
+  scriptBaseUrl += '/';
+}
+
 const cookieConsentWrapperScript = scriptBaseUrl + 'cookie-consent.min.js';
 
 for (let localeKey in locales) {
@@ -2763,6 +2775,10 @@ ___WEB_PERMISSIONS___
               {
                 "type": 1,
                 "string": "https://unpkg.com/"
+              },
+              {
+                "type": 1,
+                "string": "https://cdn.jsdelivr.net/"
               }
             ]
           }
