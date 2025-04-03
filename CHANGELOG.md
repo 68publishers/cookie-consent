@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Added new field "Package destination" in the GTM template that allows to specify the location of the package files.
+- Added section "About the package destination" in the README.
 
 ## [1.3.0] - 2025-04-03
 ### Added
