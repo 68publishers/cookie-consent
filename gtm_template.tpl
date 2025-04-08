@@ -570,14 +570,14 @@ ___TEMPLATE_PARAMETERS___
                 "paramName": "functionality_storage_visibility",
                 "paramValue": "hidden_synchronized",
                 "type": "EQUALS"
+              },
+              {
+                "paramName": "functionality_storage_visibility",
+                "paramValue": "",
+                "type": "IS_MACRO_REFERENCE"
               }
             ],
-            "notSetText": "None",
-            "valueValidators": [
-              {
-                "type": "NON_EMPTY"
-              }
-            ]
+            "notSetText": "None"
           },
           {
             "type": "TEXT",
@@ -595,6 +595,11 @@ ___TEMPLATE_PARAMETERS___
                 "paramName": "functionality_storage_visibility",
                 "paramValue": "visible_disabled",
                 "type": "EQUALS"
+              },
+              {
+                "paramName": "functionality_storage_visibility",
+                "paramValue": "",
+                "type": "IS_MACRO_REFERENCE"
               }
             ],
             "valueUnit": "days",
@@ -694,14 +699,14 @@ ___TEMPLATE_PARAMETERS___
                 "paramName": "security_storage_visibility",
                 "paramValue": "hidden_synchronized",
                 "type": "EQUALS"
+              },
+              {
+                "paramName": "security_storage_visibility",
+                "paramValue": "",
+                "type": "IS_MACRO_REFERENCE"
               }
             ],
-            "notSetText": "None",
-            "valueValidators": [
-              {
-                "type": "NON_EMPTY"
-              }
-            ]
+            "notSetText": "None"
           },
           {
             "type": "TEXT",
@@ -719,6 +724,11 @@ ___TEMPLATE_PARAMETERS___
                 "paramName": "security_storage_visibility",
                 "paramValue": "visible_disabled",
                 "type": "EQUALS"
+              },
+              {
+                "paramName": "security_storage_visibility",
+                "paramValue": "",
+                "type": "IS_MACRO_REFERENCE"
               }
             ],
             "valueUnit": "days",
@@ -818,14 +828,14 @@ ___TEMPLATE_PARAMETERS___
                 "paramName": "personalization_storage_visibility",
                 "paramValue": "hidden_synchronized",
                 "type": "EQUALS"
+              },
+              {
+                "paramName": "personalization_storage_visibility",
+                "paramValue": "",
+                "type": "IS_MACRO_REFERENCE"
               }
             ],
-            "notSetText": "None",
-            "valueValidators": [
-              {
-                "type": "NON_EMPTY"
-              }
-            ]
+            "notSetText": "None"
           },
           {
             "type": "TEXT",
@@ -843,6 +853,11 @@ ___TEMPLATE_PARAMETERS___
                 "paramName": "personalization_storage_visibility",
                 "paramValue": "visible_disabled",
                 "type": "EQUALS"
+              },
+              {
+                "paramName": "personalization_storage_visibility",
+                "paramValue": "",
+                "type": "IS_MACRO_REFERENCE"
               }
             ],
             "valueUnit": "days",
@@ -942,14 +957,14 @@ ___TEMPLATE_PARAMETERS___
                 "paramName": "ad_storage_visibility",
                 "paramValue": "hidden_synchronized",
                 "type": "EQUALS"
+              },
+              {
+                "paramName": "ad_storage_visibility",
+                "paramValue": "",
+                "type": "IS_MACRO_REFERENCE"
               }
             ],
-            "notSetText": "None",
-            "valueValidators": [
-              {
-                "type": "NON_EMPTY"
-              }
-            ]
+            "notSetText": "None"
           },
           {
             "type": "TEXT",
@@ -967,6 +982,11 @@ ___TEMPLATE_PARAMETERS___
                 "paramName": "ad_storage_visibility",
                 "paramValue": "visible_disabled",
                 "type": "EQUALS"
+              },
+              {
+                "paramName": "ad_storage_visibility",
+                "paramValue": "",
+                "type": "IS_MACRO_REFERENCE"
               }
             ],
             "valueUnit": "days",
@@ -1066,14 +1086,14 @@ ___TEMPLATE_PARAMETERS___
                 "paramName": "ad_user_data_visibility",
                 "paramValue": "hidden_synchronized",
                 "type": "EQUALS"
+              },
+              {
+                "paramName": "ad_user_data_visibility",
+                "paramValue": "",
+                "type": "IS_MACRO_REFERENCE"
               }
             ],
-            "notSetText": "None",
-            "valueValidators": [
-              {
-                "type": "NON_EMPTY"
-              }
-            ]
+            "notSetText": "None"
           },
           {
             "type": "TEXT",
@@ -1091,6 +1111,11 @@ ___TEMPLATE_PARAMETERS___
                 "paramName": "ad_user_data_visibility",
                 "paramValue": "visible_disabled",
                 "type": "EQUALS"
+              },
+              {
+                "paramName": "ad_user_data_visibility",
+                "paramValue": "",
+                "type": "IS_MACRO_REFERENCE"
               }
             ],
             "valueUnit": "days",
@@ -1190,14 +1215,14 @@ ___TEMPLATE_PARAMETERS___
                 "paramName": "ad_personalization_visibility",
                 "paramValue": "hidden_synchronized",
                 "type": "EQUALS"
+              },
+              {
+                "paramName": "ad_personalization_visibility",
+                "paramValue": "",
+                "type": "IS_MACRO_REFERENCE"
               }
             ],
-            "notSetText": "None",
-            "valueValidators": [
-              {
-                "type": "NON_EMPTY"
-              }
-            ]
+            "notSetText": "None"
           },
           {
             "type": "TEXT",
@@ -1215,6 +1240,11 @@ ___TEMPLATE_PARAMETERS___
                 "paramName": "ad_personalization_visibility",
                 "paramValue": "visible_disabled",
                 "type": "EQUALS"
+              },
+              {
+                "paramName": "ad_personalization_visibility",
+                "paramValue": "",
+                "type": "IS_MACRO_REFERENCE"
               }
             ],
             "valueUnit": "days",
@@ -1314,14 +1344,14 @@ ___TEMPLATE_PARAMETERS___
                 "paramName": "analytics_storage_visibility",
                 "paramValue": "hidden_synchronized",
                 "type": "EQUALS"
+              },
+              {
+                "paramName": "analytics_storage_visibility",
+                "paramValue": "",
+                "type": "IS_MACRO_REFERENCE"
               }
             ],
-            "notSetText": "None",
-            "valueValidators": [
-              {
-                "type": "NON_EMPTY"
-              }
-            ]
+            "notSetText": "None"
           },
           {
             "type": "TEXT",
@@ -1339,6 +1369,11 @@ ___TEMPLATE_PARAMETERS___
                 "paramName": "analytics_storage_visibility",
                 "paramValue": "visible_disabled",
                 "type": "EQUALS"
+              },
+              {
+                "paramName": "analytics_storage_visibility",
+                "paramValue": "",
+                "type": "IS_MACRO_REFERENCE"
               }
             ],
             "valueUnit": "days",
