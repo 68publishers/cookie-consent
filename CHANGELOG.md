@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Fixed
+- Fixed displaying of fields "Synchronize consent with" and "If the storage is denied show the modal again after" in the GTM template when a variable is used in the field "Visibility and default state".
 
 ## [1.3.1] - 2025-04-03
 ### Added
