@@ -45,6 +45,7 @@ export class ModalTriggerFactory {
 
         link.addEventListener('click', event => {
             event.preventDefault();
+            link.blur();
             window.CookieConsentWrapper.unwrap().showSettings(0);
         });
 
