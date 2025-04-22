@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Fixed
+- Prevented page scrolling after consent has been made through a settings modal that was opened through an element created by the "Settings modal trigger selector" option.
 
 ## [1.3.3] - 2025-04-21
 ### Fixed
