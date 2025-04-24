@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [1.3.5] - 2025-04-24
 ### Changed
 - Information about storages in the settings modal (descriptions, cookies tables) are now automatically collapsed when the modal is closed.
 
@@ -316,7 +318,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - The first version of the package has been released.
 
-[Unreleased]: https://github.com/68publishers/cookie-consent/compare/v1.3.4...HEAD
+[Unreleased]: https://github.com/68publishers/cookie-consent/compare/v1.3.5...HEAD
+[1.3.5]: https://github.com/68publishers/cookie-consent/compare/v1.3.4...v1.3.5
 [1.3.4]: https://github.com/68publishers/cookie-consent/compare/v1.3.3...v1.3.4
 [1.3.3]: https://github.com/68publishers/cookie-consent/compare/v1.3.2...v1.3.3
 [1.3.2]: https://github.com/68publishers/cookie-consent/compare/v1.3.1...v1.3.2
