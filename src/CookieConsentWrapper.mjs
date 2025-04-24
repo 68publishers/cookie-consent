@@ -226,6 +226,7 @@ export class CookieConsentWrapper {
             const runOriginal = self._cookieConsent.run;
             const updateLanguageOriginal = self._cookieConsent.updateLanguage;
             const acceptOriginal = self._cookieConsent.accept;
+            const hideSettingsOriginal = self._cookieConsent.hideSettings;
 
             const processVisibleReadonlyDisabledStorages = () => {
                 const container = document.getElementById('s-bl');
@@ -273,6 +274,23 @@ export class CookieConsentWrapper {
                 }
 
                 acceptOriginal(_categories, _exclusions);
+            }).bind(self._cookieConsent);
+
+            self._cookieConsent.hideSettings = (function () {
+                hideSettingsOriginal();
+
+                // close opened storage descriptions
+                setTimeout(() => {
+                    Array.from(document.querySelectorAll('#s-bl .b-tl.exp[aria-expanded="true"]')).forEach(blockTitleBtn => {
+                        const blockSection = blockTitleBtn.closest('.c-bl.act');
+                        const accordionId = blockTitleBtn.getAttribute('aria-controls');
+                        const accordion = accordionId ? document.getElementById(accordionId) : null;
+
+                        blockTitleBtn.setAttribute('aria-expanded', 'false');
+                        blockSection && blockSection.classList.remove('act');
+                        accordion && accordion.setAttribute('aria-hidden', 'true');
+                    });
+                }, 250);
             }).bind(self._cookieConsent);
 
             const consentManager = new ConsentManager(self._cookieConsent, self._eventBus, self._config, self._storagePool, Object.values(self._eventTriggers), self._gtag);
