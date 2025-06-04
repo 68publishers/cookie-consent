@@ -71,7 +71,7 @@ export default {
 
                                 return true;
                             });
-                            _array[0] = focusable_elems[0];
+                            _array[0] = focusable_elems.find(el => 'true' === el.dataset.ccFocusTrapStart) || focusable_elems[0];
                             _array[1] = focusable_elems[focusable_elems.length - 1];
                             `,
                             flags: 'gm',
