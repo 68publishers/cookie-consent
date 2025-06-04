@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- Reverted change that removes a focus from an element created by the "Settings modal trigger selector" option after the settings modal is closed. Even if it prevented the page from scrolling, it is a violation of accessibility rules.
+
+### Fixed
+- Fixed accessibility for third button in the consent modal.
+- Fixed accessibility in both modals after a language update.
+- Third button is now re-translated after a language update.
+- Buttons in the settings modal are physically reordered in the DOM if they are ordered visually using CSS flexbox property `order` to keep right tabindex flow.
 
 ## [1.3.6] - 2025-05-15
 ### Added
