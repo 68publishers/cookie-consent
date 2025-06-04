@@ -35,6 +35,8 @@ export class PluginOptions extends AbstractOptions {
     exportCookieConsentConfig() {
         const config = {...this};
         delete config.init_after_dom_content_loaded;
+        config.autorun = false;
+        config.delay = 0;
 
         const configDomain = 0 === config.cookie_domain.indexOf('.') ? config.cookie_domain.substring(1) : config.cookie_domain;
         const currentDomain = window.location.hostname;

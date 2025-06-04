@@ -52,6 +52,72 @@ export default {
                     'postcss-loader',
                 ]
             },
+            {
+                test: /cookieconsent\.js$/,
+                loader: 'string-replace-loader',
+                options: {
+                    multiple: [
+                        {
+                            search: '^\\s*_array\\[0\\] = focusable_elems\\[0\\];\\s+_array\\[1\\] = focusable_elems\\[focusable_elems\\.length - 1\\];$',
+                            replace: `
+                            focusable_elems = Array.from(focusable_elems).filter(el => {
+                                const focusableOnShowConsent = el.dataset.ccFocusableOnShowConsent;
+                                
+                                if (undefined === focusableOnShowConsent) {
+                                    return true;
+                                }
+
+                                if (('true' === focusableOnShowConsent && !consent_modal_visible) || ('false' === focusableOnShowConsent && consent_modal_visible)) {                                    
+                                    return false;
+                                }
+
+                                return true;
+                            });
+                            _array[0] = focusable_elems[0];
+                            _array[1] = focusable_elems[focusable_elems.length - 1];
+                            `,
+                            flags: 'gm',
+                            strict: true
+                        },
+                        {
+                            search: '_addClass\\(html_dom, "show--consent"\\);',
+                            replace: `
+                            _getModalFocusableData();
+                            focusable_edges = consent_modal_focusable;
+                            _addClass(html_dom, "show--consent");
+                            setTimeout(() => setFocus(focusable_edges[0]), 250);
+                            `,
+                            flags: 'g',
+                            strict: true,
+                        },
+                        {
+                            search: '_addClass\\(html_dom, "show--settings"\\);',
+                            replace: `
+                            _getModalFocusableData();
+                            focusable_edges = settings_modal_focusable;
+                            _addClass(html_dom, "show--settings");
+                            setTimeout(() => setFocus(focusable_edges[0]), 250);
+                            `,
+                            flags: 'g',
+                            strict: true,
+                        },
+                        {
+                            search: 'return _cookieconsent;',
+                            replace: `
+                            _cookieconsent.__updateModalFocusableData = _getModalFocusableData;
+                            _cookieconsent.__getFocusableEdges = () => focusable_edges;
+                            _cookieconsent.__generateFocusSpan = generateFocusSpan;
+                            _cookieconsent.__isConsentModalExists = () => consent_modal_exists;
+                            _cookieconsent.__getFocusedModal = () => focused_modal;
+        
+                            return _cookieconsent;
+                            `,
+                            flags: 'g',
+                            strict: true,
+                        }
+                    ],
+                },
+            }
         ],
     },
     resolve: {
