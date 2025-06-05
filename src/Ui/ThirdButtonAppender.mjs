@@ -14,15 +14,18 @@ export class ThirdButtonAppender {
 
         const role = 'settings' === consentModalOptions.secondary_button_role ? 'accept_necessary' : 'settings';
         const button = document.createElement('button');
+        const span = wrapper.unwrap().__generateFocusSpan(1);
 
         button.setAttribute('type', 'button');
         button.setAttribute('id', 'c-t-bn');
         button.setAttribute('class', 'c-bn');
 
-        button.innerText = wrapper.translate(
+        span.innerHTML = wrapper.translate(
             wrapper.unwrap().getConfig('current_lang'),
             'settings' === role ? 'consent_modal_secondary_btn_settings' : 'consent_modal_secondary_btn_accept_necessary',
         );
+
+        button.appendChild(span);
 
         button.addEventListener('click', function (e) {
             const plugin = wrapper.unwrap();
@@ -38,5 +41,12 @@ export class ThirdButtonAppender {
         });
 
         document.getElementById('c-bns').appendChild(button);
+
+        wrapper.on('locale:change', locale => {
+            span.innerHTML = wrapper.translate(
+                locale,
+                'settings' === role ? 'consent_modal_secondary_btn_settings' : 'consent_modal_secondary_btn_accept_necessary',
+            );
+        });
     }
 }

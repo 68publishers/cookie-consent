@@ -1,4 +1,4 @@
-import 'vanilla-cookieconsent';
+import 'vanilla-cookieconsent/src/cookieconsent.js';
 import pkg from '../package.json';
 import { Config } from './Config/Config.mjs';
 import { Storage } from './Storage/Storage.mjs';
@@ -24,7 +24,18 @@ export class CookieConsentWrapper {
         this._initializationTriggered = false;
         this._initialized = false;
         this._gtag = gtag;
+
+        /**
+         * @type {(CookieConsent & {
+         *     __updateModalFocusableData: () => void,
+         *     __getFocusableEdges: () => HTMLElement[]|undefined,
+         *     __generateFocusSpan: (number) => HTMLElement,
+         *     __isConsentModalExists: () => boolean,
+         *     __getFocusedModal: () => HTMLElement,
+         * })|null}
+         */
         this._cookieConsent = null;
+
         this._scriptBasePath = '';
 
         if (document.currentScript && document.currentScript.src) {
@@ -221,6 +232,7 @@ export class CookieConsentWrapper {
             StylesheetLoader.loadFromConfig(document, self._config.uiOptions);
 
             // init cookie consent
+            // noinspection JSValidateTypes
             self._cookieConsent = window.initCookieConsent();
 
             const runOriginal = self._cookieConsent.run;
@@ -254,11 +266,38 @@ export class CookieConsentWrapper {
 
             self._cookieConsent.run = (function (config) {
                 runOriginal(config);
+
+                if (self._config.consentModalOptions.show_third_button) {
+                    const appender = new ThirdButtonAppender();
+                    appender.append(self, document);
+                }
+
+                requestAnimationFrame(() => {
+                    self.#reorderSettingsModalButtons();
+                });
+
+                if (self._config.pluginOptions.autorun && self._cookieConsent.__isConsentModalExists()) {
+                    const delay = self._config.pluginOptions.delay;
+
+                    setTimeout(function() {
+                        self._cookieConsent.show(0);
+                    }, delay > 0 ? delay : 0);
+                }
+
                 processVisibleReadonlyDisabledStorages();
             }).bind(self._cookieConsent);
 
             self._cookieConsent.updateLanguage = (function (lang, force) {
-                updateLanguageOriginal(lang, force);
+                const focusedElement = document.activeElement;
+
+                if (updateLanguageOriginal(lang, force)) {
+                    self._cookieConsent.__updateModalFocusableData();
+                    const focusedModal = self._cookieConsent.__getFocusedModal();
+
+                    if (focusedModal && !focusedModal.contains(focusedElement)) {
+                        self._cookieConsent.__getFocusableEdges()[0]?.focus();
+                    }
+                }
                 processVisibleReadonlyDisabledStorages();
             }).bind(self._cookieConsent);
 
@@ -309,14 +348,6 @@ export class CookieConsentWrapper {
 
             integrateCmpApi(self, self._config.cmpApiOptions);
 
-            if (self._config.consentModalOptions.show_third_button) {
-                self.on(Events.ON_INIT, function () {
-                    const appender = new ThirdButtonAppender();
-
-                    appender.append(self, document);
-                });
-            }
-
             // run cookie consent
             self._cookieConsent.run(config);
 
@@ -356,5 +387,42 @@ export class CookieConsentWrapper {
                 initPromise.then(doInitSettingsModalTrigger);
             });
         }
+    }
+
+    #reorderSettingsModalButtons() {
+        const container = document.getElementById('s-bns');
+
+        if (!container) {
+            return;
+        }
+
+        const buttons = Array.from(container.querySelectorAll('button'));
+
+        if (0 === buttons.length) {
+            return;
+        }
+
+        const withOrder = buttons.map(button => {
+            const orderStr = getComputedStyle(button).order;
+            const order = parseInt(orderStr, 10);
+
+            return {
+                button,
+                originalOrder: isNaN(order) ? 0 : order,
+            };
+        });
+
+        const hasCustomOrder = withOrder.some(item => 0 !== item.originalOrder);
+
+        if (!hasCustomOrder) {
+            return;
+        }
+
+        withOrder.sort((a, b) => a.originalOrder - b.originalOrder);
+
+        withOrder.forEach(({ button }) => {
+            container.appendChild(button);
+            button.style.order = '';
+        });
     }
 }

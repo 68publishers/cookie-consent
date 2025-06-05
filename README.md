@@ -11,6 +11,8 @@ An extended integration of [orestbida/cookieconsent](https://github.com/orestbid
 - :white_check_mark: Configurable storages standardized by Google
 - :white_check_mark: Possibility to synchronize consents between more storages
 - :white_check_mark: Default translations
+- :white_check_mark: WCAG 2 compliant
+- :white_check_mark: Support for storing consents via [CMP](https://github.com/68publishers/consent-management-platform)
 
 ## Table of contents
 
