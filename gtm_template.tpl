@@ -46,6 +46,13 @@ ___TEMPLATE_PARAMETERS___
     "defaultValue": "latest"
   },
   {
+    "type": "TEXT",
+    "name": "package_source",
+    "displayName": "Package source",
+    "simpleValueType": true,
+    "help": "The URL where the package files are hosted. If the field is not filled , the \u003cstrong\u003eunpkg.com\u003c/strong\u003e CDN is used. To use a different CDN or self-hosting, the field value needs to be set to the URL that leads to the package root (dist folder in the repository). The variable \u003cem\u003e{version}\u003c/em\u003e can be used, which will be replaced by the value from the \u003cem\u003e\"Package version\"\u003c/em\u003e field."
+  },
+  {
     "type": "CHECKBOX",
     "name": "force_consent",
     "checkboxText": "Make consent required",
@@ -496,7 +503,7 @@ ___TEMPLATE_PARAMETERS___
         "type": "SELECT",
         "name": "functionality_storage_visibility",
         "displayName": "Visibility and default state",
-        "macrosInSelect": false,
+        "macrosInSelect": true,
         "selectItems": [
           {
             "value": "visible_enabled",
@@ -517,6 +524,10 @@ ___TEMPLATE_PARAMETERS___
           {
             "value": "hidden_disabled",
             "displayValue": "Hidden, Disabled always"
+          },
+          {
+            "value": "visible_readonly_disabled",
+            "displayValue": "Visible \u0026 Readonly, Disabled always"
           }
         ],
         "simpleValueType": true,
@@ -559,14 +570,14 @@ ___TEMPLATE_PARAMETERS___
                 "paramName": "functionality_storage_visibility",
                 "paramValue": "hidden_synchronized",
                 "type": "EQUALS"
+              },
+              {
+                "paramName": "functionality_storage_visibility",
+                "paramValue": "",
+                "type": "IS_MACRO_REFERENCE"
               }
             ],
-            "notSetText": "None",
-            "valueValidators": [
-              {
-                "type": "NON_EMPTY"
-              }
-            ]
+            "notSetText": "None"
           },
           {
             "type": "TEXT",
@@ -584,6 +595,11 @@ ___TEMPLATE_PARAMETERS___
                 "paramName": "functionality_storage_visibility",
                 "paramValue": "visible_disabled",
                 "type": "EQUALS"
+              },
+              {
+                "paramName": "functionality_storage_visibility",
+                "paramValue": "",
+                "type": "IS_MACRO_REFERENCE"
               }
             ],
             "valueUnit": "days",
@@ -616,7 +632,7 @@ ___TEMPLATE_PARAMETERS___
         "type": "SELECT",
         "name": "security_storage_visibility",
         "displayName": "Visibility and default state",
-        "macrosInSelect": false,
+        "macrosInSelect": true,
         "selectItems": [
           {
             "value": "visible_enabled",
@@ -637,6 +653,10 @@ ___TEMPLATE_PARAMETERS___
           {
             "value": "hidden_disabled",
             "displayValue": "Hidden, Disabled always"
+          },
+          {
+            "value": "visible_readonly_disabled",
+            "displayValue": "Visible \u0026 Readonly, Disabled always"
           }
         ],
         "simpleValueType": true,
@@ -679,14 +699,14 @@ ___TEMPLATE_PARAMETERS___
                 "paramName": "security_storage_visibility",
                 "paramValue": "hidden_synchronized",
                 "type": "EQUALS"
+              },
+              {
+                "paramName": "security_storage_visibility",
+                "paramValue": "",
+                "type": "IS_MACRO_REFERENCE"
               }
             ],
-            "notSetText": "None",
-            "valueValidators": [
-              {
-                "type": "NON_EMPTY"
-              }
-            ]
+            "notSetText": "None"
           },
           {
             "type": "TEXT",
@@ -704,6 +724,11 @@ ___TEMPLATE_PARAMETERS___
                 "paramName": "security_storage_visibility",
                 "paramValue": "visible_disabled",
                 "type": "EQUALS"
+              },
+              {
+                "paramName": "security_storage_visibility",
+                "paramValue": "",
+                "type": "IS_MACRO_REFERENCE"
               }
             ],
             "valueUnit": "days",
@@ -736,7 +761,7 @@ ___TEMPLATE_PARAMETERS___
         "type": "SELECT",
         "name": "personalization_storage_visibility",
         "displayName": "Visibility and default state",
-        "macrosInSelect": false,
+        "macrosInSelect": true,
         "selectItems": [
           {
             "value": "visible_enabled",
@@ -757,6 +782,10 @@ ___TEMPLATE_PARAMETERS___
           {
             "value": "hidden_disabled",
             "displayValue": "Hidden, Disabled always"
+          },
+          {
+            "value": "visible_readonly_disabled",
+            "displayValue": "Visible \u0026 Readonly, Disabled always"
           }
         ],
         "simpleValueType": true,
@@ -799,14 +828,14 @@ ___TEMPLATE_PARAMETERS___
                 "paramName": "personalization_storage_visibility",
                 "paramValue": "hidden_synchronized",
                 "type": "EQUALS"
+              },
+              {
+                "paramName": "personalization_storage_visibility",
+                "paramValue": "",
+                "type": "IS_MACRO_REFERENCE"
               }
             ],
-            "notSetText": "None",
-            "valueValidators": [
-              {
-                "type": "NON_EMPTY"
-              }
-            ]
+            "notSetText": "None"
           },
           {
             "type": "TEXT",
@@ -824,6 +853,11 @@ ___TEMPLATE_PARAMETERS___
                 "paramName": "personalization_storage_visibility",
                 "paramValue": "visible_disabled",
                 "type": "EQUALS"
+              },
+              {
+                "paramName": "personalization_storage_visibility",
+                "paramValue": "",
+                "type": "IS_MACRO_REFERENCE"
               }
             ],
             "valueUnit": "days",
@@ -856,7 +890,7 @@ ___TEMPLATE_PARAMETERS___
         "type": "SELECT",
         "name": "ad_storage_visibility",
         "displayName": "Visibility and default state",
-        "macrosInSelect": false,
+        "macrosInSelect": true,
         "selectItems": [
           {
             "value": "visible_enabled",
@@ -877,6 +911,10 @@ ___TEMPLATE_PARAMETERS___
           {
             "value": "hidden_disabled",
             "displayValue": "Hidden, Disabled always"
+          },
+          {
+            "value": "visible_readonly_disabled",
+            "displayValue": "Visible \u0026 Readonly, Disabled always"
           }
         ],
         "simpleValueType": true,
@@ -919,14 +957,14 @@ ___TEMPLATE_PARAMETERS___
                 "paramName": "ad_storage_visibility",
                 "paramValue": "hidden_synchronized",
                 "type": "EQUALS"
+              },
+              {
+                "paramName": "ad_storage_visibility",
+                "paramValue": "",
+                "type": "IS_MACRO_REFERENCE"
               }
             ],
-            "notSetText": "None",
-            "valueValidators": [
-              {
-                "type": "NON_EMPTY"
-              }
-            ]
+            "notSetText": "None"
           },
           {
             "type": "TEXT",
@@ -944,6 +982,11 @@ ___TEMPLATE_PARAMETERS___
                 "paramName": "ad_storage_visibility",
                 "paramValue": "visible_disabled",
                 "type": "EQUALS"
+              },
+              {
+                "paramName": "ad_storage_visibility",
+                "paramValue": "",
+                "type": "IS_MACRO_REFERENCE"
               }
             ],
             "valueUnit": "days",
@@ -976,7 +1019,7 @@ ___TEMPLATE_PARAMETERS___
         "type": "SELECT",
         "name": "ad_user_data_visibility",
         "displayName": "Visibility and default state",
-        "macrosInSelect": false,
+        "macrosInSelect": true,
         "selectItems": [
           {
             "value": "visible_enabled",
@@ -997,6 +1040,10 @@ ___TEMPLATE_PARAMETERS___
           {
             "value": "hidden_disabled",
             "displayValue": "Hidden, Disabled always"
+          },
+          {
+            "value": "visible_readonly_disabled",
+            "displayValue": "Visible \u0026 Readonly, Disabled always"
           }
         ],
         "simpleValueType": true,
@@ -1039,14 +1086,14 @@ ___TEMPLATE_PARAMETERS___
                 "paramName": "ad_user_data_visibility",
                 "paramValue": "hidden_synchronized",
                 "type": "EQUALS"
+              },
+              {
+                "paramName": "ad_user_data_visibility",
+                "paramValue": "",
+                "type": "IS_MACRO_REFERENCE"
               }
             ],
-            "notSetText": "None",
-            "valueValidators": [
-              {
-                "type": "NON_EMPTY"
-              }
-            ]
+            "notSetText": "None"
           },
           {
             "type": "TEXT",
@@ -1064,6 +1111,11 @@ ___TEMPLATE_PARAMETERS___
                 "paramName": "ad_user_data_visibility",
                 "paramValue": "visible_disabled",
                 "type": "EQUALS"
+              },
+              {
+                "paramName": "ad_user_data_visibility",
+                "paramValue": "",
+                "type": "IS_MACRO_REFERENCE"
               }
             ],
             "valueUnit": "days",
@@ -1096,7 +1148,7 @@ ___TEMPLATE_PARAMETERS___
         "type": "SELECT",
         "name": "ad_personalization_visibility",
         "displayName": "Visibility and default state",
-        "macrosInSelect": false,
+        "macrosInSelect": true,
         "selectItems": [
           {
             "value": "visible_enabled",
@@ -1117,6 +1169,10 @@ ___TEMPLATE_PARAMETERS___
           {
             "value": "hidden_disabled",
             "displayValue": "Hidden, Disabled always"
+          },
+          {
+            "value": "visible_readonly_disabled",
+            "displayValue": "Visible \u0026 Readonly, Disabled always"
           }
         ],
         "simpleValueType": true,
@@ -1159,14 +1215,14 @@ ___TEMPLATE_PARAMETERS___
                 "paramName": "ad_personalization_visibility",
                 "paramValue": "hidden_synchronized",
                 "type": "EQUALS"
+              },
+              {
+                "paramName": "ad_personalization_visibility",
+                "paramValue": "",
+                "type": "IS_MACRO_REFERENCE"
               }
             ],
-            "notSetText": "None",
-            "valueValidators": [
-              {
-                "type": "NON_EMPTY"
-              }
-            ]
+            "notSetText": "None"
           },
           {
             "type": "TEXT",
@@ -1184,6 +1240,11 @@ ___TEMPLATE_PARAMETERS___
                 "paramName": "ad_personalization_visibility",
                 "paramValue": "visible_disabled",
                 "type": "EQUALS"
+              },
+              {
+                "paramName": "ad_personalization_visibility",
+                "paramValue": "",
+                "type": "IS_MACRO_REFERENCE"
               }
             ],
             "valueUnit": "days",
@@ -1216,7 +1277,7 @@ ___TEMPLATE_PARAMETERS___
         "type": "SELECT",
         "name": "analytics_storage_visibility",
         "displayName": "Visibility and default state",
-        "macrosInSelect": false,
+        "macrosInSelect": true,
         "selectItems": [
           {
             "value": "visible_enabled",
@@ -1237,6 +1298,10 @@ ___TEMPLATE_PARAMETERS___
           {
             "value": "hidden_disabled",
             "displayValue": "Hidden, Disabled always"
+          },
+          {
+            "value": "visible_readonly_disabled",
+            "displayValue": "Visible \u0026 Readonly, Disabled always"
           }
         ],
         "simpleValueType": true,
@@ -1279,14 +1344,14 @@ ___TEMPLATE_PARAMETERS___
                 "paramName": "analytics_storage_visibility",
                 "paramValue": "hidden_synchronized",
                 "type": "EQUALS"
+              },
+              {
+                "paramName": "analytics_storage_visibility",
+                "paramValue": "",
+                "type": "IS_MACRO_REFERENCE"
               }
             ],
-            "notSetText": "None",
-            "valueValidators": [
-              {
-                "type": "NON_EMPTY"
-              }
-            ]
+            "notSetText": "None"
           },
           {
             "type": "TEXT",
@@ -1304,6 +1369,11 @@ ___TEMPLATE_PARAMETERS___
                 "paramName": "analytics_storage_visibility",
                 "paramValue": "visible_disabled",
                 "type": "EQUALS"
+              },
+              {
+                "paramName": "analytics_storage_visibility",
+                "paramValue": "",
+                "type": "IS_MACRO_REFERENCE"
               }
             ],
             "valueUnit": "days",
@@ -2108,6 +2178,7 @@ const VisibilityMap = {
   visibleDisabled: 'visible_disabled',
   hiddenSynchronized: 'hidden_synchronized',
   hiddenDisabled: 'hidden_disabled',
+  visibleReadonlyDisabled: 'visible_readonly_disabled',
 };
 
 const VisibilityResolver = {
@@ -2115,10 +2186,10 @@ const VisibilityResolver = {
     return -1 !== [VisibilityMap.visibleEnabled, VisibilityMap.visibleReadonlyEnabled].indexOf(v);
   },
   isDisplayInWidget: v => {
-    return -1 !== [VisibilityMap.visibleEnabled, VisibilityMap.visibleReadonlyEnabled, VisibilityMap.visibleDisabled].indexOf(v);
+    return -1 !== [VisibilityMap.visibleEnabled, VisibilityMap.visibleReadonlyEnabled, VisibilityMap.visibleDisabled, VisibilityMap.visibleReadonlyDisabled].indexOf(v);
   },
   isReadonly: v => {
-    return VisibilityMap.visibleReadonlyEnabled === v;
+    return -1 !== [VisibilityMap.visibleReadonlyEnabled, VisibilityMap.visibleReadonlyDisabled].indexOf(v);
   },
   canSynchronizeConsent: v => {
     return VisibilityMap.hiddenSynchronized === v;
@@ -2379,8 +2450,13 @@ setInWindow('cc_wrapper_config', {
 }, true);
 
 // inject cookie consent wrapper
-const packageVersion = 'latest' === data.package_version ? '' : '@' + data.package_version;
-const scriptBaseUrl = 'https://unpkg.com/@68publishers/cookie-consent' + packageVersion + '/dist/';
+let scriptBaseUrl = data.package_source ? data.package_source : 'https://unpkg.com/@68publishers/cookie-consent@{version}/dist/';
+scriptBaseUrl = scriptBaseUrl.replace('{version}', data.package_version);
+
+if (scriptBaseUrl.indexOf('/', scriptBaseUrl.length - 1) < 0) {
+  scriptBaseUrl += '/';
+}
+
 const cookieConsentWrapperScript = scriptBaseUrl + 'cookie-consent.min.js';
 
 for (let localeKey in locales) {
@@ -2734,6 +2810,10 @@ ___WEB_PERMISSIONS___
               {
                 "type": 1,
                 "string": "https://unpkg.com/"
+              },
+              {
+                "type": 1,
+                "string": "https://cdn.jsdelivr.net/"
               }
             ]
           }

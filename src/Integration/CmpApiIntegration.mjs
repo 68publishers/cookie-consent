@@ -20,13 +20,20 @@ const integrateConsentApi = function (wrapper, cmpApiOptions) {
             }
         }
 
+        const attributes = {};
+
+        Object.keys(user.attributes).forEach(key => {
+            const value = user.attributes[key];
+            attributes[key] = 'function' === typeof value ? value() : value;
+        });
+
         fetch(`${url}/api/v${cmpApiOptions.version.toString()}/consent/${project}/${user.identity.toString()}`, {
             method: 'put',
             credentials: 'omit',
             body: JSON.stringify({
                 settingsChecksum: configurationExport.checksum,
                 consents: userConsent,
-                attributes: user.attributes,
+                attributes: attributes,
                 environment: cmpApiOptions.environment,
             }),
         }).then(response => {

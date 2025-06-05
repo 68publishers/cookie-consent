@@ -94,7 +94,7 @@ export class ConsentManager {
         this._gtag('consent', 'update', consent);
 
         if (0 >= accepted.length) {
-            return;
+            return consent;
         }
 
         let eventTriggerKey;

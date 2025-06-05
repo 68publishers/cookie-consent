@@ -7,6 +7,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.6] - 2025-05-15
+### Added
+- Added ability to define user attributes as callback functions. Callbacks will be invoked when interacting with the CMP.
+
+## [1.3.5] - 2025-04-24
+### Changed
+- Information about storages in the settings modal (descriptions, cookies tables) are now automatically collapsed when the modal is closed.
+
+## [1.3.4] - 2025-04-22
+### Fixed
+- Prevented page scrolling after consent has been made through a settings modal that was opened through an element created by the "Settings modal trigger selector" option.
+
+## [1.3.3] - 2025-04-21
+### Fixed
+- Fixed "TypeError: Cannot use 'in' operator to search for 'functionality_storage' in undefined" when no storage is enabled.
+
+## [1.3.2] - 2025-04-08
+### Fixed
+- Fixed displaying of fields "Synchronize consent with" and "If the storage is denied show the modal again after" in the GTM template when a variable is used in the field "Visibility and default state".
+
+## [1.3.1] - 2025-04-03
+### Added
+- Added new field "Package source" in the GTM template that allows to specify the location of the package files.
+- Added section "Using other CDN or self-hosted" in the README.
+
+## [1.3.0] - 2025-04-03
+### Added
+- Added new option "Visible & Readonly, Disabled always" for field "Visibility and default state" in the GTM template.
+
 ## [1.2.0] - 2025-01-10
 ### Added
 - Added custom CSS build that is used as the default stylesheets source instead of the original plugin CSS.
@@ -293,7 +322,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - The first version of the package has been released.
 
-[Unreleased]: https://github.com/68publishers/cookie-consent/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/68publishers/cookie-consent/compare/v1.3.6...HEAD
+[1.3.6]: https://github.com/68publishers/cookie-consent/compare/v1.3.5...v1.3.6
+[1.3.5]: https://github.com/68publishers/cookie-consent/compare/v1.3.4...v1.3.5
+[1.3.4]: https://github.com/68publishers/cookie-consent/compare/v1.3.3...v1.3.4
+[1.3.3]: https://github.com/68publishers/cookie-consent/compare/v1.3.2...v1.3.3
+[1.3.2]: https://github.com/68publishers/cookie-consent/compare/v1.3.1...v1.3.2
+[1.3.1]: https://github.com/68publishers/cookie-consent/compare/v1.3.0...v1.3.1
+[1.3.0]: https://github.com/68publishers/cookie-consent/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/68publishers/cookie-consent/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/68publishers/cookie-consent/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/68publishers/cookie-consent/compare/v0.5.3...v1.0.0
