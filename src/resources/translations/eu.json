@@ -1,0 +1,59 @@
+{
+    "modal_trigger_title": "Cookien konfigurazioa",
+
+    "consent_modal_title": "Cookieak erabiltzen ditugu!",
+    "consent_modal_description": "Webgune honek funtsezko cookieak erabiltzen ditu funtzionamendu egokia bermatzeko, eta jarraipeneko cookieak harekin nola elkarreragiten duen ulertzeko. Azken horiek aurretik baimena emanda baino ez dira instalatuko.",
+    "consent_modal_primary_btn": "Onartu",
+    "consent_modal_secondary_btn_settings": "Konfiguratu",
+    "consent_modal_secondary_btn_accept_necessary": "Onartu beharrezkoak",
+
+    "settings_modal_title": "Cookien konfigurazioa",
+    "settings_modal_save_settings_btn": "Gorde",
+    "settings_modal_accept_all_btn": "Onartu guztiak",
+    "settings_modal_reject_all_btn": "Onartu beharrezkoak",
+    "settings_modal_close_btn_label": "Itxi",
+
+    "settings_modal_before_consent_title": "Cookien erabilera",
+    "settings_modal_before_consent_description": "Cookieak erabiltzen ditugu webgunearen oinarrizko funtzionaltasunak bermatzeko eta zure esperientzia hobetzeko. Kategoria bakoitzean, nahi duzunean onartu edo baztertu nahi dituzun aukera dezakezu.",
+
+    "settings_modal_after_consent_title": "Informazio gehiago",
+    "settings_modal_after_consent_description": "Gure cookie-politikei eta zure aukerei buruzko edozein kontsulta dela eta, jar zaitez gurekin harremanetan.",
+
+    "functionality_storage_title": "Funtzionalitate Cookieak",
+    "functionality_storage_description": "Cookie hauek beharrezkoak dira gure webgunearen funtzionamendu egokirako. Cookie horiek gabe, baliteke webguneak behar bezala ez funtzionatzea.",
+
+    "personalization_storage_title": "Pertsonalizazio Cookieak",
+    "personalization_storage_description": "Pertsonalizazio cookieak hirugarrenen cookieak dira, eta edukia pertsonalizatzen eta hainbat webgune eta gailutan erabiltzaileen jarraipena egiten laguntzen die.",
+
+    "security_storage_title": "Segurtasun Cookieak",
+    "security_storage_description": "Segurtasun cookieek segurtasunarekin lotutako informazioa gordetzeko aukera ematen dute, hala nola autentifikazioa, iruzurraren aurkako babesa eta erabiltzaileak babesteko beste baliabide batzuk.",
+
+    "ad_storage_title": "Publizitate Cookieak",
+    "ad_storage_description": "Publizitate cookieak guk edo gure bazkideek erabiltzen dituzte eduki edo iragarki garrantzitsuak erakusteko, bai gure webgunean, bai hirugarrenen webguneetan. Horri esker, zure interesetan oinarritutako profilak sor ditzakegu, hau da, profil anonimizatuak. Informazio hori oinarri hartuta, normalean ezin da zuzenean pertsona gisa identifikatu, datu anonimizatuak baino ez baitira erabiltzen. Zure adostasuna adierazi ezean, ez duzu zure interesetara egokitutako edukirik edo iragarkirik jasoko.",
+
+    "ad_user_data_title": "Ad user data",
+    "ad_user_data_description": "",
+
+    "ad_personalization_title": "Ad personalization",
+    "ad_personalization_description": "",
+
+    "analytics_storage_title": "Analitika Cookieak",
+    "analytics_storage_description": "Analitikako cookie-ek gure webgunearen eta publizitate-kanpainen errendimendua neurtzeko aukera ematen digute. Gure webgunera egindako bisiten kopurua eta jatorria zehazteko erabiltzen ditugu. Cookie hauen bidez lortutako datuak modu agregatuan prozesatzen ditugu, gure webguneko erabiltzaile espezifikoak seinalatzen dituzten identifikatzailerik erabili gabe. Zure bisitarekin lotutako cookie analitikoen erabilera desaktibatzen baduzu, errendimendua aztertzeko eta gure neurriak optimizatzeko gaitasuna galduko dugu.",
+
+    "cookie_table_col_name": "Izena",
+    "cookie_table_col_purpose": "Deskribapen",
+    "cookie_table_col_processing_time": "Iraungitzea",
+    "cookie_table_col_provider": "Hornitzailea",
+    "cookie_table_col_type": "Mota",
+    "cookie_table_col_link": "Esteka",
+    "cookie_table_col_link_find_out_more": "Esteka",
+    "cookie_table_col_category": "Kategoria",
+
+    "processing_time_session": "Saioa",
+    "processing_time_persistent": "Iraunkorra",
+
+    "cookie_type_1st_party": "Propioak",
+    "cookie_type_3rd_party": "Hirugarrenenak",
+
+    "find_out_more": "Informazio gehiago"
+}
