@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Added Basque translations.
+
 ### Changed
 - Reverted change that removes a focus from an element created by the "Settings modal trigger selector" option after the settings modal is closed. Even if it prevented the page from scrolling, it is a violation of accessibility rules.
 

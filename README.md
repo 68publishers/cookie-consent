@@ -152,6 +152,7 @@ The package comes with the default translations for the following languages:
 - [Swedish - sv](src/resources/translations/se.json)
 - [Ukrainian - uk](src/resources/translations/ua.json)
 - [Portuguese - pt](src/resources/translations/pt.json)
+- [Basque - eu](src/resources/translations/eu.json)
 
 Translations that will be loaded and accessible for the widget are taken from the field `Locales`. Each locale must be defined on a new line.
 Alternatively, from version `1.0.0`, the URL from which the translations are to be downloaded can also be entered.
