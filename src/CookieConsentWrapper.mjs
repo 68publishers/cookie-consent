@@ -17,6 +17,8 @@ import { CookieTables } from './CookieTable/CookieTables.mjs';
 import { integrateCmpApi } from './Integration/CmpApiIntegration.mjs';
 import sha256 from 'crypto-js/sha256.js';
 
+import { checkVisibility } from './Ui/Utils.mjs';
+
 const version = pkg.version;
 
 export class CookieConsentWrapper {
@@ -52,6 +54,9 @@ export class CookieConsentWrapper {
         this._cookieTables = new CookieTables();
         this._eventTriggers = {};
         this._user = User.createDefault();
+        this.utils = {
+            checkVisibility,
+        };
     }
 
     get version() {
@@ -227,10 +232,10 @@ export class CookieConsentWrapper {
 
         this._initializationTriggered = true;
 
-        const doInitCookieConsent = async function () {
-            // load stylesheets
-            StylesheetLoader.loadFromConfig(document, self._config.uiOptions);
+        // load stylesheets
+        StylesheetLoader.loadFromConfig(document, self._config.uiOptions);
 
+        const doInitCookieConsent = async function () {
             // init cookie consent
             // noinspection JSValidateTypes
             self._cookieConsent = window.initCookieConsent();

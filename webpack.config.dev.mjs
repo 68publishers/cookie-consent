@@ -58,21 +58,9 @@ export default {
                         {
                             search: '^\\s*_array\\[0\\] = focusable_elems\\[0\\];\\s+_array\\[1\\] = focusable_elems\\[focusable_elems\\.length - 1\\];$',
                             replace: `
-                            focusable_elems = Array.from(focusable_elems).filter(el => {
-                                const focusableOnShowConsent = el.dataset.ccFocusableOnShowConsent;
-                                
-                                if (undefined === focusableOnShowConsent) {
-                                    return true;
-                                }
-
-                                if (('true' === focusableOnShowConsent && !consent_modal_visible) || ('false' === focusableOnShowConsent && consent_modal_visible)) {                                    
-                                    return false;
-                                }
-
-                                return true;
-                            });
-                            _array[0] = focusable_elems.find(el => 'true' === el.dataset.ccFocusTrapStart) || focusable_elems[0];
-                            _array[1] = focusable_elems[focusable_elems.length - 1];
+                            const focusable_elems_arr = Array.from(focusable_elems);
+                            _array[0] = focusable_elems_arr.find(el => CookieConsentWrapper.utils.checkVisibility(el));
+                            _array[1] = focusable_elems_arr.reverse().find(el => CookieConsentWrapper.utils.checkVisibility(el));
                             `,
                             flags: 'gm',
                             strict: true
@@ -82,8 +70,8 @@ export default {
                             replace: `
                             _getModalFocusableData();
                             focusable_edges = consent_modal_focusable;
+                            focused_modal.addEventListener('transitionend', () => setFocus(focusable_edges[0]), {once: true});
                             _addClass(html_dom, "show--consent");
-                            setTimeout(() => setFocus(focusable_edges[0]), 250);
                             `,
                             flags: 'g',
                             strict: true,
@@ -93,8 +81,8 @@ export default {
                             replace: `
                             _getModalFocusableData();
                             focusable_edges = settings_modal_focusable;
+                            focused_modal.addEventListener('transitionend', () => setFocus(focusable_edges[0]), {once: true});
                             _addClass(html_dom, "show--settings");
-                            setTimeout(() => setFocus(focusable_edges[0]), 250);
                             `,
                             flags: 'g',
                             strict: true,
