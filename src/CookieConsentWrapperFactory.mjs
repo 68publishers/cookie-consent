@@ -39,9 +39,24 @@ export class CookieConsentWrapperFactory {
             },
         }
 
-        cookieConsentWrapper.init(window, document);
+        if (this.#shouldInit()) {
+            cookieConsentWrapper.init(window, document);
+        }
+
 
         return cookieConsentWrapper;
+    }
+
+    #shouldInit() {
+        try {
+            if (window.self === window.top) {
+                return true;
+            }
+
+            return !window.top.location.hostname;
+        } catch (e) { // eslint-disable-line no-unused-vars
+            return true;
+        }
     }
 
     #createGtagFunction() {

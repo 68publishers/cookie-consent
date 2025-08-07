@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Fixed
+- The widget is now not displayed inside iframes if the iframe is displayed on the same origin as the main window. This prevents the widget from being displayed multiple times.
+- The widget will wait for the `DOMContentLoaded` event to occur if `document.body` does not yet exist.
 
 ## [1.4.0] - 2025-06-17
 ### Added
