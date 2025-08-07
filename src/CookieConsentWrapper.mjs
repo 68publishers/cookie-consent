@@ -379,7 +379,7 @@ export class CookieConsentWrapper {
 
         let initPromise = null;
 
-        if (!this._config.pluginOptions.init_after_dom_content_loaded) {
+        if (!this._config.pluginOptions.init_after_dom_content_loaded && document.body) {
             initPromise = doInitCookieConsent();
         }
 
