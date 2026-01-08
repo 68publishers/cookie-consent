@@ -23,6 +23,7 @@ An extended integration of [orestbida/cookieconsent](https://github.com/orestbid
 * [Triggering tags based on the consent](#triggering-tags-based-on-the-consent)
 * [Accessing the wrapper in the JavaScript](#accessing-the-wrapper-in-the-javascript)
 * [Integration with CMP application](#integration-with-cmp-application)
+* [Integration with Mobile Application](#integration-with-mobile-application)
 * [How the GTM integration works](#how-the-gtm-integration-works)
 * [How to update already published container](#how-to-update-already-published-containers)
   * [Migration from v0.4 to v0.5](#migration-from-v04-to-v05)
@@ -192,10 +193,10 @@ You can define a message that will be displayed in the consent modal's descripti
 
 ### Page scripts
 
-| Field               | Description                                                          |
-|---------------------|----------------------------------------------------------------------|
-| Manage page scripts | Enable if you want to easily manage existing `<script>` tags.        |
-| Script selector     | The name of a data attribute that is used for managed <script> tags. |
+| Field               | Description                                                            |
+|---------------------|------------------------------------------------------------------------|
+| Manage page scripts | Enable if you want to easily manage existing `<script>` tags.          |
+| Script selector     | The name of a data attribute that is used for managed `<script>` tags. |
 
 Managing page scripts is disabled by default. When the feature is enabled then the following notation can be used for scripts you want to manage:
 
@@ -398,6 +399,12 @@ If you check the `Cookies API enabled` option then the widget will automatically
 Below this field you can define which columns the cookie table should contain.
 
 <img src="docs/images/widget-with-cookie-tables.png" alt="Widget with cookie tables" width="600">
+
+## Integration with Mobile Application
+
+Integration with the mobile application is described in a separate document:
+
+[Integration with Mobile Application](docs/integration-with-mobile-application.md).
 
 ## How the GTM integration works
 
