@@ -1,0 +1,59 @@
+{
+    "modal_trigger_title": "Cookie 設定",
+
+    "consent_modal_title": "我們使用 Cookie！",
+    "consent_modal_description": "本網站使用必要的 Cookie 以確保其正常運作，並使用追蹤 Cookie 來了解您如何與網站互動。後者僅在您同意後才會設定。",
+    "consent_modal_primary_btn": "我同意",
+    "consent_modal_secondary_btn_settings": "自訂",
+    "consent_modal_secondary_btn_accept_necessary": "僅接受必要項目",
+
+    "settings_modal_title": "Cookie 設定",
+    "settings_modal_save_settings_btn": "儲存設定",
+    "settings_modal_accept_all_btn": "接受全部",
+    "settings_modal_reject_all_btn": "僅接受必要項目",
+    "settings_modal_close_btn_label": "關閉",
+
+    "settings_modal_before_consent_title": "Cookie 使用說明",
+    "settings_modal_before_consent_description": "我們使用 Cookie 來確保網站的基本功能並提升您的線上體驗。您可以隨時選擇啟用或停用各類別的 Cookie。",
+
+    "settings_modal_after_consent_title": "更多資訊",
+    "settings_modal_after_consent_description": "若您對我們的 Cookie 政策或您的選擇有任何疑問，請與我們聯絡。",
+
+    "functionality_storage_title": "功能性 Cookie",
+    "functionality_storage_description": "這些 Cookie 對於網站的正常運作至關重要。若沒有這些 Cookie，網站可能無法正常運作。",
+
+    "personalization_storage_title": "個人化 Cookie",
+    "personalization_storage_description": "個人化 Cookie 可能包含第三方 Cookie，用於協助個人化內容並追蹤使用者跨網站和裝置的行為。",
+
+    "security_storage_title": "安全性 Cookie",
+    "security_storage_description": "安全性 Cookie 允許儲存與安全相關的資訊，例如驗證、詐欺防護及其他保護使用者的措施。",
+
+    "ad_storage_title": "廣告 Cookie",
+    "ad_storage_description": "廣告 Cookie 由我們或我們的合作夥伴使用，旨在於我們的網站或第三方網站上向您顯示相關內容或廣告。這使我們能夠根據您的興趣建立設定檔，即所謂的「假名化設定檔」(pseudonymised profiles)。根據這些資訊，通常無法直接識別您的個人身分，因為僅使用假名化資料。除非您表示同意，否則您將不會收到針對您興趣量身打造的內容和廣告。",
+
+    "ad_user_data_title": "廣告使用者資料",
+    "ad_user_data_description": "",
+
+    "ad_personalization_title": "廣告個人化",
+    "ad_personalization_description": "",
+
+    "analytics_storage_title": "分析 Cookie",
+    "analytics_storage_description": "分析 Cookie 讓我們能夠衡量網站和廣告活動的成效。我們使用它們來確定網站的訪問次數和流量來源。我們以匯總方式處理透過這些 Cookie 獲得的數據，而不使用可指向特定使用者的識別碼。如果您停用與您訪問相關的分析 Cookie，我們將無法分析成效並優化我們的措施。",
+
+    "cookie_table_col_name": "名稱",
+    "cookie_table_col_purpose": "說明",
+    "cookie_table_col_processing_time": "到期日",
+    "cookie_table_col_provider": "提供者",
+    "cookie_table_col_type": "類型",
+    "cookie_table_col_link": "連結",
+    "cookie_table_col_link_find_out_more": "連結",
+    "cookie_table_col_category": "類別",
+
+    "processing_time_session": "工作階段",
+    "processing_time_persistent": "持續性",
+
+    "cookie_type_1st_party": "第一方",
+    "cookie_type_3rd_party": "第三方",
+
+    "find_out_more": "了解更多"
+}
