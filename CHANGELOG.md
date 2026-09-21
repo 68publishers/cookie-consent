@@ -7,7 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- Added Chinese (Traditional) translations.
+- Added Taiwanese Mandarin translations (`zh-TW`).
+
+### Fixed
+- Fixed links to the Swedish and Ukrainian translations in the README.
 
 ### Changed
 - Added the `categories` entry in the GTM template, which is required for publishing the template in the [Community Template Gallery](https://tagmanager.google.com/gallery).
