@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Added Taiwanese Mandarin translations (`zh-TW`).
+
+### Fixed
+- Fixed links to the Swedish and Ukrainian translations in the README.
+
+### Changed
+- Added the `categories` entry in the GTM template, which is required for publishing the template in the [Community Template Gallery](https://tagmanager.google.com/gallery).
 
 ## [1.4.1] - 2025-08-08
 ### Fixed
