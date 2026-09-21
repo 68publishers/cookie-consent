@@ -92,3 +92,10 @@ jobs:
           prerelease: ${{ startsWith(github.event.inputs.release-type, 'pre') }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Sync the GTM Community Template Gallery repository
+        if: startsWith(github.event.inputs.release-type, 'pre') != true
+        continue-on-error: true
+        run: gh api repos/68publishers/cookie-consent-gtm-template/dispatches -f event_type=cookie-consent-released
+        env:
+          GH_TOKEN: ${{ secrets.GTM_TEMPLATE_REPO_TOKEN }}

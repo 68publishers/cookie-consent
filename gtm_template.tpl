@@ -13,6 +13,7 @@ ___INFO___
   "id": "cvt_temp_public_id",
   "version": 1,
   "securityGroups": [],
+  "categories": ["UTILITY", "TAG_MANAGEMENT"],
   "displayName": "Cookie Consent",
   "brand": {
     "id": "68publishers",
