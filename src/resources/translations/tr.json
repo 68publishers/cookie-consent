@@ -1,0 +1,59 @@
+{
+    "modal_trigger_title": "Çerez ayarları",
+
+    "consent_modal_title": "Çerez kullanıyoruz!",
+    "consent_modal_description": "Bu web sitesi, düzgün çalışmasını sağlamak için zorunlu çerezler ve siteyle nasıl etkileşim kurduğunuzu anlamak için izleme çerezleri kullanır. İzleme çerezleri yalnızca onayınız alındıktan sonra ayarlanacaktır.",
+    "consent_modal_primary_btn": "Kabul ediyorum",
+    "consent_modal_secondary_btn_settings": "Özelleştir",
+    "consent_modal_secondary_btn_accept_necessary": "Yalnızca zorunluları kabul et",
+
+    "settings_modal_title": "Çerez ayarları",
+    "settings_modal_save_settings_btn": "Ayarları kaydet",
+    "settings_modal_accept_all_btn": "Tümünü kabul et",
+    "settings_modal_reject_all_btn": "Yalnızca zorunluları kabul et",
+    "settings_modal_close_btn_label": "Kapat",
+
+    "settings_modal_before_consent_title": "Çerez kullanımı",
+    "settings_modal_before_consent_description": "Web sitesinin temel işlevlerini sağlamak ve çevrimiçi deneyiminizi iyileştirmek için çerezler kullanıyoruz. Her kategori için istediğiniz zaman onay verebilir veya onayınızı geri çekebilirsiniz.",
+
+    "settings_modal_after_consent_title": "Daha fazla bilgi",
+    "settings_modal_after_consent_description": "Çerez politikamız ve tercihleriniz hakkında herhangi bir sorunuz için lütfen bizimle iletişime geçin.",
+
+    "functionality_storage_title": "İşlevsellik çerezleri",
+    "functionality_storage_description": "Bu çerezler, web sitemizin düzgün çalışması için gereklidir. Bu çerezler olmadan web sitesi düzgün çalışmayabilir.",
+
+    "personalization_storage_title": "Kişiselleştirme çerezleri",
+    "personalization_storage_description": "Kişiselleştirme çerezleri; içeriği kişiselleştirmek ve kullanıcıları farklı web siteleri ile cihazlar arasında izlemek için üçüncü taraf çerezleri kullanabilir.",
+
+    "security_storage_title": "Güvenlik çerezleri",
+    "security_storage_description": "Güvenlik çerezleri; kimlik doğrulama, dolandırıcılığa karşı koruma ve kullanıcıyı korumaya yönelik diğer önlemler gibi güvenlikle ilgili bilgilerin saklanmasına olanak tanır.",
+
+    "ad_storage_title": "Reklam çerezleri",
+    "ad_storage_description": "Reklam çerezleri; hem kendi sitemizde hem de üçüncü taraf sitelerinde size ilgili içerik veya reklamlar göstermek amacıyla bizim veya iş ortaklarımız tarafından kullanılır. Bu, ilgi alanlarınıza dayalı, takma adlandırılmış profiller oluşturmamıza olanak tanır. Bu bilgilere dayanarak yalnızca takma adlandırılmış veriler kullanıldığı için sizi bir kişi olarak doğrudan tanımlamak genellikle mümkün değildir. Onayınızı vermediğiniz sürece ilgi alanlarınıza özel içerik ve reklam almazsınız.",
+
+    "ad_user_data_title": "Reklam kullanıcı verileri",
+    "ad_user_data_description": "",
+
+    "ad_personalization_title": "Reklam kişiselleştirme",
+    "ad_personalization_description": "",
+
+    "analytics_storage_title": "Analiz çerezleri",
+    "analytics_storage_description": "Analiz çerezleri; web sitemizin ve reklam kampanyalarımızın performansını ölçmemize olanak tanır. Web sitemize yapılan ziyaret sayısını ve ziyaretlerin kaynaklarını belirlemek için bunları kullanırız. Bu çerezler aracılığıyla elde edilen verileri, web sitemizin belirli kullanıcılarına işaret eden tanımlayıcılar kullanmadan toplu olarak işliyoruz. Ziyaretinizle ilgili olarak analiz çerezlerinin kullanımını devre dışı bırakırsanız performansı analiz etme ve önlemlerimizi optimize etme yeteneğimizi kaybederiz.",
+
+    "cookie_table_col_name": "Ad",
+    "cookie_table_col_purpose": "Açıklama",
+    "cookie_table_col_processing_time": "Geçerlilik süresi",
+    "cookie_table_col_provider": "Sağlayıcı",
+    "cookie_table_col_type": "Tür",
+    "cookie_table_col_link": "Bağlantı",
+    "cookie_table_col_link_find_out_more": "Bağlantı",
+    "cookie_table_col_category": "Kategori",
+
+    "processing_time_session": "Oturum",
+    "processing_time_persistent": "Kalıcı",
+
+    "cookie_type_1st_party": "Birinci taraf",
+    "cookie_type_3rd_party": "Üçüncü taraf",
+
+    "find_out_more": "daha fazla bilgi"
+}
