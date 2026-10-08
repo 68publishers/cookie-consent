@@ -21,6 +21,7 @@ An extended integration of [orestbida/cookieconsent](https://github.com/orestbid
 * [Using other CDN or self-hosted](#using-other-cdn-or-self-hosted)
 * [Settings modal trigger](#settings-modal-trigger)
 * [Triggering tags based on the consent](#triggering-tags-based-on-the-consent)
+* [Consent state in the data layer](#consent-state-in-the-data-layer)
 * [Accessing the wrapper in the JavaScript](#accessing-the-wrapper-in-the-javascript)
 * [Integration with CMP application](#integration-with-cmp-application)
 * [How the GTM integration works](#how-the-gtm-integration-works)
@@ -308,6 +309,37 @@ And a tag that is fired with the trigger:
 
 <img src="docs/images/analytics-storage-tag.png" alt="Analytics storage trigger" width="600">
 
+## Consent state in the data layer
+
+The consent state is always sent to the data layer as [Google Consent Mode](https://developers.google.com/tag-platform/devguides/consent) commands (`gtag('consent', 'default' | 'update', {...})`). GTM processes those commands internally, so their values cannot be read by Data Layer Variables and no trigger can be attached to them.
+
+If you need the state of all storages (both `granted` and `denied`) in GTM, enable the option `Push consent to the data layer as an event` in the `Data layer` section of the tag. The widget then pushes a regular data layer event immediately after every `default` and `update` command, with the same values:
+
+```javascript
+dataLayer.push({
+  event: '68publishers_consent', // configurable through the option "Data layer event name"
+  consent_status: 'default', // or 'update'
+  functionality_storage: 'granted',
+  security_storage: 'granted',
+  personalization_storage: 'denied',
+  ad_storage: 'denied',
+  ad_user_data: 'denied',
+  ad_personalization: 'denied',
+  analytics_storage: 'granted'
+});
+```
+
+The values can then be read by Data Layer Variables (e.g. `analytics_storage`, `consent_status`) and tags can be fired by a Custom Event trigger with the configured event name.
+
+Things to keep in mind:
+
+- The option is disabled by default.
+- The `default` event is pushed in the Consent Initialization, but GTM processes it after the `Container Loaded` event and before `DOM Ready`. The values are therefore **not** available in tags fired by the `Initialization` or `All Pages` triggers.
+- The consent event is always pushed before the [event triggers](#triggering-tags-based-on-the-consent) of the storages (`68publishers_*`), so tags fired by these triggers can already read the consent values.
+- For a returning visitor, the event is pushed twice on every page, first with the `default` status and then with the `update` status once the widget is loaded. Both contain the same values, so tags fired by the Custom Event trigger run twice.
+- The event is also pushed with the `update` status after the user's first action in the consent modal and after every change in the settings modal.
+- The storage keys are pushed to the top level of the data model, so they overwrite any variables with the same names pushed by other tools.
+
 ## Accessing the wrapper in the JavaScript
 
 The wrapper is accessible in the `window` under the name `CookieConsentWrapper`. The recommended way how to manipulate with it is through event callbacks because the wrapper may not be fully initialized at the time your script is executed.
@@ -408,11 +440,13 @@ Below this field you can define which columns the cookie table should contain.
     - :gear: A configuration for `CookieConsentWrapper` object is created from values defined inside the tag
     - :ballot_box_with_check: The default consent is resolved according to the configuration and already existent user preferences
     - :arrows_counterclockwise: The default consent is sent into [native Google Consent API](https://developers.google.com/tag-platform/devguides/consent#gtag.js)
+    - :arrows_counterclockwise: The default consent is pushed into the data layer as an event (if [enabled](#consent-state-in-the-data-layer))
     - :hourglass_flowing_sand: Custom [triggers](#triggering-tags-based-on-the-consent) for granted storage types are scheduled into a `gtag` function
     - :arrow_double_down: A script with the wrapper initialization is injected into a page
 
 #### GTM Container loaded
 
+- :fire: The data layer event with the default consent is processed (if [enabled](#consent-state-in-the-data-layer))
 - :fire: Custom triggers for granted storage types are fired
 
 #### Page loaded
@@ -428,6 +462,7 @@ Below this field you can define which columns the cookie table should contain.
 #### User updates his preferences through the setting modal
 
 - :arrows_counterclockwise: The consent update is sent into [native Google Consent API](https://developers.google.com/tag-platform/devguides/consent#gtag.js)
+- :arrows_counterclockwise: The consent update is pushed into the data layer as an event (if [enabled](#consent-state-in-the-data-layer))
 - :fire: Custom triggers for newly granted storage types are fired
 - :fire: Callbacks for an [event](#consent-events) `CookieConsentWrapper.on('consent:changed')` are fired
 - :arrows_counterclockwise: The consent is sent into the CMP application
