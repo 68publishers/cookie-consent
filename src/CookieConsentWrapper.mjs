@@ -155,6 +155,10 @@ export class CookieConsentWrapper {
         this._config.cmpApiOptions.merge(options || {});
     }
 
+    setDataLayerOptions(options) {
+        this._config.dataLayerOptions.merge(options || {});
+    }
+
     addStorage(config) {
         this._storagePool.add(new Storage(config || {}));
     }

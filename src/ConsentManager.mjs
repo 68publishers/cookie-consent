@@ -92,6 +92,7 @@ export class ConsentManager {
         }
 
         this._gtag('consent', 'update', consent);
+        this._pushConsentToDataLayer(consent);
 
         if (0 >= accepted.length) {
             return consent;
@@ -109,6 +110,21 @@ export class ConsentManager {
         }
 
         return consent;
+    }
+
+    _pushConsentToDataLayer(consent) {
+        const options = this._config.dataLayerOptions;
+
+        if (!options.push_consent) {
+            return;
+        }
+
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: options.consent_event_name,
+            consent_status: 'update',
+            ...consent,
+        });
     }
 
     _autoClearCookies() {

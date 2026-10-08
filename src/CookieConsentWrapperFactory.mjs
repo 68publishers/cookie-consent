@@ -20,6 +20,7 @@ export class CookieConsentWrapperFactory {
         this.#setupEventTriggers(cookieConsentWrapper, wrapperConfig);
         this.#setupTranslations(cookieConsentWrapper, wrapperConfig);
         this.#setupCmpApiOptions(cookieConsentWrapper, wrapperConfig);
+        this.#setupDataLayerOptions(cookieConsentWrapper, wrapperConfig);
 
         if ('cookieConsentWrapperEvents' in window) {
             for (let i = 0; i < window.cookieConsentWrapperEvents.length; i++) {
@@ -162,6 +163,12 @@ export class CookieConsentWrapperFactory {
     #setupCmpApiOptions(wrapper, wrapperConfig) {
         if ('cmp_api_options' in wrapperConfig && 'object' === typeof wrapperConfig.cmp_api_options) {
             wrapper.setCmpApiOptions(wrapperConfig.cmp_api_options);
+        }
+    }
+
+    #setupDataLayerOptions(wrapper, wrapperConfig) {
+        if ('data_layer_options' in wrapperConfig && 'object' === typeof wrapperConfig.data_layer_options) {
+            wrapper.setDataLayerOptions(wrapperConfig.data_layer_options);
         }
     }
 }

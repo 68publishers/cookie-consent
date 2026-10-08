@@ -4,6 +4,7 @@ import { SettingsModalOptions } from './SettingsModalOptions.mjs';
 import { UiOptions } from './UiOptions.mjs';
 import { AutoClearOptions } from './AutoClearOptions.mjs';
 import { CmpApiOptions } from './CmpApiOptions.mjs';
+import { DataLayerOptions } from './DataLayerOptions.mjs';
 
 export class Config {
     constructor(scriptBasePath) {
@@ -13,6 +14,7 @@ export class Config {
         this.uiOptions = new UiOptions(scriptBasePath);
         this.autoClearOptions = new AutoClearOptions();
         this.cmpApiOptions = new CmpApiOptions();
+        this.dataLayerOptions = new DataLayerOptions();
     }
 
     exportCookieConsentConfig() {
