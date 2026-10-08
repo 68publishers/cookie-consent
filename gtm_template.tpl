@@ -1495,6 +1495,42 @@ ___TEMPLATE_PARAMETERS___
   },
   {
     "type": "GROUP",
+    "name": "data_layer",
+    "displayName": "Data layer",
+    "groupStyle": "ZIPPY_OPEN",
+    "subParams": [
+      {
+        "type": "CHECKBOX",
+        "name": "push_consent_to_data_layer",
+        "checkboxText": "Push consent to the data layer as an event",
+        "simpleValueType": true,
+        "defaultValue": false,
+        "help": "The consent state is always sent to the data layer as Google Consent Mode commands (\u003ccode\u003egtag(\u0027consent\u0027, \u0027default\u0027 | \u0027update\u0027, ...)\u003c/code\u003e). GTM processes those commands internally, so their values cannot be read by Data Layer Variables and no trigger can be attached to them. If the option is enabled, the widget also pushes a regular data layer event with the same consent state after every \u003ccode\u003edefault\u003c/code\u003e and \u003ccode\u003eupdate\u003c/code\u003e command, e.g. \u003ccode\u003e{event: \u002768publishers_consent\u0027, consent_status: \u0027update\u0027, analytics_storage: \u0027granted\u0027, ...}\u003c/code\u003e. Values can then be read by Data Layer Variables and tags can be fired by a Custom Event trigger."
+      },
+      {
+        "type": "TEXT",
+        "name": "consent_data_layer_event_name",
+        "displayName": "Data layer event name",
+        "simpleValueType": true,
+        "defaultValue": "68publishers_consent",
+        "valueValidators": [
+          {
+            "type": "NON_EMPTY"
+          }
+        ],
+        "enablingConditions": [
+          {
+            "paramName": "push_consent_to_data_layer",
+            "paramValue": true,
+            "type": "EQUALS"
+          }
+        ],
+        "help": "The name of the event pushed into the data layer. Use it in a Custom Event trigger."
+      }
+    ]
+  },
+  {
+    "type": "GROUP",
     "name": "translation_settings",
     "displayName": "Translation settings",
     "groupStyle": "ZIPPY_OPEN",
@@ -2127,6 +2163,7 @@ ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 const log = require('logToConsole');
 const setDefaultConsentState = require('setDefaultConsentState');
 const createArgumentsQueue = require('createArgumentsQueue');
+const createQueue = require('createQueue');
 const queryPermission = require('queryPermission');
 const getCookieValues = require('getCookieValues');
 const injectScript = require('injectScript');
@@ -2140,6 +2177,7 @@ log('data =', data);
 
 // create gtag
 const gtag = createArgumentsQueue('gtag', 'dataLayer');
+const dataLayerPush = createQueue('dataLayer');
 
 // create temporary wrapper in the window
 const temporaryWrapper = (function () {
@@ -2302,6 +2340,22 @@ for (let key in storagePool) {
 // setup default consents
 setDefaultConsentState(defaultConsents);
 
+// push default consents to the data layer as an event
+if (data.push_consent_to_data_layer) {
+  const consentEvent = {
+    event: data.consent_data_layer_event_name,
+    consent_status: 'default'
+  };
+
+  for (let key in defaultConsents) {
+    consentEvent[key] = defaultConsents[key];
+  }
+
+  dataLayerPush(consentEvent);
+
+  log('Event "' + consentEvent.event + '" with the default consent pushed into the data layer.');
+}
+
 // fire event triggers for granted consents
 for (let eventTriggerKey in eventTriggers) {
   const eventTrigger = eventTriggers[eventTriggerKey];
@@ -2432,6 +2486,11 @@ setInWindow('cc_wrapper_config', {
   user_options: {
     identity: 'default' !== data.user_identity ? data.user_identity : null,
     attributes: userAttributes
+  },
+
+  data_layer_options: {
+    push_consent: data.push_consent_to_data_layer || false,
+    consent_event_name: data.consent_data_layer_event_name || '68publishers_consent'
   },
 
   cmp_api_options: {
