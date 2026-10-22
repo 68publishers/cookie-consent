@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - [Template] Added the options `Push consent to the data layer as an event` and `Data layer event name`. If enabled, the consent state of all storages is pushed into the data layer as an event (`68publishers_consent` by default) after every `gtag('consent', 'default' | 'update', ...)` command.
 - Added the `data_layer_options` section in the wrapper configuration. The wrapper pushes the consent event into the data layer after every consent update if the option `push_consent` is enabled.
+- Added Turkish translations (`tr`).
 
 ## [1.5.0] - 2026-10-04
 ### Added
