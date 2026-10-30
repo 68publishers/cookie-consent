@@ -337,7 +337,7 @@ Things to keep in mind:
 - The option is disabled by default.
 - The `default` event is pushed in the Consent Initialization, but GTM processes it after the `Container Loaded` event and before `DOM Ready`. The values are therefore **not** available in tags fired by the `Initialization` or `All Pages` triggers.
 - The consent event is always pushed before the [event triggers](#triggering-tags-based-on-the-consent) of the storages (`68publishers_*`), so tags fired by these triggers can already read the consent values.
-- For a returning visitor, the event is pushed twice on every page, first with the `default` status and then with the `update` status once the widget is loaded. Both contain the same values, so tags fired by the Custom Event trigger run twice.
+- For a returning visitor, the event is pushed only once on every page, with the `default` status. The widget does not push the same consent again with the `update` status once it is loaded. Without the GTM template, the widget pushes the `update` event on every page.
 - The event is also pushed with the `update` status after the user's first action in the consent modal and after every change in the settings modal.
 - The storage keys are pushed to the top level of the data model, so they overwrite any variables with the same names pushed by other tools.
 

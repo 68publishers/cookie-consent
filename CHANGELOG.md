@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- [Template] The template tells the widget that it has already pushed the default consent into the data layer, so a returning visitor no longer gets a duplicate `update` event with the same consent on every page.
+- The consent `update` event is no longer pushed into the data layer when the widget is loaded for a returning visitor if the default consent has already been pushed (the `default_consent_pushed` option in `data_layer_options`). The `gtag('consent', 'update', ...)` command is sent as before.
 
 ## [1.6.0] - 2026-10-22
 ### Added
