@@ -29,7 +29,8 @@ export class ConsentManager {
 
     onAccept() {
         setTimeout(() => {
-            const consent = this.first_action_triggered ? this._getContent() : this._updateConsent();
+            // the consent is the same as the default one, which the GTM template may have already pushed into the data layer
+            const consent = this.first_action_triggered ? this._getContent() : this._updateConsent(!this._config.dataLayerOptions.default_consent_pushed);
             this.first_action_triggered = false;
 
             this._showModalAgainIfAnyStorageIsExpired();
@@ -74,7 +75,7 @@ export class ConsentManager {
         return consent;
     }
 
-    _updateConsent() {
+    _updateConsent(pushToDataLayer = true) {
         const storageArr = this._storagePool.all();
         const consent = {};
         const accepted = [];
@@ -92,7 +93,10 @@ export class ConsentManager {
         }
 
         this._gtag('consent', 'update', consent);
-        this._pushConsentToDataLayer(consent);
+
+        if (pushToDataLayer) {
+            this._pushConsentToDataLayer(consent);
+        }
 
         if (0 >= accepted.length) {
             return consent;
