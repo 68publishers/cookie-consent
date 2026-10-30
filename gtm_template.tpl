@@ -2490,7 +2490,8 @@ setInWindow('cc_wrapper_config', {
 
   data_layer_options: {
     push_consent: data.push_consent_to_data_layer || false,
-    consent_event_name: data.consent_data_layer_event_name || '68publishers_consent'
+    consent_event_name: data.consent_data_layer_event_name || '68publishers_consent',
+    default_consent_pushed: data.push_consent_to_data_layer || false
   },
 
   cmp_api_options: {
