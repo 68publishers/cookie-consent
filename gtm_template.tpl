@@ -197,29 +197,6 @@ ___TEMPLATE_PARAMETERS___
       },
       {
         "type": "SELECT",
-        "name": "consent_modal_transition",
-        "displayName": "Transition",
-        "macrosInSelect": false,
-        "selectItems": [
-          {
-            "value": "zoom",
-            "displayValue": "zoom"
-          },
-          {
-            "value": "slide",
-            "displayValue": "slide"
-          }
-        ],
-        "simpleValueType": true,
-        "defaultValue": "zoom",
-        "valueValidators": [
-          {
-            "type": "NON_EMPTY"
-          }
-        ]
-      },
-      {
-        "type": "SELECT",
         "name": "consent_modal_primary_button_role",
         "displayName": "Primary button role",
         "macrosInSelect": false,
@@ -323,21 +300,22 @@ ___TEMPLATE_PARAMETERS___
       },
       {
         "type": "SELECT",
-        "name": "settings_modal_transition",
-        "displayName": "Transition",
+        "name": "settings_modal_preferences_mode",
+        "displayName": "Preferences layout",
         "macrosInSelect": false,
         "selectItems": [
           {
-            "value": "zoom",
-            "displayValue": "zoom"
+            "value": "categories",
+            "displayValue": "Categories with cookie tables"
           },
           {
-            "value": "slide",
-            "displayValue": "slide"
+            "value": "services",
+            "displayValue": "Categories with services (providers)"
           }
         ],
         "simpleValueType": true,
-        "defaultValue": "zoom"
+        "defaultValue": "categories",
+        "help": "\u003ccode\u003eCategories with services\u003c/code\u003e shows a toggle for every service (cookie provider) inside a category, the providers are loaded from the CMP application (Cookies API). Requires the package version 2.0 or newer, older versions ignore it."
       },
       {
         "type": "TEXT",
@@ -486,11 +464,11 @@ ___TEMPLATE_PARAMETERS___
       },
       {
         "type": "CHECKBOX",
-        "name": "use_rfc_cookie",
-        "checkboxText": "Use RFC cookie",
+        "name": "respect_gpc",
+        "checkboxText": "Respect Global Privacy Control",
         "simpleValueType": true,
         "defaultValue": false,
-        "help": "The cookie value will be encoded using the \u003ccode\u003eencodeURIComponent\u003c/code\u003e function (so the cookie value will be RFC compliant) if the option is enabled. Otherwise, the cookie will contain plain JSON."
+        "help": "If the browser sends the \u003ca href=\"https://globalprivacycontrol.org/\"\u003eGlobal Privacy Control\u003c/a\u003e signal and the visitor has not decided yet, storages enabled by default are treated as denied and the consent modal is not shown automatically (the visitor can still open the settings). Requires the package version 2.0 or newer."
       }
     ]
   },
@@ -1570,7 +1548,7 @@ ___TEMPLATE_PARAMETERS___
           }
         ],
         "simpleValueType": true,
-        "help": "\"Browser\" to get user\u0027s browser language or \"Document\" to read value from \u0026lt;html lang\u003d\"...\"\u0026gt; of current page.",
+        "help": "\"Browser\" to get user\u0027s browser language or \"Document\" to read value from \u0026lt;html lang=\"...\"\u0026gt; of current page.",
         "defaultValue": "document"
       },
       {
@@ -1838,7 +1816,7 @@ ___TEMPLATE_PARAMETERS___
           {
             "type": "REGEX",
             "args": [
-              "https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#\u003d]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?\u0026//\u003d]*)"
+              "https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?\u0026//=]*)"
             ]
           }
         ],
@@ -2172,6 +2150,7 @@ const callInWindow = require('callInWindow');
 const JSON = require('JSON');
 const Object = require('Object');
 const makeInteger = require('makeInteger');
+const copyFromWindow = require('copyFromWindow');
 
 log('data =', data);
 
@@ -2315,18 +2294,22 @@ for (let key in data.composite_consent_event_triggers || []) {
 const defaultConsents = {};
 const acceptedStorageNames = [];
 
+// Global Privacy Control: until the visitor decides, storages enabled by default (except readonly ones) are denied, the same as the widget does
+const gpcOptOut = !!data.respect_gpc && null === consentCookie && true === copyFromWindow('navigator.globalPrivacyControl');
+const isEnabledByDefault = storage => storage.enabled_by_default && (!gpcOptOut || storage.readonly);
+
 // setup default consent & invoke event triggers for accepted storages
 for (let key in storagePool) {
   const storage = storagePool[key];
 
-  let defaultStorageConsent = ((null === consentCookie && storage.enabled_by_default) || (null !== consentCookie && -1 !== consentCookie.indexOf(storage.name))) ? 'granted' : 'denied';
+  let defaultStorageConsent = ((null === consentCookie && isEnabledByDefault(storage)) || (null !== consentCookie && -1 !== consentCookie.indexOf(storage.name))) ? 'granted' : 'denied';
 
 
   // if consent is denied then check "sync_consent_with" property
   if ('denied' === defaultStorageConsent && storage.hasOwnProperty('sync_consent_with') && storagePool.hasOwnProperty(storage.sync_consent_with)) {
     const delegatedStorage = storagePool[storage.sync_consent_with];
 
-    defaultStorageConsent = ((null === consentCookie && delegatedStorage.enabled_by_default) || (null !== consentCookie && -1 !== consentCookie.indexOf(delegatedStorage.name))) ? 'granted' : 'denied';
+    defaultStorageConsent = ((null === consentCookie && isEnabledByDefault(delegatedStorage)) || (null !== consentCookie && -1 !== consentCookie.indexOf(delegatedStorage.name))) ? 'granted' : 'denied';
 
   }
 
@@ -2343,7 +2326,8 @@ setDefaultConsentState(defaultConsents);
 // push default consents to the data layer as an event
 if (data.push_consent_to_data_layer) {
   const consentEvent = {
-    event: data.consent_data_layer_event_name,
+    // a tag saved by a template older than 1.6.0 has no event name
+    event: data.consent_data_layer_event_name || '68publishers_consent',
     consent_status: 'default'
   };
 
@@ -2418,7 +2402,7 @@ const pluginOptions = {
   delay: makeInteger(data.delay),
   auto_language: 'disabled' !== data.locale_detection_strategy ? data.locale_detection_strategy : null,
   page_scripts: data.page_scripts,
-  use_rfc_cookie: data.use_rfc_cookie
+  respect_gpc: !!data.respect_gpc
 };
 
 if (data.hasOwnProperty('current_locale')) {
@@ -2463,7 +2447,6 @@ setInWindow('cc_wrapper_config', {
   consent_modal_options: {
     layout: data.consent_modal_layout,
     position: data.consent_modal_position,
-    transition: data.consent_modal_transition,
     primary_button_role: data.consent_modal_primary_button_role,
     secondary_button_role: data.consent_modal_secondary_button_role,
     swap_buttons: 'secondary_primary' === data.consent_modal_buttons_order,
@@ -2473,8 +2456,8 @@ setInWindow('cc_wrapper_config', {
   settings_modal_options: {
     layout: data.settings_modal_layout,
     position: data.settings_modal_position,
-    transition: data.settings_modal_transition,
-    modal_trigger_selector: data.modal_trigger_selector || undefined
+    modal_trigger_selector: data.modal_trigger_selector || undefined,
+    preferences_mode: data.settings_modal_preferences_mode || 'categories'
   },
 
   ui_options: {
@@ -2519,8 +2502,19 @@ if (scriptBaseUrl.indexOf('/', scriptBaseUrl.length - 1) < 0) {
 
 const cookieConsentWrapperScript = scriptBaseUrl + 'cookie-consent.min.js';
 
-for (let localeKey in locales) {
-  let locale = locales[localeKey];
+// the widget (2.0+) loads only the current locale; the template injects only the locale given by "Current locale"
+// or the only one, otherwise all of them (the current one is unknown without reading <html lang>)
+let injectedLocales = locales || [];
+
+if (data.hasOwnProperty('current_locale') && data.current_locale) {
+  const currentLocale = data.current_locale;
+  const matching = injectedLocales.filter(l => l === currentLocale || l.indexOf('/' + currentLocale + '.') !== -1);
+
+  injectedLocales = matching.length ? matching : injectedLocales;
+}
+
+for (let localeKey in injectedLocales) {
+  let locale = injectedLocales[localeKey];
   let localeScript;
 
   if (0 === locale.lastIndexOf('https://', 0) || 0 === locale.lastIndexOf('http://', 0)) {
@@ -3091,6 +3085,45 @@ ___WEB_PERMISSIONS___
                     "boolean": true
                   }
                 ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "key"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  },
+                  {
+                    "type": 1,
+                    "string": "execute"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "navigator.globalPrivacyControl"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  }
+                ]
               }
             ]
           }
@@ -3128,12 +3161,63 @@ ___WEB_PERMISSIONS___
 
 ___TESTS___
 
-scenarios: []
-setup: ''
+scenarios:
+- name: Global Privacy Control denies storages enabled by default for a new visitor
+  code: |-
+    mock('copyFromWindow', (key) => key === 'navigator.globalPrivacyControl' ? true : undefined);
+    mock('getCookieValues', []);
+    mock('injectScript', (url, onSuccess) => onSuccess());
+    runCode(mockData);
+    assertApi('setDefaultConsentState').wasCalledWith({
+      functionality_storage: 'granted',
+      security_storage: 'denied',
+      personalization_storage: 'denied',
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied'
+    });
+    assertApi('gtmOnSuccess').wasCalled();
+- name: Without Respect Global Privacy Control the signal is ignored
+  code: |-
+    mockData.respect_gpc = false;
+    mock('copyFromWindow', (key) => key === 'navigator.globalPrivacyControl' ? true : undefined);
+    mock('getCookieValues', []);
+    mock('injectScript', (url, onSuccess) => onSuccess());
+    runCode(mockData);
+    assertApi('setDefaultConsentState').wasCalledWith({
+      functionality_storage: 'granted',
+      security_storage: 'denied',
+      personalization_storage: 'granted',
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied'
+    });
+setup: |-
+  const mockData = {
+    package_version: '2.0.0',
+    cookie_name: 'cc-settings',
+    cookie_expiration: '182',
+    revision: '0',
+    delay: '0',
+    locales: ['en'],
+    respect_gpc: true,
+    functionality_storage_visibility: 'visible_readonly_enabled',
+    security_storage_visibility: 'hidden_disabled',
+    personalization_storage_visibility: 'visible_enabled',
+    ad_storage_visibility: 'visible_disabled',
+    ad_user_data_visibility: 'hidden_disabled',
+    ad_personalization_visibility: 'hidden_disabled',
+    analytics_storage_visibility: 'visible_disabled',
+    locale_detection_strategy: 'document'
+  };
 
 
 ___NOTES___
 
 Created on 17. 12. 2021 0:22:20
 
-
+2.0.0: plugin vanilla-cookieconsent 3.x; new fields "Preferences layout" and "Respect Global Privacy Control";
+removed fields "Transition" (both modals) and "Use RFC cookie" (the cookie is always URI encoded);
+new permission: read access to "navigator.globalPrivacyControl". See docs/migration-from-1.x-to-2.0.md.
