@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cookie consent wrapper: CMP (mocked)</title>
+    <!-- Mocked CMP API v1, see tests/fixtures/cmp-mock.js; requests are listed below. -->
+    <script src="/tests/fixtures/cmp-mock.js"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        window.cc_wrapper_config = {
+            locales: ['cs', 'en'],
+            user_options: { attributes: { email: 'demo@example.com' } },
+            settings_modal_options: { modal_trigger_selector: 'footer .footer-item' },
+            consent_modal_options: { show_third_button: true },
+            storage_pool: [
+                { name: 'functionality_storage', enabled_by_default: true, display_in_widget: true, readonly: true },
+                { name: 'personalization_storage', display_in_widget: true },
+                { name: 'ad_storage', display_in_widget: true },
+                { name: 'ad_user_data', sync_consent_with: 'ad_storage' },
+                { name: 'ad_personalization', sync_consent_with: 'ad_storage' },
+                { name: 'analytics_storage', display_in_widget: true },
+            ],
+            cmp_api_options: {
+                url: 'https://cmp.test/',
+                project: 'demo',
+                consent_api_enabled: true,
+                cookies_api_enabled: true,
+                cookie_table_headers: ['name', 'purpose', 'processing_time', 'provider', 'link_find_out_more'],
+            },
+        };
+        setInterval(function () {
+            var el = document.getElementById('cmp-log');
+            el && (el.textContent = JSON.stringify(window.__cmpRequests, null, 2));
+        }, 500);
+    </script>
+    <script src="/pkg/cookie-consent.min.js" async></script>
+</head>
+<body>
+    <main style="max-width: 800px; margin: 0 auto; padding: 20px">
+        <h1>CMP demo (mocked API)</h1>
+        <h2>CMP requests</h2>
+        <pre id="cmp-log"></pre>
+        <footer style="margin-top: 60px"><div class="footer-item"><a href="#settings"><span>Link</span></a></div></footer>
+    </main>
+</body>
+</html>

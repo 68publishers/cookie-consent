@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cookie consent wrapper: GTM template (Example Project configuration)</title>
+    <!-- Runs gtm_template.tpl through the sandbox shim with the tag configuration of the Example Project
+         (tests/fixtures/gtm/example-project.json, ?fixture=<name> for another fixture). CMP is mocked. -->
+    <script src="/tests/fixtures/cmp-mock.js"></script>
+    <script src="/tests/gtm/sandbox-shim.js"></script>
+    <script src="/__gtm/template.js"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        var fixture = new URLSearchParams(location.search).get('fixture') || 'example-project';
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/tests/fixtures/gtm/' + encodeURIComponent(fixture) + '.json', false);
+        xhr.send();
+        window.runGtmTemplate(window.__gtmTemplateCode, JSON.parse(xhr.responseText).data);
+    </script>
+</head>
+<body>
+    <main style="max-width: 800px; margin: 0 auto; padding: 20px">
+        <h1>GTM demo</h1>
+        <p>Data layer and template log are in <code>window.dataLayer</code> and <code>window.__gtmLog</code>.</p>
+        <footer style="margin-top: 60px"><div class="footer-item"><a href="#settings"><span>Link</span></a></div></footer>
+    </main>
+</body>
+</html>

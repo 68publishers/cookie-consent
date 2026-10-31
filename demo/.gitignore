@@ -1,3 +1,8 @@
 *
 !.gitignore
 !index.html
+# pages of npm run demo (tests/server.mjs)
+!standalone.html
+!gtm.html
+!cmp.html
+!example-project.html
