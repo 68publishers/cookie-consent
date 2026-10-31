@@ -2,7 +2,7 @@
 <img src="docs/images/logo.svg" alt="Cookie Consent Logo" align="center" width="250">
 <h1 align="center">Cookie Consent</h1>
 
-An extended integration of [orestbida/cookieconsent](https://github.com/orestbida/cookieconsent) with support of the Google Tag Manager.
+An extended integration of [orestbida/cookieconsent](https://github.com/orestbida/cookieconsent) 3.x with support of the Google Tag Manager.
 </div>
 
 <br>
@@ -13,6 +13,12 @@ An extended integration of [orestbida/cookieconsent](https://github.com/orestbid
 - :white_check_mark: Default translations
 - :white_check_mark: WCAG 2 compliant
 - :white_check_mark: Support for storing consents via [CMP](https://github.com/68publishers/consent-management-platform)
+- :white_check_mark: Consent per category or per service (cookie provider)
+- :white_check_mark: Global Privacy Control
+
+> :information_source: Version 2.0 is built on the plugin 3.x. The configuration, events and the consent cookie stay compatible with 1.x; custom CSS has to be updated. See [Migration from 1.x to 2.0](docs/migration-from-1.x-to-2.0.md).
+
+**Requirements:** HTTPS (the consent is sent to the CMP only from a secure context) and browsers supporting ES2020 (Chrome 80+, Firefox 74+, Safari 13.1+, Edge 80+).
 
 ## Table of contents
 
@@ -23,9 +29,11 @@ An extended integration of [orestbida/cookieconsent](https://github.com/orestbid
 * [Triggering tags based on the consent](#triggering-tags-based-on-the-consent)
 * [Consent state in the data layer](#consent-state-in-the-data-layer)
 * [Accessing the wrapper in the JavaScript](#accessing-the-wrapper-in-the-javascript)
+* [Configuration without GTM](#configuration-without-gtm)
 * [Integration with CMP application](#integration-with-cmp-application)
 * [How the GTM integration works](#how-the-gtm-integration-works)
 * [How to update already published container](#how-to-update-already-published-containers)
+  * [Migration from 1.x to 2.0](#migration-from-1x-to-20)
   * [Migration from v0.4 to v0.5](#migration-from-v04-to-v05)
 * [Development](#development)
 * [License](#license)
@@ -61,15 +69,20 @@ The plugin is configurable using fields inside the tag definition.
 | Make consent required               | The page will be blocked until a user action.                                                                                                                                                                                                                |
 | Show the widget as soon as possible | The widget will be displayed automatically on the page load. You must trigger the widget manually by calling `CookieConsentWrapper.unwrap().show()` if the option is disabled.                                                                               |
 | Init widget after DOMContentLoaded  | The widget is initialized as soon as possible by default. If the option is enabled, initialization will wait until the `DOMContentLoaded` event.                                                                                                             |
-| Hide from bots                      | Enable if you don't want the plugin to run when a bot/crawler/webdriver is detected.                                                                                                                                                                         |
+| Hide from bots                      | Enable if you don't want the plugin to run when a bot/crawler/webdriver is detected (including browsers controlled by automation, `navigator.webdriver`).                                                                                                   |
 | Revision                            | Revision number of your terms of use of cookies. For more information [see below](#how-to-manage-revisions).                                                                                                                                                 |
 | Delay                               | Number of milliseconds before showing the consent modal.                                                                                                                                                                                                     |
 
 ### Consent & Setting modal options
 
-Both sections contain these fields: `Layout`, `Position`, `Transition`. These settings affect where modals appear and what shape they take.
+Both sections contain these fields: `Layout` and `Position`. These settings affect where modals appear and what shape they take (the consent modal layouts `box`, `cloud` and `bar`, the settings modal layouts `box` and `bar`; the `bar` consent modal uses the vertical part of the position only).
 The behavior of the consent modal buttons can be configured through fields `Primary button role`, `Secondary button role` (accept necessary cookies or open the settings modal), and `Buttons order`.
-See the [widget documentation](https://github.com/orestbida/cookieconsent/tree/v2.8.3#layout-options--customization) for more details.
+See the [plugin documentation](https://cookieconsent.orestbida.com/advanced/ui-customization.html) for more details. The field `Transition` was removed in 2.0, animations are set by the CSS variable `--cc-modal-transition-duration`.
+
+The settings modal has the field `Preferences layout`:
+
+- `Categories with cookie tables` (default) shows a toggle for every category and the table of its cookies.
+- `Categories with services (providers)` shows also a toggle for every service (cookie provider) inside the category. The services are the providers of the cookies loaded from the [CMP application](#integration-with-cmp-application) (Cookies API, the provider code is the service name) and the services defined in the configuration (`storage_pool[].services`). The consent of services is stored in the cookie and sent to the CMP. Google Consent Mode keeps working per storage: a storage is `granted` when its category is accepted.
 
 The consent modal has also an option `Show third button` that adds the third button to the modal. If the secondary button's role is `Open settings` the third button's role is `Accept necessary` and vice versa.
 
@@ -85,12 +98,15 @@ The settings modal has one special option with the name `Settings modal trigger 
 | Enable cookies auto-clear   | All cookies will be deleted based on the user's consent and a selected strategy if the option is enabled.                                                                                                              |
 | Cookies auto-clear strategy | Strategy for cookies auto-clear feature.                                                                                                                                                                               |
 | Cookie names                | Names of the cookies that will be deleted or kept (based on a selected strategy).                                                                                                                                      |
+| Respect Global Privacy Control | If the browser sends the [Global Privacy Control](https://globalprivacycontrol.org/) signal and the visitor has not decided yet, storages enabled by default (except readonly ones) are treated as denied, also in the default consent of the GTM template, and the consent modal is not shown automatically. The visitor can still open the settings. |
+
+The field `Use RFC cookie` was removed in 2.0, the cookie value is always URI encoded.
 
 The following strategies are implemented:
 
 1) `Clear all except defined`<sup>*</sup> - All cookies except those you define in the field `Cookie names` will be deleted when the user denies any storage.
 2) `Clear defined only`<sup>*</sup> - All cookies you defined in the field `Cookie names` will be deleted when the user denies any storage.
-3) `Use cookie tables` - Cookie clearing is based on cookie tables from the original [plugin](https://github.com/orestbida/cookieconsent). Integration of [CMP application](#integration-with-cmp-application) is required for this option.
+3) `Use cookie tables` - The cookies listed in the cookie tables of the rejected categories (and of the rejected services in the services layout) are deleted. Integration of [CMP application](#integration-with-cmp-application) is required for this option.
 
 <sup>*</sup> There is no need to define a name from the `Cookie name` field because this cookie is never automatically deleted.
 
@@ -183,7 +199,7 @@ You can define a message that will be displayed in the consent modal's descripti
 
 <img src="docs/images/revision-message-translation.png" alt="Revision message translation" width="600">
 
-*<sup>Note: the <a href="https://github.com/orestbida/cookieconsent/tree/v2.8.3#how-to-enablemanage-revisions">cookieconsent plugin</a> uses the placeholder `{{revision_message}}` but this notation is used by GTM for variables so the package comes with the placeholder `[[revision_message]]` instead.</sup>*
+*<sup>Note: the <a href="https://cookieconsent.orestbida.com/advanced/revision-management.html">cookieconsent plugin</a> uses the placeholder `{{revisionMessage}}` but this notation is used by GTM for variables so the package comes with the placeholder `[[revision_message]]` instead.</sup>*
 
 ### Stylesheets
 
@@ -193,6 +209,9 @@ You can define a message that will be displayed in the consent modal's descripti
 | External stylesheets        | The list of custom CSS stylesheets. One URL per line.                                                                                                                                        |
 | Internal stylesheet         | Custom CSS rules that will be injected into the page after default stylesheets and other external stylesheets.                                                                               |
 
+The widget is styled by the CSS variables of the plugin (`--cc-*`, see [UI customization](https://cookieconsent.orestbida.com/advanced/ui-customization.html)), e.g. `#cc-main { --cc-btn-primary-bg: #54a40d; }`.
+The default stylesheet contains the light scheme only; the dark scheme is in `cookie-consent-dark.css` (add it to the external stylesheets and the class `cc--darkmode` to `<html>`). Right-to-left layouts are not part of the default stylesheet.
+
 ### Page scripts
 
 | Field               | Description                                                          |
@@ -200,7 +219,7 @@ You can define a message that will be displayed in the consent modal's descripti
 | Manage page scripts | Enable if you want to easily manage existing `<script>` tags.        |
 | Script selector     | The name of a data attribute that is used for managed <script> tags. |
 
-Managing page scripts is disabled by default. When the feature is enabled then the following notation can be used for scripts you want to manage:
+Managing page scripts is disabled by default. When the feature is enabled then the following notation can be used for scripts you want to manage (the attribute name is the value of `Script selector`, the plugin attribute `data-category` works too; `data-service` limits a script to a service in the services layout):
 
 ```html
 <script type="text/plain" data-cookiecategory="analytics_storage" src="analytics.js" defer></script>
@@ -337,8 +356,8 @@ Things to keep in mind:
 - The option is disabled by default.
 - The `default` event is pushed in the Consent Initialization, but GTM processes it after the `Container Loaded` event and before `DOM Ready`. The values are therefore **not** available in tags fired by the `Initialization` or `All Pages` triggers.
 - The consent event is always pushed before the [event triggers](#triggering-tags-based-on-the-consent) of the storages (`68publishers_*`), so tags fired by these triggers can already read the consent values.
-- For a returning visitor, the event is pushed twice on every page, first with the `default` status and then with the `update` status once the widget is loaded. Both contain the same values, so tags fired by the Custom Event trigger run twice.
-- The event is also pushed with the `update` status after the user's first action in the consent modal and after every change in the settings modal.
+- For a returning visitor, the event is pushed once on every page with the `default` status. Since 2.0 the widget does not push the same values again with the `update` status when it is loaded (the `gtag('consent', 'update', ...)` command stays).
+- The event is pushed with the `update` status after the user's first action in the consent modal and after every change in the settings modal.
 - The storage keys are pushed to the top level of the data model, so they overwrite any variables with the same names pushed by other tools.
 
 ## Accessing the wrapper in the JavaScript
@@ -361,10 +380,27 @@ A callback is invoked when the wrapper is fully initialized or directly if every
             // check if the analytics_storage is granted
         }
 
-        CookieConsentWrapper.unwrap(); // get the original cookie consent plugin
+        CookieConsentWrapper.unwrap(); // get the original cookie consent plugin (3.x API)
     }]);
 </script>
 ```
+
+`CookieConsentWrapper.unwrap()` returns the API of the plugin 3.x (`show()`, `showPreferences()`, `acceptCategory()`, `acceptedService()`, `getCookie()`, ...).
+For Custom HTML tags written for 1.x it also keeps the methods of the plugin 2.9 (`showSettings()`, `hideSettings()`, `allowedCategory()`, `accept()`, `updateLanguage()`, `getConfig('cookie_name')`, ...); they log a deprecation warning and will be removed in the next major version.
+
+Other methods of the wrapper:
+
+| Method / property | Description |
+|---|---|
+| `allowedCategory(name)` | `true` if the storage is accepted. |
+| `changeLocale(locale, force)` | Changes the language of the widget (loads the translations if needed). Returns a Promise. |
+| `setSettingsModalClosable(closable)` | `false` keeps the settings modal open: no close icon, Escape and clicks outside do nothing (e.g. the consent settings inside a mobile app). |
+| `consentCookieData`, `consentCookieValue` | The parsed and the raw value of the consent cookie. |
+| `acceptedServices` | Accepted services by storage (the services layout). |
+| `configurationExport` | A Promise of the configuration sent to the CMP and its checksum (a plain object in 1.x). |
+| `version` | The version of the package. |
+
+With the option `compat_legacy_ids` (enabled by default) the buttons and toggles keep the ids and classes of 1.x (`c-p-bn`, `s-all-bn`, `s-sv-bn`, `c-tgl`, ...), so GTM click triggers based on `{{Click ID}}` keep working.
 
 ### Consent events
 
@@ -380,8 +416,16 @@ A callback is invoked when the wrapper is fully initialized or directly if every
         // called on every page load after the first user's action
     }]);
 
-    window.cookieConsentWrapperEvents.push(['consent:changed', function (consent, changedCategories) {
+    window.cookieConsentWrapperEvents.push(['consent:changed', function (consent, changedCategories, changedServices) {
         // called when preferences changed
+    }]);
+
+    window.cookieConsentWrapperEvents.push(['consent:saved', function (consent) {
+        // called after every action of the user in the widget, also without a change (the cookie is saved)
+    }]);
+
+    window.cookieConsentWrapperEvents.push(['services:changed', function (acceptedServices) {
+        // the services layout only: {ad_storage: ['google_ads', 'meta'], ...}
     }]);
 </script>
 ```
@@ -403,6 +447,66 @@ A callback is invoked when the wrapper is fully initialized or directly if every
     CookieConsentWrapper.changeLocale('en', true) // en!
 </script>
 ```
+
+## Configuration without GTM
+
+Without GTM the wrapper is configured by the object `window.cc_wrapper_config` defined before the script `cookie-consent.min.js` is loaded. The GTM template creates the same object.
+
+```html
+<script>
+    window.cc_wrapper_config = {
+        locales: ['cs', 'en'],
+        storage_pool: [
+            { name: 'functionality_storage', enabled_by_default: true, display_in_widget: true, readonly: true },
+            { name: 'analytics_storage', display_in_widget: true },
+        ],
+    };
+</script>
+<script src="https://unpkg.com/@68publishers/cookie-consent@2/dist/cookie-consent.min.js" async></script>
+```
+
+| Key | Option | Description |
+|---|---|---|
+| `plugin_options` | `autorun` | Show the consent modal automatically (default `true`). |
+| | `delay` | Milliseconds before the consent modal is shown. |
+| | `hide_from_bots` | Do not run for bots and browsers controlled by automation. |
+| | `cookie_name` | Name of the consent cookie (default `cc-settings`). |
+| | `cookie_expiration` | Expiration in days (default `182`). |
+| | `cookie_domain` | Domain of the cookie; the current host is used if the page is not on that domain. |
+| | `cookie_path` | Path of the cookie (default `/`). |
+| | `cookie_same_site` | SameSite attribute of the cookie (default `Lax`). |
+| | `force_consent` | Block the page until the user decides. |
+| | `revision` | Revision of the cookie policy; a change shows the widget again. |
+| | `current_lang` | Default language. |
+| | `auto_language` | Language detection: `document`, `browser` or `null`. |
+| | `page_scripts` | Manage `<script type="text/plain">` tags. |
+| | `script_selector` | Attribute of managed scripts (default `data-cookiecategory`). |
+| | `respect_gpc` | Respect the Global Privacy Control signal. |
+| | `init_after_dom_content_loaded` | Initialize after `DOMContentLoaded`. |
+| | `remove_cookie_tables` | Kept for compatibility, no effect. |
+| | `lazy_html_generation` | Create the settings modal when it is opened (default `true`). |
+| | `compat_legacy_ids` | Ids and classes of 1.x on buttons and toggles (default `true`). |
+| | `use_rfc_cookie` | Deprecated, ignored. |
+| `consent_modal_options` | `layout`, `position` | Layout (`box`, `cloud`, `bar`) and position of the consent modal. |
+| | `primary_button_role` | `accept_all`. |
+| | `secondary_button_role` | `settings` or `accept_necessary`. |
+| | `show_third_button` | Add the button with the other role. |
+| | `swap_buttons` | Reverse the order of the buttons. |
+| | `equal_weight_buttons` | All buttons look the same. |
+| | `transition` | Deprecated, ignored. |
+| `settings_modal_options` | `layout`, `position` | Layout (`box`, `bar`) and position (`left`, `right`) of the settings modal. |
+| | `modal_trigger_selector` | CSS selector of an element cloned as the link opening the settings. |
+| | `preferences_mode` | `categories` (default) or `services`. |
+| | `transition` | Deprecated, ignored. |
+| `auto_clear_options` | `enabled`, `strategy`, `cookie_names` | See [Cookies options](#cookies-options); strategies `clear_all_except_defined`, `clear_defined_only`, `cookie_tables`. |
+| `ui_options` | `include_default_stylesheets`, `external_stylesheets`, `internal_stylesheets` | See [Stylesheets](#stylesheets). |
+| `user_options` | `identity`, `attributes` | User identity and attributes sent to the CMP (attributes may be functions). |
+| `data_layer_options` | `push_consent`, `consent_event_name` | See [Consent state in the data layer](#consent-state-in-the-data-layer). |
+| `cmp_api_options` | `url`, `project`, `version`, `environment`, `consent_api_enabled`, `cookies_api_enabled`, `cookie_table_headers` | See [Integration with CMP application](#integration-with-cmp-application). |
+| `storage_pool` | `name`, `enabled_by_default`, `display_in_widget`, `readonly`, `sync_consent_with`, `show_modal_again_expiration`, `services` | Storages; `services` is a list of `{name, label}` for the services layout. |
+| `event_triggers` | `name`, `storage_names`, `type` | Events pushed by `gtag('event', ...)` when the storages are granted (`or`, `and`). |
+| `locales` | | Locale codes or URLs of translation files; only the current one is loaded. |
+| `translations` | | Custom translations: `{cs: {consent_modal_title: '...'}}`. |
 
 ## Integration with CMP application
 
@@ -478,37 +582,31 @@ Then open the associated tag and update the value of the field `Package version`
 
 If the package files are [self-hosted](#self-hosted-package), it is necessary to re-edit the Injects scripts in template permissions.
 
+### Migration from 1.x to 2.0
+
+Reimport the template, update the field `Package version` and rewrite custom CSS of the widget. Custom HTML tags using `unwrap()` and GTM triggers using the ids of the buttons keep working. See the page [Migration from 1.x to 2.0](docs/migration-from-1.x-to-2.0.md).
+
 ### Migration from v0.4 to v0.5
 
 For more detailed information on migrating from `0.4.x` to `0.5.x`, please continue to the page [Migration from v0.4 to v0.5](docs/migration-from-0.4-to-0.5.md).
 
 ## Development
 
-Firstly download the package and install dependencies:
-
 ```sh
 $ git clone https://github.com/68publishers/cookie-consent.git
 $ cd cookie-consent
 $ npm install
+$ npx playwright install chromium firefox webkit
 ```
 
-Use predefined commands for the package build:
-
-```sh
-$ npm run build:dev # or prod
-```
-
-Paths of output files are:
- - `~/demo/cookie-consent.js` (dev mode)
- - `~/dist/cookie-consent.min.js` (production mode)
-
-A simple demo page without real GTM is located in `~/demo/index.html`. To show the demo in your browser run:
-
-```sh
-$ npm run start:dev
-```
-
-Then visit the page `http://localhost:3000`.
+| Command | Description |
+|---|---|
+| `npm run build:prod` | Production build into `dist/`. |
+| `npm run demo` | Builds into `var/build` and serves the demo pages on http://localhost:4173/demo/standalone.html, `gtm.html` (the GTM template with the Example Project configuration through a sandbox shim), `cmp.html` (a mocked CMP) and `example-project.html` (the widget of a 1.x client with its branding, custom tags and click triggers; `?version=1.6.0` shows the same page with 1.6.0, `&app=settings` the mobile app mode; 1.6.0 needs `npm run ref` once). The pages need the server, opening the files directly does not work. |
+| `npm test` | Unit tests (Vitest), e2e tests (Playwright in Chromium, Firefox and WebKit) and, on macOS, the visual references. `CC_TARGET=var/perf-ref` runs the e2e tests against another build, e.g. 1.6.0 downloaded by `npm run ref`. |
+| `npm run test:visual -- --update-snapshots=all` | Updates the visual references after an intended change of the look; `npm run test:visual:gallery` builds `var/visual/index.html`. |
+| `npm run perf -- --compare` | Measures the size, requests and time to the widget against 1.6.0 (budget in `perf/budget.json`). |
+| `npm run size` | Size limits of the JS and the CSS. |
 
 ## License
 
