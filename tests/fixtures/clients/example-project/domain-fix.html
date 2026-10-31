@@ -1,0 +1,12 @@
+<!-- Custom HTML tag "Cookie consent (domain fix)" of the Example Project, verbatim -->
+<script>
+    CookieConsentWrapper.on('init', function () {
+        var cookieName = CookieConsentWrapper.unwrap().getConfig('cookie_name');
+
+        if (1 < document.cookie.split(/;\s*/).filter(function (c) {
+            return cookieName === c.split('=').shift();
+        }).length) {
+            CookieConsentWrapper.unwrap().eraseCookies([cookieName], undefined, 'www.example.com');
+        }
+    });
+</script>

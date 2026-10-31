@@ -1,0 +1,98 @@
+{
+  "click.cookies_reject_pers_webview": [
+    {
+      "type": "EQUALS",
+      "arg0": "{{Click ID}}",
+      "arg1": "s-sv-bn"
+    },
+    {
+      "type": "CONTAINS",
+      "arg0": "{{js.pers_cookie_state}}",
+      "arg1": "false"
+    },
+    {
+      "type": "CONTAINS",
+      "arg0": "{{js.navigator.userAgent}}",
+      "arg1": "ExampleApp"
+    }
+  ],
+  "click.cookies_accept_pers_webview": [
+    {
+      "type": "EQUALS",
+      "arg0": "{{Click ID}}",
+      "arg1": "s-sv-bn"
+    },
+    {
+      "type": "CONTAINS",
+      "arg0": "{{js.navigator.userAgent}}",
+      "arg1": "ExampleApp"
+    },
+    {
+      "type": "CONTAINS",
+      "arg0": "{{js.pers_cookie_state}}",
+      "arg1": "true"
+    }
+  ],
+  "click.cookies_accept_btns_webview": [
+    {
+      "type": "MATCH_REGEX",
+      "arg0": "{{Click ID}}",
+      "arg1": "s-all-bn|c-p-bn"
+    },
+    {
+      "type": "CONTAINS",
+      "arg0": "{{js.navigator.userAgent}}",
+      "arg1": "ExampleApp"
+    }
+  ],
+  "click.cookies_reject_btns_webview": [
+    {
+      "type": "MATCH_REGEX",
+      "arg0": "{{Click ID}}",
+      "arg1": "c-t-bn|s-rall-bn"
+    },
+    {
+      "type": "CONTAINS",
+      "arg0": "{{js.navigator.userAgent}}",
+      "arg1": "ExampleApp"
+    }
+  ],
+  "click.cookies_reject_pers_web": [
+    {
+      "type": "EQUALS",
+      "arg0": "{{Click ID}}",
+      "arg1": "s-sv-bn"
+    },
+    {
+      "type": "CONTAINS",
+      "arg0": "{{js.pers_cookie_state}}",
+      "arg1": "false"
+    }
+  ],
+  "click.cookies_accept_pers_web": [
+    {
+      "type": "EQUALS",
+      "arg0": "{{Click ID}}",
+      "arg1": "s-sv-bn"
+    },
+    {
+      "type": "CONTAINS",
+      "arg0": "{{js.pers_cookie_state}}",
+      "arg1": "true"
+    }
+  ],
+  "click.cookies_accept_btns_web": [
+    {
+      "type": "MATCH_REGEX",
+      "arg0": "{{Click ID}}",
+      "arg1": "s-all-bn|c-p-bn"
+    }
+  ],
+  "click.cookies_reject_btns_web": [
+    {
+      "type": "MATCH_REGEX",
+      "arg0": "{{Click ID}}",
+      "arg1": "c-t-bn|s-rall-bn"
+    }
+  ]
+}

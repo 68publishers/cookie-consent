@@ -1,0 +1,36 @@
+[
+  [
+    "consent",
+    "update",
+    {
+      "functionality_storage": "granted",
+      "personalization_storage": "denied",
+      "security_storage": "granted",
+      "ad_storage": "denied",
+      "ad_user_data": "denied",
+      "ad_personalization": "denied",
+      "analytics_storage": "granted"
+    }
+  ],
+  {
+    "event": "68publishers_consent",
+    "consent_status": "update",
+    "functionality_storage": "granted",
+    "personalization_storage": "denied",
+    "security_storage": "granted",
+    "ad_storage": "denied",
+    "ad_user_data": "denied",
+    "ad_personalization": "denied",
+    "analytics_storage": "granted"
+  },
+  [
+    "event",
+    "68publishers_functionality_storage",
+    {}
+  ],
+  [
+    "event",
+    "68publishers_analytics_storage",
+    {}
+  ]
+]

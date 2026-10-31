@@ -1,0 +1,56 @@
+<!-- Custom HTML tag "Cookie consent (mobile app - cookie settings)" of the Example Project, verbatim -->
+<script>
+  console.log('firing "Cookie consent - mobile app integration - cookie settings"');
+  CookieConsentWrapper.on('init', function () {
+    var plugin = CookieConsentWrapper.unwrap();
+    
+    // make settings modal unhidable
+    plugin.hideSettings = function () {};
+    
+    // show settings modal
+    plugin.showSettings(0);
+    
+    // add click event listener for all action buttons
+    document.querySelectorAll('#s-bns .c-bn, #c-bns .c-bn').forEach(function (button) {
+      button.addEventListener('click', function () {
+        // let's make sure this callback is called last
+        setTimeout(function () {
+          var consent = CookieConsentWrapper.consentCookieData;
+          
+          if (null === consent) {
+            return;
+          }
+          
+          var queryParameters = new URLSearchParams(window.location.search);
+          var message = {
+            consent: consent,
+            source: queryParameters.get('source') || 'default',
+          };
+
+          console.log(message);
+
+          if ('ReactNativeWebView' in window) {
+            window.ReactNativeWebView.postMessage(JSON.stringify(message));
+          }
+        }, 0);
+      });
+    });
+  });
+</script>
+
+<style>
+  #cc_div #cm {
+    display: none !important;
+  }
+
+  #s-inr {
+    box-shadow: none !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    max-height: 100vh !important;
+  }
+
+  .cc-back-button {
+    display: none !important;
+  }
+</style>

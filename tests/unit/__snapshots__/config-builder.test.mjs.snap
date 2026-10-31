@@ -1,0 +1,117 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`V3ConfigBuilder > builds the plugin configuration of the GTM tag of the Example Project 1`] = `
+{
+  "autoClearCookies": false,
+  "autoShow": false,
+  "categories": {
+    "ad_storage": {
+      "enabled": false,
+      "readOnly": false,
+    },
+    "analytics_storage": {
+      "enabled": false,
+      "readOnly": false,
+    },
+    "functionality_storage": {
+      "enabled": true,
+      "readOnly": true,
+    },
+    "personalization_storage": {
+      "enabled": false,
+      "readOnly": false,
+    },
+  },
+  "cookie": {
+    "domain": "localhost",
+    "expiresAfterDays": 365,
+    "name": "cc-settings",
+    "path": "/",
+    "sameSite": "Lax",
+  },
+  "disablePageInteraction": false,
+  "guiOptions": {
+    "consentModal": {
+      "equalWeightButtons": false,
+      "flipButtons": false,
+      "layout": "box",
+      "position": "bottom center",
+    },
+    "preferencesModal": {
+      "equalWeightButtons": true,
+      "flipButtons": false,
+      "layout": "box",
+    },
+  },
+  "hideFromBots": false,
+  "language": {
+    "autoDetect": "document",
+    "default": "en",
+    "translations": {
+      "en": "[function]",
+    },
+  },
+  "lazyHtmlGeneration": true,
+  "manageScriptTags": false,
+  "mode": "opt-in",
+  "onConsent": "[function]",
+  "respectGpc": false,
+  "revision": 0,
+}
+`;
+
+exports[`V3ConfigBuilder > builds the plugin configuration of the demo page 1`] = `
+{
+  "autoClearCookies": false,
+  "autoShow": false,
+  "categories": {
+    "ad_storage": {
+      "enabled": false,
+      "readOnly": false,
+    },
+    "analytics_storage": {
+      "enabled": false,
+      "readOnly": false,
+    },
+    "functionality_storage": {
+      "enabled": true,
+      "readOnly": true,
+    },
+  },
+  "cookie": {
+    "domain": "localhost",
+    "expiresAfterDays": 182,
+    "name": "consent-settings",
+    "path": "/",
+    "sameSite": "Lax",
+  },
+  "disablePageInteraction": true,
+  "guiOptions": {
+    "consentModal": {
+      "equalWeightButtons": false,
+      "flipButtons": false,
+      "layout": "box",
+      "position": "middle center",
+    },
+    "preferencesModal": {
+      "equalWeightButtons": true,
+      "flipButtons": false,
+      "layout": "box",
+    },
+  },
+  "hideFromBots": false,
+  "language": {
+    "autoDetect": "document",
+    "default": "en",
+    "translations": {
+      "en": "[function]",
+    },
+  },
+  "lazyHtmlGeneration": true,
+  "manageScriptTags": true,
+  "mode": "opt-in",
+  "onConsent": "[function]",
+  "respectGpc": false,
+  "revision": 0,
+}
+`;

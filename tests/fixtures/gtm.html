@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cookie consent GTM test page</title>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        window.cookieConsentWrapperEvents = window.cookieConsentWrapperEvents || [];
+        window.__ccEvents = [];
+        ['init', 'consent:first-action', 'consent:accepted', 'consent:changed', 'locale:change', 'consent:saved', 'services:changed'].forEach(function (name) {
+            window.cookieConsentWrapperEvents.push([name, function () {
+                window.__ccEvents.push({ name: name, args: JSON.parse(JSON.stringify(Array.prototype.slice.call(arguments))) });
+            }]);
+        });
+    </script>
+    <script src="/tests/fixtures/cmp-mock.js"></script>
+    <script src="/tests/fixtures/gtm-click-triggers.js"></script>
+    <script src="/tests/gtm/sandbox-shim.js"></script>
+    <script>document.write('<script src="/__gtm/template.js' + (window.__GTM_TEMPLATE_FILE__ ? '?file=' + encodeURIComponent(window.__GTM_TEMPLATE_FILE__) : '') + '"><\/script>');</script>
+    <script>
+        // Consent Initialization: the template runs before the rest of the page.
+        if (window.__GTM_DATA__) {
+            window.runGtmTemplate(window.__gtmTemplateCode, window.__GTM_DATA__);
+            // what the template itself pushed, before the widget is loaded
+            window.__afterTemplate = window.dataLayer.map(function (e) {
+                return JSON.parse(JSON.stringify(typeof e.length === 'number' && !Array.isArray(e) ? Array.prototype.slice.call(e) : e));
+            });
+        }
+    </script>
+</head>
+<body>
+    <main>
+        <h1>GTM test page</h1>
+        <footer><div class="footer-item"><a href="#a"><span>Link</span></a></div></footer>
+    </main>
+</body>
+</html>
