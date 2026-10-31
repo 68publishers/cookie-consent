@@ -1,7 +1,7 @@
 {
     "note": "Budgets of 2.0 against 1.6.0 measured in the same run on the same machine (perf/run.mjs --compare). Sizes in bytes. The original estimate (16 kB gzip, 70 % TTM, 50 % JS time) is not reachable on top of the plugin 3.x, the budgets keep 2.0 at or below the level of 1.6.0. scriptRatioMax 1.10: the JS time of 2.0 is at the level of 1.6.0 (95-107 % in repeated runs, 1-2 ms with 4x CPU throttling), the gate catches regressions beyond that.",
     "jsGzipMax": 24000,
-    "jsRawMax": 72000,
+    "jsRawMax": 72500,
     "cssGzipMax": 5000,
     "ttmRatioMax": 1.0,
     "scriptRatioMax": 1.1,

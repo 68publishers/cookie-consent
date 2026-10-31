@@ -22,11 +22,11 @@ Version 2.0 is built on vanilla-cookieconsent 3.2. The configuration, events, tr
 - `CookieConsentWrapper.unwrap()` returns the API of the plugin 3.x; the methods of 2.9 are kept with a deprecation warning.
 - A cookie of 1.x is converted when the widget starts and the cookie keeps the fields of 1.x, so neither the upgrade nor a rollback shows the widget again.
 - Only the current locale is loaded before the widget is shown; the template injects only the locale of `Current locale` when it is set.
-- The widget is smaller (JS 23.9 kB gzip instead of 26.9 kB), needs fewer requests (only the current locale) and is shown slightly sooner; it needs browsers supporting ES2020 and HTTPS for the CMP integration (WebCrypto).
+- The widget is smaller (JS 24.0 kB gzip instead of 26.9 kB), needs fewer requests (only the current locale) and is shown slightly sooner; it needs browsers supporting ES2020 and HTTPS for the CMP integration (WebCrypto).
 - `CookieConsentWrapper.configurationExport` is a Promise.
 - A returning visitor gets the consent event in the data layer only once per page (the `update` event with the same values as `default` is not pushed).
 - The buttons keep the order of 1.x (primary, secondary, third) and buttons ordered by the CSS `order` property are reordered in the DOM.
-- An opened modal focuses its first button or link like 1.x (the plugin 3.x focuses the modal itself); the focus stays in the modal when it is re-rendered (language change, cookie tables loaded from the CMP).
+- An opened modal focuses its first button or link like 1.x (the plugin 3.x focuses the modal itself); the focus stays in the modal when it is re-rendered (language change, cookie tables loaded from the CMP). Tab wraps inside the open modal through all its visible links, toggles and buttons, the wrapper does it instead of the plugin 3.x, which wraps at the elements found when the modal was rendered.
 - [Template] Renamed the template to `68 Publishers Cookie Consent`, replaced the brand thumbnail with a 96×96 px icon and removed the UTF-8 BOM from the file, as required by the Community Template Gallery style guide.
 
 ### Removed

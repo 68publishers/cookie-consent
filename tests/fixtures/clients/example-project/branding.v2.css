@@ -257,12 +257,18 @@
     padding-bottom: 8px;
 }
 
-/* 1.x #s-bl .c-bl:first-child > .title: the back button and the title stay at the top when scrolling (absolute top 74px over the full width) */
+/* 1.x #s-bl .c-bl:first-child > .title: the back button and the title stay above the scrolling content (absolute top 74px over the full width);
+   sticky is not enough, it sticks only inside the first section; the padding of the section keeps the place of the title */
+#cc-main .pm__section:first-child:not(.pm__section--toggle) {
+    padding-top: 87.4px;
+}
+
 #cc-main .pm__section:first-child:not(.pm__section--toggle) .pm__section-title-wrapper {
-    position: sticky;
-    top: 0;
+    position: absolute;
+    top: 68px;
+    left: 103px;
+    right: 0;
     z-index: 2;
-    width: calc(100% + 115px);
     /* 1.x: the title is out of the flow and the section has a fixed padding-top 72px, the content does not move even with the back button hidden (mobile app) */
     height: 87.4px;
     align-items: flex-start;
@@ -309,14 +315,17 @@
     background: transparent;
 }
 
-/* 1.x #s-bl .b-acc .p */
+/* 1.x #s-bl .b-acc .p: only the text of the description is padded, the cookie table follows it without a gap */
 #cc-main .pm__section--toggle .pm__section-desc-wrapper {
-    padding: 15px 0 25px;
+    padding: 0;
     border: 0;
 }
 
-#cc-main .pm__section--toggle .pm__section-desc {
-    padding: 0;
+#cc-main .pm__section--toggle .pm__section-desc,
+#cc-main .pm__section-desc .p {
+    display: block;
+    padding: 15px 0 25px;
+    border: 0;
 }
 
 /* 1.x .b-tl.exp::before carets (black triangles instead of the circled arrow) */
@@ -429,6 +438,23 @@
     border-bottom: 1px solid var(--cc-color-gray-light);
 }
 
+/* 1.x .cc-link:hover, :active: the underline disappears */
+#cc-main a.cc-link:hover,
+#cc-main a.cc-link:active {
+    border-bottom-color: transparent;
+}
+
+/* 2.9 links in the descriptions (partners in the advertising cookies): normal weight, the underline disappears on hover */
+#cc-main .pm__section-desc a:not(.cc-link) {
+    font-weight: 400;
+    background: none;
+    border-bottom: 1px solid;
+}
+
+#cc-main .pm__section-desc a:not(.cc-link):hover {
+    border-bottom-color: transparent;
+}
+
 #cc-main .cc-link-box {
     display: block;
     margin-top: 25px;
@@ -504,12 +530,15 @@
 
 #cc-main .pm__section-table {
     border: 0;
+    font-size: 12.8px;
 }
 
-#cc-main .pm__table-tr {
+#cc-main .pm__table-tr,
+#cc-main .pm__table-tr:not(:last-child) {
     padding: 16px 0;
     border-bottom: 1px solid var(--cc-color-gray-light);
 }
+
 
 #cc-main .pm__table-tr:first-child {
     border-top: 1px solid var(--cc-color-gray-light);
@@ -612,13 +641,24 @@
 
     /* 1.x #s-bl .c-bl:first-child > .title width 100% (top 22px) */
     #cc-main .pm__section:first-child:not(.pm__section--toggle) .pm__section-title-wrapper {
-        width: calc(100% + 44px);
+        top: 16px;
+        left: 16px;
     }
 
     #cc-main .cm__btn + .cm__btn,
     #cc-main .pm__btn + .pm__btn,
     #cc-main .pm__btn-group + .pm__btn-group {
         margin: 0 !important;
+    }
+
+    /* 2.9 below 688 px: the column names in the --cc-text color of the plugin */
+    #cc-main .pm__table-td::before {
+        color: #2d4156;
+    }
+
+    /* 2.9 below 688 px: a light line under the gray one between the rows of the cookie table */
+    #cc-main .pm__table-tr + .pm__table-tr {
+        border-top: 1px solid #e9edf2;
     }
 
     /* below 688 px 2.9 enlarges the toggles (.b-tg scale 1.1) */

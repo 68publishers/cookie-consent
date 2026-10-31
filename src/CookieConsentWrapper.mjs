@@ -29,7 +29,8 @@ const version = 'undefined' !== typeof __CC_VERSION__ ? __CC_VERSION__ : 'dev';
 const BOT_PATTERN = /bot|crawl|spider|slurp|teoma/i;
 
 // the first visible and enabled button or link of a modal
-const focusFirst = (modal) => [...modal.querySelectorAll('a[href], button, input')].find(el => !el.disabled && el.offsetParent)?.focus();
+const focusables = (modal) => [...modal.querySelectorAll('a[href], button, input')].filter(el => !el.disabled && el.offsetParent);
+const focusFirst = (modal) => focusables(modal)[0]?.focus();
 
 export class CookieConsentWrapper {
     constructor(gtag) {
@@ -622,10 +623,25 @@ export class CookieConsentWrapper {
             }
         });
 
-        // a settings modal that cannot be closed ignores Escape and clicks outside
         window.addEventListener('keydown', (event) => {
-            if ('Escape' === event.key && !self._settingsModalClosable && document.documentElement.classList.contains('show--preferences')) {
+            const classes = document.documentElement.classList;
+
+            // a settings modal that cannot be closed ignores Escape and clicks outside
+            if ('Escape' === event.key && !self._settingsModalClosable && classes.contains('show--preferences')) {
                 event.stopImmediatePropagation();
+            }
+
+            // the plugin wraps Tab at the first and last element found when the modal was rendered, the reordered
+            // buttons and elements hidden by custom CSS break it (the last button was unreachable), the wrapper wraps instead
+            const modal = 'Tab' === event.key && document.querySelector(classes.contains('show--preferences') ? '#cc-main .pm' : (classes.contains('show--consent') ? '#cc-main .cm' : null));
+
+            if (modal) {
+                const elements = focusables(modal);
+                const index = elements.indexOf(document.activeElement);
+                const next = event.shiftKey ? (0 >= index && elements.at(-1)) : ((0 > index || elements.length - 1 === index) && elements[0]);
+
+                event.stopImmediatePropagation();
+                next && (event.preventDefault(), next.focus());
             }
         }, true);
         document.addEventListener('click', (event) => {

@@ -15,6 +15,12 @@ const SCENARIOS = [
     { name: 'preferences-bottom', viewport: { width: 1280, height: 800 }, preferences: true, scroll: 'bottom' },
     { name: 'preferences-mobile', viewport: { width: 390, height: 844 }, preferences: true },
     { name: 'preferences-mobile-bottom', viewport: { width: 390, height: 844 }, preferences: true, scroll: 'bottom' },
+    // all sections expanded: cookie tables, separators and the title with the back button above the scrolling content
+    { name: 'preferences-tables', viewport: { width: 1280, height: 800 }, preferences: true, expand: 'all', scroll: 700 },
+    { name: 'preferences-tables-2', viewport: { width: 1280, height: 800 }, preferences: true, expand: 'all', scroll: 1900 },
+    { name: 'preferences-tables-mobile', viewport: { width: 390, height: 844 }, preferences: true, expand: 'all', scroll: 600 },
+    { name: 'preferences-tables-mobile-2', viewport: { width: 390, height: 844 }, preferences: true, expand: 'all', scroll: 1700 },
+    { name: 'consent-link-hover', viewport: { width: 1280, height: 800 }, hover: 'a.cc-link' },
     { name: 'app-settings', viewport: { width: 390, height: 844 }, query: '&app=settings' },
     // the opening animation stopped in the middle of the transition (125 ms of 250 ms)
     { name: 'consent-opening', viewport: { width: 1280, height: 800 }, freeze: 'consent' },
@@ -89,11 +95,16 @@ async function capture(page, version, scenario, attempt = 0) {
     if (scenario.expand) {
         // a click without the automatic scroll of Playwright (it depends on the geometry), focus like after a mouse click
         await page.evaluate(([v, name]) => {
-            const title = document.querySelector('1.6.0' === v
-                ? `#s-bl .c-bl:has(input.c-tgl[value="${name}"]) .b-tl`
-                : `#cc-main .pm__section--toggle:has(input.section__toggle[value="${name}"]) .pm__section-title`);
-            title.focus();
-            title.click();
+            const titles = 'all' === name
+                ? document.querySelectorAll('1.6.0' === v ? '#s-bl .c-bl.b-ex .b-tl' : '#cc-main .pm__section--expandable .pm__section-title')
+                : [document.querySelector('1.6.0' === v
+                    ? `#s-bl .c-bl:has(input.c-tgl[value="${name}"]) .b-tl`
+                    : `#cc-main .pm__section--toggle:has(input.section__toggle[value="${name}"]) .pm__section-title`)];
+            titles.forEach((title) => {
+                title.focus();
+                title.click();
+            });
+            'all' === name && document.activeElement.blur();
         }, [version, scenario.expand]);
         await page.waitForTimeout(800);
     }
@@ -104,6 +115,11 @@ async function capture(page, version, scenario, attempt = 0) {
             el.scrollTop = 'bottom' === scroll ? el.scrollHeight : scroll;
         }, [version, scenario.scroll]);
         await page.waitForTimeout(300);
+    }
+
+    if (scenario.hover) {
+        await page.locator(scenario.hover).filter({ visible: true }).first().hover();
+        await page.waitForTimeout(400);
     }
 
     // the demo header shows the version, only the widget and the page below it are compared

@@ -153,6 +153,39 @@ test.describe('Example Project demo: 2.0 behaves like 1.6.0', () => {
         }
     }
 
+    test('Tab goes through the same elements in the same order and wraps inside the modal', async ({ browser, browserName }) => {
+        test.skip(browserName === 'webkit', 'WebKit does not move focus to buttons with Tab by default');
+        const results = {};
+
+        for (const version of VERSIONS) {
+            const context = await browser.newContext({ locale: 'en-US' });
+            const page = await context.newPage();
+            const focused = () => page.evaluate(() => {
+                const el = document.activeElement;
+                return (el.value && 'checkbox' === el.type ? el.value : el.textContent.trim().split(/\s+/).slice(0, 2).join(' '));
+            });
+            const tab = async (count) => {
+                const seq = [await focused()];
+                for (let i = 0; i < count; i++) {
+                    await page.keyboard.press('Tab');
+                    seq.push(await focused());
+                }
+                return seq;
+            };
+            await open(page, version);
+            await expect(page.locator(SELECTORS[version].consent)).toBeVisible();
+            await page.waitForTimeout(500);
+            const consent = await tab(5);
+            await button(page, 'Detailed cookie settings').click();
+            await page.waitForTimeout(700);
+            results[version] = { consent, preferences: await tab(13) };
+            await context.close();
+        }
+
+        expect(results['2.0']).toEqual(results['1.6.0']);
+        expect(results['2.0'].preferences).toContain('Reject optional');
+    });
+
     for (const [from, to] of [['1.6.0', '2.0'], ['2.0', '1.6.0']]) {
         test(`consent given in ${from} is kept by ${to} without the bar`, async ({ page }) => {
             await open(page, from);
