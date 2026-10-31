@@ -12,6 +12,8 @@
     "settings_modal_accept_all_btn": "Дозволити всі cookie-файли",
     "settings_modal_reject_all_btn": "Увімкнути необхідні cookie-файли",
     "settings_modal_close_btn_label": "Закрити",
+    "settings_modal_service_counter_label": "сервіс|сервіси",
+    "consent_modal_close_btn_label": "",
 
     "settings_modal_before_consent_title": "Використання cookie-файлів",
     "settings_modal_before_consent_description": "Використовуємо cookie-файли, щоб забезпечити базові функції сайту та покращити взаємодію з користувачем. Ви можете будь-коли змінити свою згоду для кожної категорії.",

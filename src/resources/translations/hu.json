@@ -12,6 +12,8 @@
     "settings_modal_accept_all_btn": "Elfogadni minden",
     "settings_modal_reject_all_btn": "Szükséges elfogadni",
     "settings_modal_close_btn_label": "Zárja be a",
+    "settings_modal_service_counter_label": "szolgáltatás|szolgáltatás",
+    "consent_modal_close_btn_label": "",
 
     "settings_modal_before_consent_title": "Cookie használat",
     "settings_modal_before_consent_description": "Sütiket használunk a weboldal alapvető funkcióinak biztosítása és az Ön online élményének javítása érdekében. Minden egyes kategória esetében bármikor választhat, hogy ki/bejelentkezik-e vagy sem.",

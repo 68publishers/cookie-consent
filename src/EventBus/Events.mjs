@@ -18,4 +18,12 @@ export class Events {
     static get ON_LOCALE_CHANGE() {
         return 'locale:change';
     };
+
+    static get ON_CONSENT_SAVED() {
+        return 'consent:saved';
+    };
+
+    static get ON_SERVICES_CHANGED() {
+        return 'services:changed';
+    };
 }

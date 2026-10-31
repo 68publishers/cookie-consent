@@ -12,6 +12,8 @@
     "settings_modal_accept_all_btn": "Alle akzeptieren",
     "settings_modal_reject_all_btn": "Notwendig akzeptieren",
     "settings_modal_close_btn_label": "Schließen Sie",
+    "settings_modal_service_counter_label": "Dienst|Dienste",
+    "consent_modal_close_btn_label": "",
 
     "settings_modal_before_consent_title": "Verwendung von Cookies",
     "settings_modal_before_consent_description": "Wir verwenden Cookies, um die grundlegenden Funktionen der Website zu gewährleisten und um Ihr Online-Erlebnis zu verbessern. Sie können für jede Kategorie wählen, ob Sie sich an- oder abmelden möchten.",

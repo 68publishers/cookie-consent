@@ -12,6 +12,8 @@
     "settings_modal_accept_all_btn": "Разрешаване на всички cookies",
     "settings_modal_reject_all_btn": "Разрешаване на необходимите cookies",
     "settings_modal_close_btn_label": "Затвори",
+    "settings_modal_service_counter_label": "услуга|услуги",
+    "consent_modal_close_btn_label": "",
 
     "settings_modal_before_consent_title": "Използваме cookies.",
     "settings_modal_before_consent_description": "Използваме cookies, за да осигурим основните функции на уебсайта и за да подобрим вашето потребителско изживяване. Можете да промените съгласието си за всяка категория по всяко време.",

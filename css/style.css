@@ -1,5 +1,21 @@
-@import 'vanilla-cookieconsent/src/cookieconsent.css';
+/* plugin 3.x without the dark scheme (dist/cookie-consent-dark.css, opt-in via the class cc--darkmode on <html>) */
+@import 'vanilla-cookieconsent/dist/css-components/base.css';
+@import 'vanilla-cookieconsent/dist/css-components/consent-modal.css';
+@import 'vanilla-cookieconsent/dist/css-components/preferences-modal.css';
+@import 'vanilla-cookieconsent/dist/css-components/light-scheme.css';
 
-#s-bl table thead tr th[scope="col"]:first-child, #s-bl table tbody tr td:first-child {
+/* a settings modal that cannot be closed (setSettingsModalClosable(false)) */
+html.cc--settings-unclosable #cc-main .pm__close-btn {
+    display: none;
+}
+
+/* "visible, readonly, disabled" storage */
+#cc-main .cc--readonly-disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+/* a button group emptied by the wrapper (the 1.x order of the buttons, ButtonOrder.mjs); !important beats the mobile display:flex!important of v3 */
+#cc-main .cm__btn-group:empty {
     display: none !important;
 }

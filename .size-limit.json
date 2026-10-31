@@ -1,0 +1,14 @@
+[
+    {
+        "name": "JS (gzip)",
+        "path": "var/build/cookie-consent.min.js",
+        "limit": "24000 B",
+        "gzip": true
+    },
+    {
+        "name": "CSS (gzip)",
+        "path": "var/build/cookie-consent.css",
+        "limit": "5000 B",
+        "gzip": true
+    }
+]

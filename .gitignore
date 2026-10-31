@@ -1,2 +1,7 @@
 node_modules/
 .idea
+.claude/settings.local.json
+var/
+perf/results/
+test-results/
+playwright-report/

@@ -1,5 +1,5 @@
 import { AbstractIdentity } from './AbstractIdentity.mjs';
-import { v4 as uuidV4 } from 'uuid';
+import { uuidV4 } from '../Utils/Crypto.mjs';
 
 export class UuidIdentity extends AbstractIdentity {
     constructor() {

@@ -16,17 +16,4 @@ export class Config {
         this.cmpApiOptions = new CmpApiOptions();
         this.dataLayerOptions = new DataLayerOptions();
     }
-
-    exportCookieConsentConfig() {
-        const config = this.pluginOptions.exportCookieConsentConfig();
-
-        config['gui_options'] = {
-            consent_modal: this.consentModalOptions.exportCookieConsentConfig(),
-            settings_modal: this.settingsModalOptions.exportCookieConsentConfig(),
-        };
-
-        config['autoclear_cookies'] = this.autoClearOptions.enabled && AutoClearOptions.STRATEGY_COOKIE_TABLES === this.autoClearOptions.strategy;
-
-        return config;
-    }
 }

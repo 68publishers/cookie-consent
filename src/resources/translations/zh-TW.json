@@ -12,6 +12,8 @@
     "settings_modal_accept_all_btn": "接受全部",
     "settings_modal_reject_all_btn": "僅接受必要項目",
     "settings_modal_close_btn_label": "關閉",
+    "settings_modal_service_counter_label": "項服務|項服務",
+    "consent_modal_close_btn_label": "",
 
     "settings_modal_before_consent_title": "Cookie 使用說明",
     "settings_modal_before_consent_description": "我們使用 Cookie 來確保網站的基本功能並提升您的線上體驗。您可以隨時選擇啟用或停用各類別的 Cookie。",

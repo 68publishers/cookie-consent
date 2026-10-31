@@ -12,6 +12,8 @@
     "settings_modal_accept_all_btn": "Povolit všechny cookies",
     "settings_modal_reject_all_btn": "Povolit nezbytné cookies",
     "settings_modal_close_btn_label": "Zavřít",
+    "settings_modal_service_counter_label": "služba|služby",
+    "consent_modal_close_btn_label": "",
 
     "settings_modal_before_consent_title": "Použití cookies",
     "settings_modal_before_consent_description": "Soubory cookie používáme k zajištění základních funkcí webu a ke zlepšení vašeho uživatelského zážitku. Souhlas pro každou kategorii můžete kdykoliv změnit.",

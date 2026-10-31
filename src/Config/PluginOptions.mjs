@@ -17,34 +17,43 @@ export class PluginOptions extends AbstractOptions {
         this.page_scripts = false;
         this.script_selector = 'data-cookiecategory';
         this.cookie_domain = window.location.hostname;
-        this.use_rfc_cookie = false;
+        this.respect_gpc = false;
 
-        // options managed by the GTM template without association with the original plugin:
+        // options managed by the GTM template without association with the plugin:
         this.init_after_dom_content_loaded = false;
 
-        // another options for the original plugin
+        // other options
         this.cookie_path = '/';
         this.cookie_same_site = 'Lax';
         this.remove_cookie_tables = false;
+        this.lazy_html_generation = true;
+        // ids and classes of the plugin 2.9 markup for GTM triggers and tags of 1.x clients
+        this.compat_legacy_ids = true;
 
-        // unsupported options (custom reimplementation)
-        //this.theme_css = ''; useless for our use case
-        //this.autoclear_cookies = false; implemented in the AutoClearOptions
+        // deprecated since 2.0, accepted and ignored
+        this.use_rfc_cookie = undefined;
     }
 
-    exportCookieConsentConfig() {
-        const config = {...this};
-        delete config.init_after_dom_content_loaded;
-        config.autorun = false;
-        config.delay = 0;
+    merge(options) {
+        if (options && 'use_rfc_cookie' in options && undefined !== options.use_rfc_cookie) {
+            console.warn('CookieConsentWrapper: the option "use_rfc_cookie" is deprecated and ignored, the cookie value is always URI encoded since 2.0.');
+        }
 
-        const configDomain = 0 === config.cookie_domain.indexOf('.') ? config.cookie_domain.substring(1) : config.cookie_domain;
+        super.merge(options);
+    }
+
+    /**
+     * The configured domain if the current host belongs to it, the current host otherwise.
+     */
+    resolveCookieDomain() {
+        const domain = this.cookie_domain || window.location.hostname;
+        const configDomain = 0 === domain.indexOf('.') ? domain.substring(1) : domain;
         const currentDomain = window.location.hostname;
 
         if (-1 === currentDomain.indexOf(configDomain, currentDomain.length - configDomain.length)) {
-            config.cookie_domain = currentDomain;
+            return currentDomain;
         }
 
-        return config;
+        return domain;
     }
 }

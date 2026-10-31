@@ -144,7 +144,7 @@ export class CookieConsentWrapperFactory {
             let localeKey;
 
             for (localeKey in locales) {
-                void wrapper.loadTranslations(locales[localeKey]);
+                wrapper.registerTranslations(locales[localeKey]);
             }
         }
     }
