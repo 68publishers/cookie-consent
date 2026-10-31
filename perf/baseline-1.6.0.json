@@ -1,0 +1,54 @@
+{
+  "variant": "V0",
+  "date": "2026-10-30",
+  "target": "var/perf-ref",
+  "version": "1.6.0",
+  "conditions": {
+    "browser": "chromium 156.0.8078.4",
+    "cpuThrottling": 4,
+    "network": "Fast 3G (562.5 ms, 180 kB/s), server compresses with brotli",
+    "runs": 10,
+    "machine": "darwin arm64",
+    "statistic": "median"
+  },
+  "sizes": {
+    "js": {
+      "raw": 83677,
+      "gzip": 26904,
+      "brotli": 23858
+    },
+    "css": {
+      "raw": 19421,
+      "gzip": 4465,
+      "brotli": 3970
+    }
+  },
+  "scenarios": {
+    "standalone": {
+      "ttmMs": 2585.7,
+      "scriptMs": 36,
+      "taskMs": 154.1,
+      "requestsBeforeModal": 5,
+      "ttmSpreadMs": 33.5,
+      "requestPaths": [
+        "/pkg/cookie-consent.min.js",
+        "/pkg/translations/cs.json",
+        "/pkg/translations/en.json",
+        "/pkg/translations/de.json",
+        "/pkg/cookie-consent.css"
+      ]
+    },
+    "example-project": {
+      "ttmMs": 2645.1,
+      "scriptMs": 45.1,
+      "taskMs": 176.2,
+      "requestsBeforeModal": 3,
+      "ttmSpreadMs": 24.4,
+      "requestPaths": [
+        "/pkg/translations/en.json.js",
+        "/pkg/cookie-consent.min.js",
+        "/pkg/cookie-consent.css"
+      ]
+    }
+  }
+}
