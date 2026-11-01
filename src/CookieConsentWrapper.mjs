@@ -637,8 +637,11 @@ export class CookieConsentWrapper {
 
             if (modal) {
                 const elements = focusables(modal);
-                const index = elements.indexOf(document.activeElement);
-                const next = event.shiftKey ? (0 >= index && elements.at(-1)) : ((0 > index || elements.length - 1 === index) && elements[0]);
+                const active = document.activeElement;
+                // the browser moves on inside the modal while an element follows (precedes) the focused one
+                // (Firefox focuses a scrollable body that is not in the list); 4 following, 2 preceding
+                const inside = modal.contains(active) && elements.some(el => active.compareDocumentPosition(el) & (event.shiftKey ? 2 : 4));
+                const next = !inside && (event.shiftKey ? elements.at(-1) : elements[0]);
 
                 event.stopImmediatePropagation();
                 next && (event.preventDefault(), next.focus());

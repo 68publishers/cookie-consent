@@ -16,6 +16,7 @@ html.cc--settings-unclosable #cc-main .pm__close-btn {
 }
 
 /* a button group emptied by the wrapper (the 1.x order of the buttons, ButtonOrder.mjs); !important beats the mobile display:flex!important of v3 */
-#cc-main .cm__btn-group:empty {
+#cc-main .cm__btn-group:empty,
+#cc-main .pm__btn-group:empty {
     display: none !important;
 }
