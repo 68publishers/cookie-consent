@@ -93,3 +93,15 @@ test('preferences modal in the services mode with an expanded category', async (
 
     await expect(page).toHaveScreenshot('preferences-services-expanded.png');
 });
+
+test('consent and preferences modal in the dark scheme', async ({ page }) => {
+    // README: dark.css in external_stylesheets, the class cc--darkmode on <html>
+    await openPage(page, standaloneConfig({ ui_options: { external_stylesheets: ['/pkg/cookie-consent-dark.css'] } }));
+    await page.evaluate(() => document.documentElement.classList.add('cc--darkmode'));
+    await stable(page);
+    await expect(page.locator(await ui(page, 'consentModal'))).toBeVisible();
+    await expect(page).toHaveScreenshot('consent-box-dark.png');
+
+    await showPreferences(page);
+    await expect(page).toHaveScreenshot('preferences-box-dark.png');
+});
