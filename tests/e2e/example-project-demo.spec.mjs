@@ -186,6 +186,56 @@ test.describe('Example Project demo: 2.0 behaves like 1.6.0', () => {
         expect(results['2.0'].preferences).toContain('Reject optional');
     });
 
+    test('focus ring of every element is whole: not cut by a scroller nor hidden under the fixed title', async ({ page, browserName }) => {
+        test.skip(browserName !== 'chromium', 'the ring is the same box-shadow in all browsers');
+        // parts of the ring outside the visible area of a scrolling ancestor or under the fixed title of the first section
+        const cut = () => page.evaluate(() => {
+            const el = document.activeElement;
+            const r = el.getBoundingClientRect();
+            const ring = Math.max(0, ...[...getComputedStyle(el).boxShadow.matchAll(/(-?[\d.]+)px (-?[\d.]+)px (-?[\d.]+)px (-?[\d.]+)px/g)].map(m => +m[4]));
+            const out = [];
+            for (let a = el.parentElement; a && a !== document.body; a = a.parentElement) {
+                const cs = getComputedStyle(a);
+                if (!/(auto|scroll|hidden|clip)/.test(cs.overflowX + cs.overflowY)) {
+                    continue;
+                }
+                const ar = a.getBoundingClientRect();
+                const [l, t] = [ar.left + a.clientLeft, ar.top + a.clientTop];
+                (r.left - ring < l - .5 || r.right + ring > l + a.clientWidth + .5 || r.top - ring < t - .5 || r.bottom + ring > t + a.clientHeight + .5) && out.push(a.className.split(' ')[0]);
+            }
+            const title = document.querySelector('#cc-main .pm__section:first-child .pm__section-title-wrapper');
+            if (title && title.offsetParent && !title.contains(el) && el.closest('.pm__body')) {
+                r.top - ring < title.getBoundingClientRect().bottom - .5 && out.push('title');
+            }
+            return out.length ? `${el.textContent.trim().slice(0, 20) || el.value}: ${out}` : null;
+        });
+        const cuts = [];
+
+        for (const viewport of [{ width: 1280, height: 800 }, { width: 390, height: 844 }]) {
+            await page.setViewportSize(viewport);
+            await open(page, '2.0');
+            await expect(page.locator(SELECTORS['2.0'].consent)).toBeVisible();
+            await page.waitForTimeout(500);
+            for (let i = 0; i < 5; i++) {
+                await page.keyboard.press('Tab');
+                cuts.push(await cut());
+            }
+            await button(page, 'Detailed cookie settings').click();
+            await page.waitForTimeout(700);
+            for (const title of await page.locator('#cc-main button.pm__section-title').all()) {
+                await title.click();
+            }
+            // forward and back, so that the focused element is scrolled to the top and to the bottom of the scroller
+            for (const key of [...Array(14).fill('Tab'), ...Array(14).fill('Shift+Tab')]) {
+                await page.keyboard.press(key);
+                await page.waitForTimeout(50);
+                cuts.push(await cut());
+            }
+        }
+
+        expect(cuts.filter(Boolean)).toEqual([]);
+    });
+
     for (const [from, to] of [['1.6.0', '2.0'], ['2.0', '1.6.0']]) {
         test(`consent given in ${from} is kept by ${to} without the bar`, async ({ page }) => {
             await open(page, from);

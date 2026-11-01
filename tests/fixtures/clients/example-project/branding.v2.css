@@ -1,7 +1,7 @@
 /* Branding of the Example Project for cookie consent 2.0 (vanilla-cookieconsent 3.x markup).
  * Port of branding.css (1.x). Each block names the 1.x rules it replaces;
  * rules without a counterpart are listed at the end as "not needed" with the reason.
- * Colors: #3366cc green, #d9480f blue, #666666 gray, #a1a1a1 gray light. */
+ * Colors: #3366cc green, #666666 gray (links), #a1a1a1 gray light. */
 
 /* ====================== Branding ====================== */
 
@@ -12,7 +12,7 @@
     --cc-color-white: #fff;
     --cc-color-gray: #666666;
     --cc-color-gray-light: #a1a1a1;
-    --cc-color-link: #d9480f;
+    --cc-color-link: #666666;
     --cc-primary-ring: var(--cc-color-white) 0px 0px 0px 2px, var(--cc-color-gray) 0px 0px 0px 5px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
 
     --cc-font-family: "Open Sans", Arial, Helvetica, sans-serif;
@@ -109,9 +109,11 @@
     bottom: 20px;
 }
 
+/* the scroller cuts the focus ring (5 px): 6 px padding evened out by a negative margin */
 #cc-main .cm .cm__body {
     max-height: 70vh;
-    padding: 0;
+    padding: 0 6px 6px;
+    margin: 0 -6px -6px;
     overflow-y: auto;
 }
 
@@ -138,6 +140,7 @@
     line-height: 1.3em;
     padding: 0 0 5px;
     max-height: none;
+    overflow: visible;
 }
 
 /* 1.x .cc_div #c-bns (column), #c-bns button+button, .c-bn */
@@ -219,6 +222,8 @@
 /* 1.x #s-bl padding 0 6px inside #s-inr padding 103px: the sections are 12 px narrower than the buttons */
 #cc-main .pm .pm__body {
     padding: 0 115px 0 103px !important;
+    /* focusing with Tab does not scroll an element under the fixed title (87.4 px) nor its ring under the bottom edge */
+    scroll-padding: 94px 0 6px;
 }
 
 /* 1.x #s-inr padding-top 76px outside the scrolling #s-bl: the content does not scroll into the top edge */
@@ -274,6 +279,8 @@
     align-items: flex-start;
     padding-top: 6px;
     background: var(--cc-color-white);
+    /* covers the focus ring of the content scrolled under the title (6 px left and right) */
+    box-shadow: 0 -6px 0 6px var(--cc-color-white);
 }
 
 #cc-main .pm__section:first-child:not(.pm__section--toggle) .pm__section-title {
@@ -319,6 +326,8 @@
 #cc-main .pm__section--toggle .pm__section-desc-wrapper {
     padding: 0;
     border: 0;
+    /* v3 overflow hidden cuts the focus ring of the partner links */
+    overflow: visible;
 }
 
 #cc-main .pm__section--toggle .pm__section-desc,
@@ -495,7 +504,7 @@
     width: 18px;
     height: 18px;
     margin-right: 8px;
-    background: url("data:image/svg+xml,%3Csvg width='18' height='16' viewBox='0 0 18 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 1L1 8L8 15' stroke='%23D9480F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M1 8H17' stroke='%23D9480F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+    background: url("data:image/svg+xml,%3Csvg width='18' height='16' viewBox='0 0 18 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 1L1 8L8 15' stroke='%23666666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M1 8H17' stroke='%23666666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 
 /* 1.x .cc-description-block */
@@ -542,6 +551,11 @@
 
 #cc-main .pm__table-tr:first-child {
     border-top: 1px solid var(--cc-color-gray-light);
+}
+
+/* intentional difference from 1.x: the last row of an expanded category has no divider (visual noise) */
+#cc-main .pm__table-tr:last-child {
+    border-bottom-color: transparent;
 }
 
 #cc-main .pm__table-tr:hover {
@@ -624,6 +638,7 @@
 
     #cc-main .cm .cm__body {
         padding-bottom: 20px !important;
+        margin: 0;
     }
 
     #cc-main .pm .pm__footer {
