@@ -97,7 +97,10 @@ async function measureOnce(browser, baseURL, scenario) {
         }).observe(document, { attributes: true, attributeFilter: ['class'], subtree: true });
     });
 
-    if (process.env.PERF_DEBUG) { page.on("console", m => console.log("CON", m.text())); page.on("pageerror", e => console.log("ERR", e.message)); }
+    if (process.env.PERF_DEBUG) {
+        page.on('console', m => console.log('console', m.text()));
+        page.on('pageerror', e => console.log('pageerror', e.message));
+    }
     await page.goto(baseURL + scenario.path);
     await page.waitForFunction(() => window.__shownAt !== undefined, null, { timeout: Number(process.env.PERF_TIMEOUT || 60000) });
     const shownAtEpoch = await page.evaluate(() => window.__shownAtEpoch);
@@ -180,22 +183,23 @@ async function main() {
         const baseline = await measureTarget(await downloadRef(), `${result.variant}-ref`);
         const budget = JSON.parse(fs.readFileSync(path.join(root, 'perf/budget.json'), 'utf8'));
         const rows = [];
-        const check = (name, actual, limit, reference) => rows.push({ name, actual, limit, reference, ok: actual <= limit });
+        // timings of shared CI runners vary by more than the budget: in CI they only warn, sizes and requests block
+        const check = (name, actual, limit, reference, timing = false) => rows.push({ name, actual, limit, reference, ok: actual <= limit, blocking: !(timing && process.env.CI) });
 
         check('js gzip (B)', result.sizes.js.gzip, budget.jsGzipMax, baseline.sizes.js.gzip);
         check('js raw (B)', result.sizes.js.raw, budget.jsRawMax, baseline.sizes.js.raw);
         check('css gzip (B)', result.sizes.css.gzip, budget.cssGzipMax, baseline.sizes.css.gzip);
         for (const name of Object.keys(SCENARIOS)) {
-            check(`${name} ttm (ms)`, result.scenarios[name].ttmMs, round(baseline.scenarios[name].ttmMs * budget.ttmRatioMax), baseline.scenarios[name].ttmMs);
-            check(`${name} script (ms)`, result.scenarios[name].scriptMs, round(baseline.scenarios[name].scriptMs * budget.scriptRatioMax), baseline.scenarios[name].scriptMs);
+            check(`${name} ttm (ms)`, result.scenarios[name].ttmMs, round(baseline.scenarios[name].ttmMs * budget.ttmRatioMax), baseline.scenarios[name].ttmMs, true);
+            check(`${name} script (ms)`, result.scenarios[name].scriptMs, round(baseline.scenarios[name].scriptMs * budget.scriptRatioMax), baseline.scenarios[name].scriptMs, true);
             check(`${name} requests`, result.scenarios[name].requestsBeforeModal, budget.requestsBeforeModalMax, baseline.scenarios[name].requestsBeforeModal);
         }
 
-        const table = ['| Metric | 1.6.0 | 2.0 | Limit | OK |', '|---|---|---|---|---|', ...rows.map(r => `| ${r.name} | ${r.reference} | ${r.actual} | ${r.limit} | ${r.ok ? 'yes' : 'NO'} |`)].join('\n');
+        const table = ['| Metric | 1.6.0 | 2.0 | Limit | OK |', '|---|---|---|---|---|', ...rows.map(r => `| ${r.name} | ${r.reference} | ${r.actual} | ${r.limit} | ${r.ok ? 'yes' : (r.blocking ? 'NO' : 'warning')} |`)].join('\n');
         console.log('\n' + table);
         process.env.GITHUB_STEP_SUMMARY && fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `### Performance against 1.6.0\n\n${table}\n`);
 
-        if (rows.some(r => !r.ok)) {
+        if (rows.some(r => !r.ok && r.blocking)) {
             process.exitCode = 1;
         }
     }

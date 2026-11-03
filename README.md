@@ -606,7 +606,6 @@ $ npx playwright install chromium firefox webkit
 | `npm test` | Unit tests (Vitest), e2e tests (Playwright in Chromium, Firefox and WebKit) and, on macOS, the visual references. `CC_TARGET=var/perf-ref` runs the e2e tests against another build, e.g. 1.6.0 downloaded by `npm run ref`. |
 | `npm run test:visual -- --update-snapshots=all` | Updates the visual references after an intended change of the look; `npm run test:visual:gallery` builds `var/visual/index.html`. |
 | `npm run perf -- --compare` | Measures the size, requests and time to the widget against 1.6.0 (budget in `perf/budget.json`). |
-| `npm run size` | Size limits of the JS and the CSS. |
 
 ## License
 

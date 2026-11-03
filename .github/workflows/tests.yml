@@ -64,9 +64,6 @@ jobs:
       - name: Measure and compare with 1.6.0 (budget in perf/budget.json)
         run: npm run perf -- --compare --variant=ci
 
-      - name: Size limit
-        run: npx size-limit
-
       - name: Upload results
         if: always()
         uses: actions/upload-artifact@v4
