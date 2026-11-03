@@ -4,7 +4,7 @@ import {
     cmpConfig, standaloneConfig,
 } from './helpers.mjs';
 
-// Phase 3: the "services" preferences mode (providers inside categories), 2.0 only.
+// The "services" preferences mode (providers inside categories), 2.0 only.
 
 const SERVICES_CONFIG = (overrides = {}) => cmpConfig({
     plugin_options: { autorun: false, page_scripts: true },

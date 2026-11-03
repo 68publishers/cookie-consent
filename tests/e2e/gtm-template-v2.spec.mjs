@@ -1,10 +1,10 @@
 import { test, expect } from '@playwright/test';
 import { openGtmPage, loadFixture, legacyConsentCookie, setConsentCookie, cookieValue, ui, wrapperMajor } from './helpers.mjs';
 
-// Phase 5: the GTM template 2.0 (gtm_template.tpl) against the template 1.6.0 (tests/fixtures/gtm/template-1.6.0.tpl).
+// The GTM template 2.0 (gtm_template.tpl) against the template 1.6.0 (var/perf-ref/gtm_template.tpl, npm run ref).
 
 const exampleProject = loadFixture('gtm/example-project.json').data;
-const TEMPLATE_16 = 'tests/fixtures/gtm/template-1.6.0.tpl';
+const TEMPLATE_16 = 'var/perf-ref/gtm_template.tpl';
 const afterTemplate = (page) => page.evaluate(() => window.__afterTemplate);
 const injected = (page) => page.evaluate(() => window.__gtmInjected.map(u => new URL(u).pathname));
 
@@ -77,7 +77,8 @@ test.describe('Global Privacy Control in the template', () => {
                     if (cookie) {
                         await setConsentCookie(page, legacyConsentCookie(['functionality_storage', 'personalization_storage'], { rfc: true }));
                     }
-                    await openGtmPage(page, { ...data, respect_gpc: field });
+                    // the field "Global Privacy Control signal" holds a variable reading navigator.globalPrivacyControl
+                    await openGtmPage(page, { ...data, respect_gpc: field, gpc_signal: gpc });
                     await page.waitForTimeout(300);
 
                     const optOut = gpc && field && !cookie;

@@ -469,6 +469,20 @@ ___TEMPLATE_PARAMETERS___
         "simpleValueType": true,
         "defaultValue": false,
         "help": "If the browser sends the \u003ca href=\"https://globalprivacycontrol.org/\"\u003eGlobal Privacy Control\u003c/a\u003e signal and the visitor has not decided yet, storages enabled by default are treated as denied and the consent modal is not shown automatically (the visitor can still open the settings). Requires the package version 2.0 or newer."
+      },
+      {
+        "type": "TEXT",
+        "name": "gpc_signal",
+        "displayName": "Global Privacy Control signal",
+        "simpleValueType": true,
+        "enablingConditions": [
+          {
+            "paramName": "respect_gpc",
+            "paramValue": true,
+            "type": "EQUALS"
+          }
+        ],
+        "help": "A Custom JavaScript variable returning the browser signal: \u003ccode\u003efunction () { return navigator.globalPrivacyControl === true; }\u003c/code\u003e. The template cannot read \u003ccode\u003enavigator\u003c/code\u003e itself. Without it, only the widget respects the signal and tags fired before the widget loads get the consent enabled by default."
       }
     ]
   },
@@ -2150,7 +2164,6 @@ const callInWindow = require('callInWindow');
 const JSON = require('JSON');
 const Object = require('Object');
 const makeInteger = require('makeInteger');
-const copyFromWindow = require('copyFromWindow');
 
 log('data =', data);
 
@@ -2295,7 +2308,7 @@ const defaultConsents = {};
 const acceptedStorageNames = [];
 
 // Global Privacy Control: until the visitor decides, storages enabled by default (except readonly ones) are denied, the same as the widget does
-const gpcOptOut = !!data.respect_gpc && null === consentCookie && true === copyFromWindow('navigator.globalPrivacyControl');
+const gpcOptOut = !!data.respect_gpc && null === consentCookie && (true === data.gpc_signal || 'true' === data.gpc_signal);
 const isEnabledByDefault = storage => storage.enabled_by_default && (!gpcOptOut || storage.readonly);
 
 // setup default consent & invoke event triggers for accepted storages
@@ -3085,45 +3098,6 @@ ___WEB_PERMISSIONS___
                     "boolean": true
                   }
                 ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  {
-                    "type": 1,
-                    "string": "key"
-                  },
-                  {
-                    "type": 1,
-                    "string": "read"
-                  },
-                  {
-                    "type": 1,
-                    "string": "write"
-                  },
-                  {
-                    "type": 1,
-                    "string": "execute"
-                  }
-                ],
-                "mapValue": [
-                  {
-                    "type": 1,
-                    "string": "navigator.globalPrivacyControl"
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  }
-                ]
               }
             ]
           }
@@ -3164,7 +3138,6 @@ ___TESTS___
 scenarios:
 - name: Global Privacy Control denies storages enabled by default for a new visitor
   code: |-
-    mock('copyFromWindow', (key) => key === 'navigator.globalPrivacyControl' ? true : undefined);
     mock('getCookieValues', []);
     mock('injectScript', (url, onSuccess) => onSuccess());
     runCode(mockData);
@@ -3181,7 +3154,6 @@ scenarios:
 - name: Without Respect Global Privacy Control the signal is ignored
   code: |-
     mockData.respect_gpc = false;
-    mock('copyFromWindow', (key) => key === 'navigator.globalPrivacyControl' ? true : undefined);
     mock('getCookieValues', []);
     mock('injectScript', (url, onSuccess) => onSuccess());
     runCode(mockData);
@@ -3203,6 +3175,7 @@ setup: |-
     delay: '0',
     locales: ['en'],
     respect_gpc: true,
+    gpc_signal: true,
     functionality_storage_visibility: 'visible_readonly_enabled',
     security_storage_visibility: 'hidden_disabled',
     personalization_storage_visibility: 'visible_enabled',
@@ -3220,4 +3193,4 @@ Created on 17. 12. 2021 0:22:20
 
 2.0.0: plugin vanilla-cookieconsent 3.x; new fields "Preferences layout" and "Respect Global Privacy Control";
 removed fields "Transition" (both modals) and "Use RFC cookie" (the cookie is always URI encoded);
-new permission: read access to "navigator.globalPrivacyControl". See docs/migration-from-1.x-to-2.0.md.
+the permissions are the same as in 1.6.0 (the GPC signal comes from the field "Global Privacy Control signal"). See docs/migration-from-1.x-to-2.0.md.
