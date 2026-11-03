@@ -427,6 +427,10 @@ With the option `compat_legacy_ids` (enabled by default) the buttons and toggles
     window.cookieConsentWrapperEvents.push(['services:changed', function (acceptedServices) {
         // the services layout only: {ad_storage: ['google_ads', 'meta'], ...}
     }]);
+
+    window.cookieConsentWrapperEvents.push(['cmp:consent-not-sent', function (error) {
+        // the consent was not sent into the CMP: an http:// page (no WebCrypto) or a failed request
+    }]);
 </script>
 ```
 

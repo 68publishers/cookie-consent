@@ -1,3 +1,5 @@
+import { Events } from '../EventBus/Events.mjs';
+
 const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 const integrateConsentApi = function (wrapper, cmpApiOptions) {
@@ -8,7 +10,9 @@ const integrateConsentApi = function (wrapper, cmpApiOptions) {
         try {
             configurationExport = await wrapper.configurationExport;
         } catch (e) {
+            // http:// page: no WebCrypto for the checksum
             console.warn('CookieConsentWrapper: the consent is not sent into the CMP.', e);
+            wrapper._eventBus.dispatch(Events.ON_CMP_CONSENT_NOT_SENT, e);
 
             return;
         }
@@ -75,6 +79,7 @@ const integrateConsentApi = function (wrapper, cmpApiOptions) {
 
         }).catch((e) => {
             console.warn('Sending consent into CMP failed.', e);
+            wrapper._eventBus.dispatch(Events.ON_CMP_CONSENT_NOT_SENT, e);
         })
     };
 
@@ -178,10 +183,13 @@ const integrateCookiesApi = function (wrapper, cmpApiOptions) {
 
             for (const cookie of json.data.cookies) {
                 const category = cookie.category.code;
-                const provider = cookie.cookieProvider;
+                // a cookie without a provider keeps its row with empty provider columns and is not a service
+                const provider = cookie.cookieProvider = cookie.cookieProvider || { name: '', type: '', link: '' };
 
-                services[category] = services[category] || {};
-                services[category][provider.code] = services[category][provider.code] || { name: provider.name, link: provider.link };
+                if (provider.code) {
+                    services[category] = services[category] || {};
+                    services[category][provider.code] = services[category][provider.code] || { name: provider.name, link: provider.link };
+                }
             }
 
             if (0 >= headers.length) {

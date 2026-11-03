@@ -10,14 +10,15 @@ Version 2.0 is built on vanilla-cookieconsent 3.2. The configuration, events, tr
 
 ### Added
 - The services layout of the settings modal (`settings_modal_options.preferences_mode: 'services'`, template field `Preferences layout`): a toggle for every service (cookie provider) inside a category. Services come from the CMP (Cookies API) and from `storage_pool[].services`; the consent of services is stored in the cookie and sent to the CMP (`services`).
-- Global Privacy Control (`plugin_options.respect_gpc`, template field `Respect Global Privacy Control`). The template needs a new permission to read `navigator.globalPrivacyControl`.
-- Events `consent:saved` and `services:changed`; `consent:changed` gets the changed services as the third argument.
+- Global Privacy Control (`plugin_options.respect_gpc`, template fields `Respect Global Privacy Control` and `Global Privacy Control signal`). The template reads the signal from a Custom JavaScript variable, its permissions are the same as in 1.6.0.
+- Events `consent:saved`, `services:changed` and `cmp:consent-not-sent`; `consent:changed` gets the changed services as the third argument.
 - `CookieConsentWrapper.setSettingsModalClosable()`, `acceptedServices`, `consent_modal_options.equal_weight_buttons`, `plugin_options.lazy_html_generation`, `plugin_options.compat_legacy_ids`.
 - The dark scheme as a separate stylesheet `cookie-consent-dark.css`.
 - Unit, e2e (Chromium, Firefox, WebKit), visual and performance tests, demo pages for the standalone, GTM and CMP integration (`npm run demo`).
 - The Example Project demo (`demo/example-project.html`): a 1.x client configuration with its branding, custom tags and click triggers, the same page on 1.6.0 for comparison and the branding ported to 2.0 (`tests/fixtures/clients/example-project/branding.v2.css`), tested pixel by pixel against 1.6.0.
 
 ### Changed
+- **Breaking:** the CMP integration needs HTTPS. On `http://` pages the checksum of the configuration cannot be computed (WebCrypto is available in a secure context only), the consent is not sent into the CMP, a warning is logged and the event `cmp:consent-not-sent` is dispatched.
 - The widget is built on vanilla-cookieconsent 3.2 instead of 2.9; the markup and the CSS classes changed. The buttons keep their 1.x ids (`compat_legacy_ids`).
 - `CookieConsentWrapper.unwrap()` returns the API of the plugin 3.x; the methods of 2.9 are kept with a deprecation warning.
 - A cookie of 1.x is converted when the widget starts and the cookie keeps the fields of 1.x, so neither the upgrade nor a rollback shows the widget again.

@@ -58,6 +58,21 @@ test.describe('CMP integration (mocked API v1)', () => {
         await expect(modal.getByText('Google Analytics').first()).toBeAttached();
     });
 
+    test('a cookie without a provider keeps the other rows', async ({ page }) => {
+        await page.addInitScript(() => {
+            window.__CMP_MOCK__ = { cookies: [
+                { name: 'no_provider', purpose: 'Unknown.', processingTime: 'session', cookieProvider: null, category: { name: 'Analytics', code: 'analytics_storage' } },
+                { name: '_ga', purpose: 'Distinguishes users.', processingTime: '2 years', cookieProvider: { code: 'google_analytics', name: 'Google Analytics', type: '3rd_party', link: '' }, category: { name: 'Analytics', code: 'analytics_storage' } },
+            ] };
+        });
+        await openPage(page, cmpConfig());
+        await showPreferences(page);
+        const modal = page.locator(await ui(page, 'preferencesModal'));
+
+        await expect(modal.getByText('no_provider', { exact: true }).first()).toBeAttached();
+        await expect(modal.getByText('_ga', { exact: true }).first()).toBeAttached();
+    });
+
     test('a CMP failure does not break the widget', async ({ page }) => {
         await page.addInitScript(() => { window.__CMP_MOCK__ = { fail: true }; });
         await openPage(page, cmpConfig());

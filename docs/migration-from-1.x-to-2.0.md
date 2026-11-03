@@ -7,17 +7,16 @@ The only change a client has to make is custom CSS targeting the markup of 1.x.
 
 ## Requirements
 
-- **HTTPS.** The checksum of the configuration sent to the CMP is computed by WebCrypto, which browsers provide in a secure context only. On `http://` pages the widget works, but the consent is not sent to the CMP and a warning is logged.
+- **HTTPS.** The checksum of the configuration sent to the CMP is computed by WebCrypto, which browsers provide in a secure context only. On `http://` pages the widget works, but the consent is not sent to the CMP (breaking change): a warning is logged and the event `cmp:consent-not-sent` is dispatched.
 - **Browsers supporting ES2020**: Chrome 80+, Firefox 74+, Safari 13.1+, Edge 80+. Internet Explorer is not supported (neither by the plugin 3.x).
 
 ## Steps in GTM
 
 1. Import `gtm_template.tpl` of 2.0 into the existing template (Templates → the template → Import). Existing tags keep their configuration.
-2. Review the new permission of the template: read access to `navigator.globalPrivacyControl` (used by the new field `Respect Global Privacy Control`).
-3. Set `Package version` to `2.0.0` (or keep `latest`).
-4. Rewrite custom CSS (the field `Internal stylesheet`, external stylesheets, Custom HTML tags), see [CSS selectors](#css-selectors).
-5. Optionally use the new fields `Preferences layout` (services of cookie providers) and `Respect Global Privacy Control`.
-6. Check the browser console for deprecation warnings of Custom HTML tags (`unwrap().showSettings()` etc.) and update them when convenient.
+2. Set `Package version` to `2.0.0` (or keep `latest`).
+3. Rewrite custom CSS (the field `Internal stylesheet`, external stylesheets, Custom HTML tags), see [CSS selectors](#css-selectors).
+4. Optionally use the new fields `Preferences layout` (services of cookie providers) and `Respect Global Privacy Control`, see [Global Privacy Control](#global-privacy-control).
+5. Check the browser console for deprecation warnings of Custom HTML tags (`unwrap().showSettings()` etc.) and update them when convenient.
 
 ## Compatibility
 
@@ -116,7 +115,13 @@ Hiding the widget in a webview:
 ## Global Privacy Control
 
 With `Respect Global Privacy Control` (`plugin_options.respect_gpc`) and the browser signal `navigator.globalPrivacyControl`, a visitor who has not decided yet gets `denied` for storages enabled by default (except readonly ones) in the default consent of the template and in the widget, and the consent modal is not shown automatically. A saved choice always wins.
-The template needs the new permission to read `navigator.globalPrivacyControl`.
+GTM does not allow templates to read `navigator`, so the template gets the signal from the field `Global Privacy Control signal`. Fill it with a Custom JavaScript variable:
+
+```js
+function () { return navigator.globalPrivacyControl === true; }
+```
+
+Without the variable only the widget respects the signal: tags fired before the widget loads get the default consent without GPC.
 
 ## CSS selectors
 

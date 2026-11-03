@@ -26,4 +26,8 @@ export class Events {
     static get ON_SERVICES_CHANGED() {
         return 'services:changed';
     };
+
+    static get ON_CMP_CONSENT_NOT_SENT() {
+        return 'cmp:consent-not-sent';
+    };
 }

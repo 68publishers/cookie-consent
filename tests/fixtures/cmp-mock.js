@@ -65,7 +65,7 @@
                 var cookies = options.cookies || DEFAULT_COOKIES;
                 var providers = {};
                 cookies.forEach(function (c) {
-                    providers[c.cookieProvider.code] = Object.assign({ purpose: '' }, c.cookieProvider);
+                    c.cookieProvider && (providers[c.cookieProvider.code] = Object.assign({ purpose: '' }, c.cookieProvider));
                 });
                 return json(200, { status: 'success', data: { providers: Object.values(providers), cookies: cookies } });
             }
