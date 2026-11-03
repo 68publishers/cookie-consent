@@ -63,7 +63,7 @@ test.describe('axe', () => {
 });
 
 test.describe('keyboard', () => {
-    const focusedInside = (selector) => (sel) => !!document.activeElement && !!document.activeElement.closest(sel);
+    const focusedInside = () => (sel) => !!document.activeElement && !!document.activeElement.closest(sel);
 
     test('focus moves into the consent modal and Tab stays inside', async ({ page, browserName }) => {
         test.skip(browserName === 'webkit', 'WebKit does not move focus to buttons with Tab by default');

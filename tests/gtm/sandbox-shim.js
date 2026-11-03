@@ -90,7 +90,7 @@
         },
         JSON: {
             parse: function (value) {
-                try { return JSON.parse(value); } catch (e) { return undefined; }
+                try { return JSON.parse(value); } catch { return undefined; }
             },
             stringify: function (value) {
                 return JSON.stringify(value);

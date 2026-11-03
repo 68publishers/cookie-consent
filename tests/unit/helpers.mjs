@@ -17,7 +17,6 @@ export const readJson = (file) => JSON.parse(fs.readFileSync(path.join(root, fil
 export function wrapperConfigFromTemplate(data) {
     delete window.cc_wrapper_config;
     window.dataLayer = [];
-    // eslint-disable-next-line no-new-func
     new Function(fs.readFileSync(path.join(root, 'tests/gtm/sandbox-shim.js'), 'utf8'))();
     window.runGtmTemplate(sandboxedCode(), data);
 

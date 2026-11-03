@@ -16,7 +16,7 @@
                 throw new Error('Unknown GTM variable ' + name);
             }
             var value;
-            try { value = fn(); } catch (e) { value = undefined; }
+            try { value = fn(); } catch { value = undefined; }
             return String(value);
         });
     }

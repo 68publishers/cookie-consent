@@ -26,7 +26,7 @@ http.createServer((req, res) => {
 
     const file = pathname.startsWith('/pkg/') ? path.join(target, pathname.slice(5))
         : pathname.startsWith('/ref/') ? path.join(ref, pathname.slice(5))
-        : path.join(root, pathname);
+            : path.join(root, pathname);
 
     if (!file.startsWith(root) && !file.startsWith(target) && !file.startsWith(ref)) {
         res.writeHead(403).end();

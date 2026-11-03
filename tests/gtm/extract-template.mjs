@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 const defaultFile = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../gtm_template.tpl');
 
 export function readSection(name, file = defaultFile) {
-    const content = fs.readFileSync(file, 'utf8').replace(/^﻿/, '');
+    const content = fs.readFileSync(file, 'utf8').replace(/^\uFEFF/, '');
     const match = content.match(new RegExp(`___${name}___\\s*\\n([\\s\\S]*?)(?=\\n___[A-Z_]+___|$)`));
 
     if (!match) {
