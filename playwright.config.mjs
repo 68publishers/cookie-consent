@@ -36,8 +36,9 @@ export default defineConfig({
         { name: 'chromium', use: { ...devices['Desktop Chrome'], launchOptions: { args: ['--host-resolver-rules=MAP *.cc.test 127.0.0.1'] } } },
         { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
         { name: 'webkit', use: { ...devices['Desktop Safari'] } },
-        // visual snapshots: Chromium on macOS only (references are platform specific)
-        ...(process.platform === 'darwin' && !process.env.CC_NO_VISUAL ? [{
+        // visual snapshots on demand (npm run test:visual): the references are platform specific and not committed,
+        // the first run writes them, later runs compare with them
+        ...(process.env.CC_VISUAL ? [{
             name: 'visual',
             testMatch: 'visual/**/*.spec.mjs',
             use: { ...devices['Desktop Chrome'], viewport: { width: 1280, height: 800 }, deviceScaleFactor: 1 },

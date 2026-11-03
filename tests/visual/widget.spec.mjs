@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { openPage, ui, showPreferences, cmpConfig, standaloneConfig, STORAGES_ALL_VISIBLE } from '../e2e/helpers.mjs';
 
 // Visual references of the 2.0 widget. Update only with `npm run test:visual -- --update-snapshots=all`
-// in a task that changes the look, and review every new image before the commit.
+// in a task that changes the look and review the changed images (npm run test:visual:gallery). The references are not committed.
 
 const POSITIONS = ['top left', 'top center', 'top right', 'middle left', 'middle center', 'middle right', 'bottom left', 'bottom center', 'bottom right'];
 const CONSENT = [
