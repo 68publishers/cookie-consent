@@ -4,6 +4,8 @@ import { readRawCookies } from './Cookies.mjs';
  * A consent cookie on another domain (e.g. "www.example.com" next to ".example.com" after a change of the cookie domain)
  * shadows the valid one and the widget keeps showing. Copies outside the configured domain are removed.
  * Clients solved it by a custom tag calling eraseCookies() with a fixed domain.
+ * Only copies on the configured path are removed: a copy on another path keeps shadowing the valid cookie
+ * (document.cookie does not tell the path, the paths of the current URL would have to be tried one by one).
  */
 export function removeDuplicatedCookies({ name, domain, path }) {
     if (1 >= readRawCookies(name).length) {
