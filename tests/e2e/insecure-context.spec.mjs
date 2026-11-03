@@ -2,8 +2,7 @@ import { test, expect } from '@playwright/test';
 import { openPage, ui, wrapperMajor, cmpConfig } from './helpers.mjs';
 
 // HTTPS is a prerequisite of 2.0 (WebCrypto). On http:// the widget works, but no consent is sent to the CMP.
-// localhost is a secure context, so a resolver rule maps *.cc.test to it (Chromium only).
-test.use({ launchOptions: { args: ['--host-resolver-rules=MAP *.cc.test 127.0.0.1'] } });
+// localhost is a secure context, so the chromium project maps *.cc.test to it.
 
 test('on http:// the consent is saved, the CMP gets nothing and a warning is logged', async ({ page, browserName }) => {
     test.skip(browserName !== 'chromium', 'host resolver rules are a Chromium flag');

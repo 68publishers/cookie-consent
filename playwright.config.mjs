@@ -32,7 +32,8 @@ export default defineConfig({
         env: { CC_TARGET: process.env.CC_TARGET || 'var/build', CC_PORT: String(port) },
     },
     projects: [
-        { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
+        // *.cc.test -> localhost for tests on another host (Chromium flag, WebKit fails to launch with it)
+        { name: 'chromium', use: { ...devices['Desktop Chrome'], launchOptions: { args: ['--host-resolver-rules=MAP *.cc.test 127.0.0.1'] } } },
         { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
         { name: 'webkit', use: { ...devices['Desktop Safari'] } },
         // visual snapshots: Chromium on macOS only (references are platform specific)

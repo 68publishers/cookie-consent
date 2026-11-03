@@ -1,8 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { openPage, ui, wrapperMajor, standaloneConfig, legacyConsentCookie } from './helpers.mjs';
 
-// two consent cookies on www.<domain> and .<domain>. A resolver rule maps *.cc.test to localhost (Chromium only).
-test.use({ launchOptions: { args: ['--host-resolver-rules=MAP *.cc.test 127.0.0.1'] } });
+// two consent cookies on www.<domain> and .<domain>. The chromium project maps *.cc.test to localhost.
 
 test('a copy of the consent cookie outside cookie_domain is removed before the plugin reads it', async ({ page, browserName }) => {
     test.skip(browserName !== 'chromium', 'host resolver rules are a Chromium flag');
