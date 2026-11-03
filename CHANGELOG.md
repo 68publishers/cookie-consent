@@ -27,7 +27,7 @@ Version 2.0 is built on vanilla-cookieconsent 3.2. The configuration, events, tr
 - A returning visitor gets the consent event in the data layer only once per page (the `update` event with the same values as `default` is not pushed).
 - The buttons keep the order of 1.x (primary, secondary, third) and buttons ordered by the CSS `order` property are reordered in the DOM.
 - An opened modal focuses its first button or link like 1.x (the plugin 3.x focuses the modal itself); the focus stays in the modal when it is re-rendered (language change, cookie tables loaded from the CMP). Tab wraps inside the open modal through all its visible links, toggles and buttons, the wrapper does it instead of the plugin 3.x, which wraps at the elements found when the modal was rendered. A focused element outside the list (Firefox focuses a scrollable modal body) continues with the next element instead of jumping to the first one. An empty button group of the preferences modal is hidden like the one of the consent modal.
-- [Template] Renamed the template to `68 Publishers Cookie Consent`, replaced the brand thumbnail with a 96×96 px icon and removed the UTF-8 BOM from the file, as required by the Community Template Gallery style guide.
+- [Template] Renamed the template to `68 Publishers Cookie Consent`, scaled the brand thumbnail down to 96×96 px and removed the UTF-8 BOM from the file, as required by the Community Template Gallery style guide.
 
 ### Removed
 - The options `transition` and `use_rfc_cookie` (and the template fields `Transition` and `Use RFC cookie`); they are accepted and ignored with a warning.
