@@ -21,13 +21,20 @@ jobs:
         uses: actions/setup-node@v4
         with:
           registry-url: https://registry.npmjs.org/
-          node-version: 22
+          node-version-file: .nvmrc
+          cache: npm
 
       - name: Update npm
         run: npm install -g npm@latest
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
+
+      - name: Install browsers
+        run: npx playwright install --with-deps chromium firefox webkit
+
+      - name: Tests
+        run: npm test
 
       - name: Git configuration
         run: |

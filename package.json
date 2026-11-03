@@ -4,16 +4,17 @@
   "description": "Cookie consent wrapper based on orestbida/cookieconsent with GTM integration.",
   "homepage": "http://www.68publishers.io/",
   "main": "index.mjs",
+  "engines": {
+    "node": ">=22"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/68publishers/cookie-consent"
   },
   "scripts": {
-    "build:dev": "webpack --config webpack.config.dev.mjs --progress --profile",
     "build:prod": "webpack --config webpack.config.prod.mjs --progress --profile",
-    "start:dev": "webpack --config webpack.config.dev.mjs --progress --profile && webpack-dev-server --config webpack.config.dev.mjs",
-    "eslint:fix": "eslint ./index.mjs ./src --fix",
-    "eslint": "eslint ./index.mjs ./src",
+    "eslint:fix": "eslint ./index.mjs ./src ./perf ./tests --fix",
+    "eslint": "eslint ./index.mjs ./src ./perf ./tests",
     "build:test": "CC_OUT_DIR=var/build webpack --config webpack.config.prod.mjs",
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
@@ -23,7 +24,7 @@
     "perf:baseline": "node perf/run.mjs --ref --baseline",
     "test:a11y-baseline": "A11Y_REPORT=perf/a11y-baseline-1.6.0.json CC_TARGET=dist playwright test tests/e2e/a11y.spec.mjs --project=chromium",
     "ref": "node perf/download-ref.mjs",
-    "test:visual": "playwright test --project=visual",
+    "test:visual": "CC_VISUAL=1 playwright test --project=visual",
     "test:visual:gallery": "node tests/visual/gallery.mjs"
   },
   "keywords": [
@@ -37,15 +38,12 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",
     "@babel/core": "^7.16.0",
-    "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.16.4",
     "@eslint/eslintrc": "^3.1.0",
     "@eslint/js": "^9.5.0",
     "@playwright/test": "^1.64.1",
     "babel-loader": "^8.2.3",
     "copy-webpack-plugin": "^12.0.2",
-    "core-js": "^3.39.0",
-    "crypto-js": "^4.2.0",
     "css-loader": "^7.1.2",
     "cssnano": "^7.0.6",
     "eslint": "^9.5.0",
@@ -60,11 +58,10 @@
     "terser-webpack-plugin": "^5.2.5",
     "vitest": "^5.0.5",
     "webpack": "^5.65.0",
-    "webpack-cli": "^4.9.1",
-    "webpack-dev-server": "^4.6.0"
+    "webpack-cli": "^4.9.1"
   },
   "dependencies": {
-    "vanilla-cookieconsent": "github:orestbida/cookieconsent#v3.2.0"
+    "vanilla-cookieconsent": "~3.2.1"
   },
   "files": [
     "src",
