@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
-- [Template] Renamed the template to `68 Publishers Cookie Consent`, replaced the brand thumbnail with a 96×96 px icon and removed the UTF-8 BOM from the file, as required by the Community Template Gallery style guide.
+- [Template] Renamed the template to `68 Publishers Cookie Consent`, scaled the brand thumbnail down to 96×96 px and removed the UTF-8 BOM from the file, as required by the Community Template Gallery style guide.
 
 ## [1.6.0] - 2026-10-22
 ### Added
