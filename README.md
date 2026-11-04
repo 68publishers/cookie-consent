@@ -15,10 +15,6 @@ An extended integration of [orestbida/cookieconsent](https://github.com/orestbid
 - :white_check_mark: Support for storing consents via [CMP](https://github.com/68publishers/consent-management-platform)
 - :white_check_mark: Consent per category or per service (cookie provider)
 
-> :information_source: Version 2.0 is built on the plugin 3.x. The configuration, events and the consent cookie stay compatible with 1.x; custom CSS has to be updated. See [Migration from 1.x to 2.0](docs/migration-from-1.x-to-2.0.md).
-
-**Requirements:** HTTPS (the consent is sent to the CMP only from a secure context) and browsers supporting ES2020 (Chrome 80+, Firefox 74+, Safari 13.1+, Edge 80+).
-
 ## Table of contents
 
 * [Integration into the GTM](#integration-into-the-gtm)
@@ -52,6 +48,8 @@ Then create the new tag with the imported Template, as trigger set an option `Co
 <img src="docs/images/cookie-consent-tag.png" alt="Cookie consent tag" width="600">
 
 Now you can open a preview of the website and as you can see the cookie widget is here! But let's configure it a bit.
+
+The widget supports browsers with ES2020 (Chrome 80+, Firefox 74+, Safari 13.1+, Edge 80+).
 
 ## Configuration
 
@@ -512,6 +510,7 @@ Without GTM the wrapper is configured by the object `window.cc_wrapper_config` d
 ## Integration with CMP application
 
 The widget can be integrated with [the CMP application](https://github.com/68publishers/consent-management-platform).
+The consent is sent to the CMP only from a secure context, so the website must run on HTTPS.
 
 The first thing to do is to set up the user information under the `Integration` section. Each user must have an identity (ID).
 The default option is `Generated UUID`, however you can set a custom GTM variable that will return the ID of the current user of your website.
@@ -585,6 +584,7 @@ If the package files are [self-hosted](#self-hosted-package), it is necessary to
 
 ### Migration from 1.x to 2.0
 
+Version 2.0 is built on the plugin 3.x. The configuration, events and the consent cookie stay compatible with 1.x.
 Reimport the template, update the field `Package version` and rewrite custom CSS of the widget. Custom HTML tags using `unwrap()` and GTM triggers using the ids of the buttons keep working. See the page [Migration from 1.x to 2.0](docs/migration-from-1.x-to-2.0.md).
 
 ### Migration from v0.4 to v0.5
