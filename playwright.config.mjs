@@ -36,8 +36,8 @@ export default defineConfig({
         { name: 'chromium', use: { ...devices['Desktop Chrome'], launchOptions: { args: ['--host-resolver-rules=MAP *.cc.test 127.0.0.1'] } } },
         { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
         { name: 'webkit', use: { ...devices['Desktop Safari'] } },
-        // visual snapshots on demand (npm run test:visual): the references are platform specific and not committed,
-        // the first run writes them, later runs compare with them
+        // visual snapshots (CC_VISUAL, set in Docker and CI): the committed references are Linux ones (make tests.visual.update),
+        // other platforms write their own on the first run and keep them uncommitted
         ...(process.env.CC_VISUAL ? [{
             name: 'visual',
             testMatch: 'visual/**/*.spec.mjs',

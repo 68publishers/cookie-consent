@@ -593,9 +593,28 @@ For more detailed information on migrating from `0.4.x` to `0.5.x`, please conti
 
 ## Development
 
+The recommended way is Docker: the image of Playwright (`Dockerfile`) has the same Node and browsers as CI.
+
 ```sh
 $ git clone https://github.com/68publishers/cookie-consent.git
 $ cd cookie-consent
+$ make install
+```
+
+| Command | Description |
+|---|---|
+| `make tests` | Build, unit, e2e and visual tests, the same as CI. |
+| `make tests.unit`, `make tests.e2e`, `make tests.visual` | One part of the tests. |
+| `make tests.visual.update` | Accepts an intended change of the look; commit the changed `tests/visual/__screenshots__/*-linux.png`. |
+| `make lint`, `make perf` | ESLint; size, requests and time against 1.6.0. |
+| `make demo` | The demo pages on http://localhost:4173/demo/standalone.html (see `npm run demo`). |
+| `make shell`, `make down` | A shell in the container; removes the containers and the `node_modules` volume. |
+
+The image tag in `Dockerfile` and `.github/workflows/tests.yml` must match `@playwright/test` (a unit test checks it).
+
+Without Docker:
+
+```sh
 $ npm install
 $ npx playwright install chromium firefox webkit
 ```
@@ -605,7 +624,7 @@ $ npx playwright install chromium firefox webkit
 | `npm run build:prod` | Production build into `dist/`. |
 | `npm run demo` | Builds into `var/build` and serves the demo pages on http://localhost:4173/demo/standalone.html, `gtm.html` (the GTM template with the Example Project configuration through a sandbox shim), `cmp.html` (a mocked CMP), `basic.html` (the default look without branding; a form switches the layouts and positions of both modals, the services mode, the language and the dark scheme, the same configurations as the visual tests) and `example-project.html` (the widget of a 1.x client with its branding, custom tags and click triggers; `?version=1.6.0` shows the same page with 1.6.0, `&app=settings` the mobile app mode; 1.6.0 needs `npm run ref` once). The pages need the server, opening the files directly does not work. For a rebuild on changes run `CC_OUT_DIR=var/build npx webpack --config webpack.config.prod.mjs --watch` next to `node tests/server.mjs`. |
 | `npm test` | Unit tests (Vitest) and e2e tests (Playwright in Chromium, Firefox and WebKit). `CC_TARGET=var/perf-ref` runs the e2e tests against another build, e.g. 1.6.0 downloaded by `npm run ref`. |
-| `npm run test:visual` | Visual snapshots of the widget and the pixel comparison of the Example Project demo with 1.6.0. The references are platform specific and not committed: the first run writes them (and fails), run it before a change of the look and again after it; `-- --update-snapshots=all` accepts an intended change; `npm run test:visual:gallery` builds `var/visual/index.html`. |
+| `npm run test:visual` | Visual snapshots of the widget and the pixel comparison of the Example Project demo with 1.6.0. Only the Linux references from Docker are committed and checked in CI; on another platform the first run writes local references (and fails), run it before a change of the look and again after it; `npm run test:visual:gallery` builds `var/visual/index.html`. |
 | `npm run perf -- --compare` | Measures the size, requests and time to the widget against 1.6.0 (budget in `perf/budget.json`). |
 
 ## License
