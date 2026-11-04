@@ -108,7 +108,7 @@ export function buildPluginConfig({ config, storagePool, locales, translation, c
     const pluginConfig = {
         mode: 'opt-in',
         revision: Number(plugin.revision) || 0,
-        // the wrapper shows the modal itself (delay, autorun, Global Privacy Control)
+        // the wrapper shows the modal itself (delay, autorun)
         autoShow: false,
         manageScriptTags: !!plugin.page_scripts,
         // the wrapper clears cookies itself (all three strategies, AutoClearOptions)
@@ -116,7 +116,6 @@ export function buildPluginConfig({ config, storagePool, locales, translation, c
         hideFromBots: !!plugin.hide_from_bots,
         disablePageInteraction: !!plugin.force_consent,
         lazyHtmlGeneration: false !== plugin.lazy_html_generation,
-        respectGpc: !!plugin.respect_gpc,
         cookie: {
             name: plugin.cookie_name,
             domain: plugin.resolveCookieDomain(),

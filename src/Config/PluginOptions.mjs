@@ -17,7 +17,6 @@ export class PluginOptions extends AbstractOptions {
         this.page_scripts = false;
         this.script_selector = 'data-cookiecategory';
         this.cookie_domain = window.location.hostname;
-        this.respect_gpc = false;
 
         // options managed by the GTM template without association with the plugin:
         this.init_after_dom_content_loaded = false;

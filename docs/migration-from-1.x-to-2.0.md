@@ -15,14 +15,14 @@ The only change a client has to make is custom CSS targeting the markup of 1.x.
 1. Import `gtm_template.tpl` of 2.0 into the existing template (Templates → the template → Import). Existing tags keep their configuration.
 2. Set `Package version` to `2.0.0` (or keep `latest`).
 3. Rewrite custom CSS (the field `Internal stylesheet`, external stylesheets, Custom HTML tags), see [CSS selectors](#css-selectors).
-4. Optionally use the new fields `Preferences layout` (services of cookie providers) and `Respect Global Privacy Control`, see [Global Privacy Control](#global-privacy-control).
+4. Optionally use the new field `Preferences layout` (services of cookie providers).
 5. Check the browser console for deprecation warnings of Custom HTML tags (`unwrap().showSettings()` etc.) and update them when convenient.
 
 ## Compatibility
 
 | Combination | Works | Note |
 |---|---|---|
-| Template 1.6 + package 2.0 | yes | the services layout and GPC cannot be enabled; the template sends `transition` and `use_rfc_cookie`, the package logs them as deprecated |
+| Template 1.6 + package 2.0 | yes | the services layout cannot be enabled; the template sends `transition` and `use_rfc_cookie`, the package logs them as deprecated |
 | Template 2.0 + package 1.6.x | yes | 1.6.x ignores the new fields |
 | Package 2.0 + CMP without services (≤ 1.2.x) | yes | the CMP ignores `services`, consents per category are stored as before |
 | Package 1.6.x + CMP with services (1.3+) | yes | consents without services are stored with an empty `services` object |
@@ -47,7 +47,7 @@ The only change a client has to make is custom CSS targeting the markup of 1.x.
 | `CookieConsentWrapper.configurationExport` | a Promise of `{configuration, checksum}` instead of the object |
 | `auto_language: 'browser'` | the first available language of `navigator.languages` is used, not only `navigator.language` |
 
-New options: `settings_modal_options.preferences_mode`, `storage_pool[].services`, `consent_modal_options.equal_weight_buttons`, `plugin_options.respect_gpc`, `plugin_options.lazy_html_generation`, `plugin_options.compat_legacy_ids`. See [Configuration without GTM](../README.md#configuration-without-gtm).
+New options: `settings_modal_options.preferences_mode`, `storage_pool[].services`, `consent_modal_options.equal_weight_buttons`, `plugin_options.lazy_html_generation`, `plugin_options.compat_legacy_ids`. See [Configuration without GTM](../README.md#configuration-without-gtm).
 
 ## Data layer
 
@@ -111,17 +111,6 @@ Hiding the widget in a webview:
     #cc-main { display: none !important; }
 </style>
 ```
-
-## Global Privacy Control
-
-With `Respect Global Privacy Control` (`plugin_options.respect_gpc`) and the browser signal `navigator.globalPrivacyControl`, a visitor who has not decided yet gets `denied` for storages enabled by default (except readonly ones) in the default consent of the template and in the widget, and the consent modal is not shown automatically. A saved choice always wins.
-GTM does not allow templates to read `navigator`, so the template gets the signal from the field `Global Privacy Control signal`. Fill it with a Custom JavaScript variable:
-
-```js
-function () { return navigator.globalPrivacyControl === true; }
-```
-
-Without the variable only the widget respects the signal: tags fired before the widget loads get the default consent without GPC.
 
 ## CSS selectors
 

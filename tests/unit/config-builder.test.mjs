@@ -49,7 +49,7 @@ describe('V3ConfigBuilder', () => {
         // every option of the wrapper must end up somewhere; a new option without a decision fails here
         const handled = {
             plugin: {
-                mapped: ['revision', 'page_scripts', 'hide_from_bots', 'force_consent', 'lazy_html_generation', 'respect_gpc', 'cookie_name', 'cookie_domain', 'cookie_path', 'cookie_same_site', 'cookie_expiration', 'current_lang', 'auto_language'],
+                mapped: ['revision', 'page_scripts', 'hide_from_bots', 'force_consent', 'lazy_html_generation', 'cookie_name', 'cookie_domain', 'cookie_path', 'cookie_same_site', 'cookie_expiration', 'current_lang', 'auto_language'],
                 wrapper: ['autorun', 'delay', 'script_selector', 'init_after_dom_content_loaded', 'remove_cookie_tables', 'compat_legacy_ids'],
                 deprecated: ['use_rfc_cookie'],
             },

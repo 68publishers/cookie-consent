@@ -55,7 +55,6 @@ exports[`V3ConfigBuilder > builds the plugin configuration of the GTM tag of the
   "manageScriptTags": false,
   "mode": "opt-in",
   "onConsent": "[function]",
-  "respectGpc": false,
   "revision": 0,
 }
 `;
@@ -111,7 +110,6 @@ exports[`V3ConfigBuilder > builds the plugin configuration of the demo page 1`] 
   "manageScriptTags": true,
   "mode": "opt-in",
   "onConsent": "[function]",
-  "respectGpc": false,
   "revision": 0,
 }
 `;

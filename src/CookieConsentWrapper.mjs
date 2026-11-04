@@ -507,14 +507,10 @@ export class CookieConsentWrapper {
             && ((navigator.userAgent && BOT_PATTERN.test(navigator.userAgent)) || !!navigator.webdriver);
     }
 
-    #isGpcOptOutActive() {
-        return this._config.pluginOptions.respect_gpc && true === navigator.globalPrivacyControl;
-    }
-
     #showConsentModalIfNeeded() {
         const options = this._config.pluginOptions;
 
-        if (!options.autorun || this._plugin.validConsent() || this.#isBot() || this.#isGpcOptOutActive()) {
+        if (!options.autorun || this._plugin.validConsent() || this.#isBot()) {
             return;
         }
 

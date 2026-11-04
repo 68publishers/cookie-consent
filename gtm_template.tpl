@@ -461,28 +461,6 @@ ___TEMPLATE_PARAMETERS___
         ],
         "help": "One name per line.",
         "lineCount": 3
-      },
-      {
-        "type": "CHECKBOX",
-        "name": "respect_gpc",
-        "checkboxText": "Respect Global Privacy Control",
-        "simpleValueType": true,
-        "defaultValue": false,
-        "help": "If the browser sends the \u003ca href=\"https://globalprivacycontrol.org/\"\u003eGlobal Privacy Control\u003c/a\u003e signal and the visitor has not decided yet, storages enabled by default are treated as denied and the consent modal is not shown automatically (the visitor can still open the settings). Requires the package version 2.0 or newer."
-      },
-      {
-        "type": "TEXT",
-        "name": "gpc_signal",
-        "displayName": "Global Privacy Control signal",
-        "simpleValueType": true,
-        "enablingConditions": [
-          {
-            "paramName": "respect_gpc",
-            "paramValue": true,
-            "type": "EQUALS"
-          }
-        ],
-        "help": "A Custom JavaScript variable returning the browser signal: \u003ccode\u003efunction () { return navigator.globalPrivacyControl === true; }\u003c/code\u003e. The template cannot read \u003ccode\u003enavigator\u003c/code\u003e itself. Without it, only the widget respects the signal and tags fired before the widget loads get the consent enabled by default."
       }
     ]
   },
@@ -2307,22 +2285,18 @@ for (let key in data.composite_consent_event_triggers || []) {
 const defaultConsents = {};
 const acceptedStorageNames = [];
 
-// Global Privacy Control: until the visitor decides, storages enabled by default (except readonly ones) are denied, the same as the widget does
-const gpcOptOut = !!data.respect_gpc && null === consentCookie && (true === data.gpc_signal || 'true' === data.gpc_signal);
-const isEnabledByDefault = storage => storage.enabled_by_default && (!gpcOptOut || storage.readonly);
-
 // setup default consent & invoke event triggers for accepted storages
 for (let key in storagePool) {
   const storage = storagePool[key];
 
-  let defaultStorageConsent = ((null === consentCookie && isEnabledByDefault(storage)) || (null !== consentCookie && -1 !== consentCookie.indexOf(storage.name))) ? 'granted' : 'denied';
+  let defaultStorageConsent = ((null === consentCookie && storage.enabled_by_default) || (null !== consentCookie && -1 !== consentCookie.indexOf(storage.name))) ? 'granted' : 'denied';
 
 
   // if consent is denied then check "sync_consent_with" property
   if ('denied' === defaultStorageConsent && storage.hasOwnProperty('sync_consent_with') && storagePool.hasOwnProperty(storage.sync_consent_with)) {
     const delegatedStorage = storagePool[storage.sync_consent_with];
 
-    defaultStorageConsent = ((null === consentCookie && isEnabledByDefault(delegatedStorage)) || (null !== consentCookie && -1 !== consentCookie.indexOf(delegatedStorage.name))) ? 'granted' : 'denied';
+    defaultStorageConsent = ((null === consentCookie && delegatedStorage.enabled_by_default) || (null !== consentCookie && -1 !== consentCookie.indexOf(delegatedStorage.name))) ? 'granted' : 'denied';
 
   }
 
@@ -2414,8 +2388,7 @@ const pluginOptions = {
   revision: makeInteger(data.revision),
   delay: makeInteger(data.delay),
   auto_language: 'disabled' !== data.locale_detection_strategy ? data.locale_detection_strategy : null,
-  page_scripts: data.page_scripts,
-  respect_gpc: !!data.respect_gpc
+  page_scripts: data.page_scripts
 };
 
 if (data.hasOwnProperty('current_locale')) {
@@ -3135,62 +3108,14 @@ ___WEB_PERMISSIONS___
 
 ___TESTS___
 
-scenarios:
-- name: Global Privacy Control denies storages enabled by default for a new visitor
-  code: |-
-    mock('getCookieValues', []);
-    mock('injectScript', (url, onSuccess) => onSuccess());
-    runCode(mockData);
-    assertApi('setDefaultConsentState').wasCalledWith({
-      functionality_storage: 'granted',
-      security_storage: 'denied',
-      personalization_storage: 'denied',
-      ad_storage: 'denied',
-      ad_user_data: 'denied',
-      ad_personalization: 'denied',
-      analytics_storage: 'denied'
-    });
-    assertApi('gtmOnSuccess').wasCalled();
-- name: Without Respect Global Privacy Control the signal is ignored
-  code: |-
-    mockData.respect_gpc = false;
-    mock('getCookieValues', []);
-    mock('injectScript', (url, onSuccess) => onSuccess());
-    runCode(mockData);
-    assertApi('setDefaultConsentState').wasCalledWith({
-      functionality_storage: 'granted',
-      security_storage: 'denied',
-      personalization_storage: 'granted',
-      ad_storage: 'denied',
-      ad_user_data: 'denied',
-      ad_personalization: 'denied',
-      analytics_storage: 'denied'
-    });
-setup: |-
-  const mockData = {
-    package_version: '2.0.0',
-    cookie_name: 'cc-settings',
-    cookie_expiration: '182',
-    revision: '0',
-    delay: '0',
-    locales: ['en'],
-    respect_gpc: true,
-    gpc_signal: true,
-    functionality_storage_visibility: 'visible_readonly_enabled',
-    security_storage_visibility: 'hidden_disabled',
-    personalization_storage_visibility: 'visible_enabled',
-    ad_storage_visibility: 'visible_disabled',
-    ad_user_data_visibility: 'hidden_disabled',
-    ad_personalization_visibility: 'hidden_disabled',
-    analytics_storage_visibility: 'visible_disabled',
-    locale_detection_strategy: 'document'
-  };
+scenarios: []
+setup: ''
 
 
 ___NOTES___
 
 Created on 17. 12. 2021 0:22:20
 
-2.0.0: plugin vanilla-cookieconsent 3.x; new fields "Preferences layout" and "Respect Global Privacy Control";
+2.0.0: plugin vanilla-cookieconsent 3.x; new field "Preferences layout";
 removed fields "Transition" (both modals) and "Use RFC cookie" (the cookie is always URI encoded);
-the permissions are the same as in 1.6.0 (the GPC signal comes from the field "Global Privacy Control signal"). See docs/migration-from-1.x-to-2.0.md.
+the permissions are the same as in 1.6.0. See docs/migration-from-1.x-to-2.0.md.

@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import {
-    openPage, ui, wrapperMajor, showPreferences, cookieValue, settledDataLayer, events, cmpRequests,
-    standaloneConfig, cmpConfig,
+    openPage, ui, wrapperMajor, showPreferences, cookieValue, events,
+    standaloneConfig,
 } from './helpers.mjs';
 
 // Behaviors added in 2.0.
@@ -91,50 +91,12 @@ test.describe('consent:saved and an unclosable settings modal', () => {
     });
 });
 
-test.describe('respect_gpc', () => {
-    test.beforeEach(async ({ page }) => {
-        await page.addInitScript(() => {
-            Object.defineProperty(Navigator.prototype, 'globalPrivacyControl', { get: () => true, configurable: true });
-        });
+// GPC is not supported (the same as 1.6.0); upstream respectGpc must stay off
+test('the Global Privacy Control signal is ignored', async ({ page }) => {
+    await page.addInitScript(() => {
+        Object.defineProperty(Navigator.prototype, 'globalPrivacyControl', { get: () => true, configurable: true });
     });
+    await openPage(page, standaloneConfig());
 
-    test('GPC with respect_gpc: no widget, no consent update, no cookie, nothing sent to the CMP', async ({ page }) => {
-        await openPage(page, cmpConfig({
-            plugin_options: { respect_gpc: true },
-            storage_pool: [
-                { name: 'functionality_storage', enabled_by_default: true, display_in_widget: true, readonly: true },
-                { name: 'analytics_storage', enabled_by_default: true, display_in_widget: true },
-            ],
-        }));
-        await page.waitForTimeout(500);
-
-        await expect(page.locator(await ui(page, 'consentModal'))).toHaveCount(0);
-        expect(await cookieValue(page)).toBeNull();
-        expect((await settledDataLayer(page)).filter(e => Array.isArray(e) && e[1] === 'update')).toEqual([]);
-        expect(await cmpRequests(page, 'consent')).toEqual([]);
-        expect(await page.evaluate(() => window.CookieConsentWrapper.allowedCategory('analytics_storage'))).toBe(false);
-
-        // the visitor can still decide in the settings
-        await showPreferences(page);
-        await expect(page.locator(await ui(page, 'toggle', 'analytics_storage'))).not.toBeChecked();
-        await page.locator(await ui(page, 'prefsAcceptAll')).click();
-        await expect.poll(async () => (await cookieValue(page))?.categories?.sort()).toEqual(['analytics_storage', 'functionality_storage']);
-        await expect.poll(async () => (await cmpRequests(page, 'consent')).length).toBe(1);
-    });
-
-    test('GPC without respect_gpc: the same as 1.6.0', async ({ page }) => {
-        await openPage(page, standaloneConfig());
-
-        await expect(page.locator(await ui(page, 'consentModal'))).toBeVisible();
-    });
-
-    test('a saved choice wins over GPC', async ({ page }) => {
-        await openPage(page, standaloneConfig({ plugin_options: { respect_gpc: true } }));
-        await showPreferences(page);
-        await page.locator(await ui(page, 'prefsAcceptAll')).click();
-        await settledDataLayer(page);
-
-        await openPage(page, standaloneConfig({ plugin_options: { respect_gpc: true } }));
-        expect(await page.evaluate(() => window.CookieConsentWrapper.allowedCategory('analytics_storage'))).toBe(true);
-    });
+    await expect(page.locator(await ui(page, 'consentModal'))).toBeVisible();
 });

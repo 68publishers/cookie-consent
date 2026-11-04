@@ -14,7 +14,6 @@ An extended integration of [orestbida/cookieconsent](https://github.com/orestbid
 - :white_check_mark: WCAG 2 compliant
 - :white_check_mark: Support for storing consents via [CMP](https://github.com/68publishers/consent-management-platform)
 - :white_check_mark: Consent per category or per service (cookie provider)
-- :white_check_mark: Global Privacy Control
 
 > :information_source: Version 2.0 is built on the plugin 3.x. The configuration, events and the consent cookie stay compatible with 1.x; custom CSS has to be updated. See [Migration from 1.x to 2.0](docs/migration-from-1.x-to-2.0.md).
 
@@ -98,7 +97,6 @@ The settings modal has one special option with the name `Settings modal trigger 
 | Enable cookies auto-clear   | All cookies will be deleted based on the user's consent and a selected strategy if the option is enabled.                                                                                                              |
 | Cookies auto-clear strategy | Strategy for cookies auto-clear feature.                                                                                                                                                                               |
 | Cookie names                | Names of the cookies that will be deleted or kept (based on a selected strategy).                                                                                                                                      |
-| Respect Global Privacy Control | If the browser sends the [Global Privacy Control](https://globalprivacycontrol.org/) signal and the visitor has not decided yet, storages enabled by default (except readonly ones) are treated as denied, also in the default consent of the GTM template, and the consent modal is not shown automatically. The visitor can still open the settings. |
 
 The field `Use RFC cookie` was removed in 2.0, the cookie value is always URI encoded.
 
@@ -485,7 +483,6 @@ Without GTM the wrapper is configured by the object `window.cc_wrapper_config` d
 | | `auto_language` | Language detection: `document`, `browser` or `null`. |
 | | `page_scripts` | Manage `<script type="text/plain">` tags. |
 | | `script_selector` | Attribute of managed scripts (default `data-cookiecategory`). |
-| | `respect_gpc` | Respect the Global Privacy Control signal. |
 | | `init_after_dom_content_loaded` | Initialize after `DOMContentLoaded`. |
 | | `remove_cookie_tables` | Kept for compatibility, no effect. |
 | | `lazy_html_generation` | Create the settings modal when it is opened (default `true`). |

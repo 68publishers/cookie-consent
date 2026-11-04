@@ -10,7 +10,6 @@ Version 2.0 is built on vanilla-cookieconsent 3.2. The configuration, events, tr
 
 ### Added
 - The services layout of the settings modal (`settings_modal_options.preferences_mode: 'services'`, template field `Preferences layout`): a toggle for every service (cookie provider) inside a category. Services come from the CMP (Cookies API) and from `storage_pool[].services`; the consent of services is stored in the cookie and sent to the CMP (`services`).
-- Global Privacy Control (`plugin_options.respect_gpc`, template fields `Respect Global Privacy Control` and `Global Privacy Control signal`). The template reads the signal from a Custom JavaScript variable, its permissions are the same as in 1.6.0.
 - Events `consent:saved`, `services:changed` and `cmp:consent-not-sent`; `consent:changed` gets the changed services as the third argument.
 - `CookieConsentWrapper.setSettingsModalClosable()`, `acceptedServices`, `consent_modal_options.equal_weight_buttons`, `plugin_options.lazy_html_generation`, `plugin_options.compat_legacy_ids`.
 - The dark scheme as a separate stylesheet `cookie-consent-dark.css`.
