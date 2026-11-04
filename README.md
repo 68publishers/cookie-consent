@@ -213,7 +213,7 @@ The default stylesheet contains the light scheme only; the dark scheme is in `co
 | Field               | Description                                                          |
 |---------------------|----------------------------------------------------------------------|
 | Manage page scripts | Enable if you want to easily manage existing `<script>` tags.        |
-| Script selector     | The name of a data attribute that is used for managed <script> tags. |
+| Script selector     | The name of a data attribute that is used for managed `<script>` tags. |
 
 Managing page scripts is disabled by default. When the feature is enabled then the following notation can be used for scripts you want to manage (the attribute name is the value of `Script selector`, the plugin attribute `data-category` works too; `data-service` limits a script to a service in the services layout):
 
