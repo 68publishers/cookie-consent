@@ -5,7 +5,7 @@
   "homepage": "http://www.68publishers.io/",
   "main": "index.mjs",
   "engines": {
-    "node": ">=22"
+    "node": "^22 || >=24"
   },
   "repository": {
     "type": "git",
@@ -16,9 +16,9 @@
     "eslint:fix": "eslint ./index.mjs ./src ./perf ./tests --fix",
     "eslint": "eslint ./index.mjs ./src ./perf ./tests",
     "build:test": "CC_OUT_DIR=var/build webpack --config webpack.config.prod.mjs",
-    "test:unit": "vitest run",
+    "test:unit": "npm run ref && vitest run",
     "test:e2e": "playwright test",
-    "test": "npm run build:test && npm run ref && npm run test:unit && npm run test:e2e",
+    "test": "npm run build:test && npm run test:unit && npm run test:e2e",
     "demo": "npm run build:test && node tests/server.mjs",
     "perf": "npm run build:test && node perf/run.mjs",
     "perf:baseline": "node perf/run.mjs --ref --baseline",
