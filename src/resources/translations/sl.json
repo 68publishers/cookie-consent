@@ -12,6 +12,8 @@
     "settings_modal_accept_all_btn": "Sprejmite vse",
     "settings_modal_reject_all_btn": "Sprejmite potrebno",
     "settings_modal_close_btn_label": "Zapri",
+    "settings_modal_service_counter_label": "storitev|storitve",
+    "consent_modal_close_btn_label": "",
 
     "settings_modal_before_consent_title": "Uporaba piškotkov",
     "settings_modal_before_consent_description": "Piškotke uporabljamo za zagotavljanje osnovnih funkcij spletnega mesta in izboljšanje vaše spletne izkušnje. Za vsako kategorijo lahko izberete, ali se želite vključiti ali izključiti, kadar koli želite.",

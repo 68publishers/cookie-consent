@@ -1,0 +1,15 @@
+{
+  "consent bar bottom center": [
+    {
+      "id": "color-contrast",
+      "impact": "serious",
+      "nodes": 1
+    }
+  ],
+  "consent box bottom center": [],
+  "consent box middle center": [],
+  "consent cloud bottom center": [],
+  "settings bar left": [],
+  "settings bar right": [],
+  "settings box": []
+}

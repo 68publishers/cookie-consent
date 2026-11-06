@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>Cookie consent wrapper</title>
+        <title>Cookie consent wrapper: standalone</title>
         <script>
             function logEvent(line) {
                 const code = document.createElement('pre');
@@ -13,10 +13,13 @@
                 document.getElementById('event-log').appendChild(code);
             }
 
-            window.dataLayer = {
-                push: function (args) {
-                    logEvent('DataLayer push: ' + JSON.stringify(args));
+            window.dataLayer = [];
+            window.dataLayer.push = function () {
+                for (var i = 0; i < arguments.length; i++) {
+                    var args = arguments[i];
+                    logEvent('DataLayer push: ' + JSON.stringify(typeof args.length === 'number' && !Array.isArray(args) ? Array.prototype.slice.call(args) : args));
                 }
+                return Array.prototype.push.apply(this, arguments);
             };
 
             window.cc_wrapper_config = {
@@ -129,7 +132,7 @@
             }]);
         </script>
 
-        <script src="./cookie-consent.js" type="text/javascript" async></script>
+        <script src="/pkg/cookie-consent.min.js" type="text/javascript" async></script>
     </head>
     <body>
         <main style="max-width: 800px; margin: 0 auto; padding: 20px">

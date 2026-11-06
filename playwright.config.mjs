@@ -1,0 +1,47 @@
+import { defineConfig, devices } from '@playwright/test';
+
+const port = Number(process.env.CC_PORT || 4173);
+
+export default defineConfig({
+    testDir: 'tests',
+    testMatch: 'e2e/**/*.spec.mjs',
+    outputDir: 'test-results',
+    // text snapshots are shared by all browsers and platforms; screenshots get their own template
+    snapshotPathTemplate: '{testDir}/e2e/__snapshots__/{testFileName}/{arg}{ext}',
+    expect: {
+        toHaveScreenshot: {
+            pathTemplate: '{testDir}/visual/__screenshots__/{arg}-{platform}{ext}',
+            animations: 'disabled',
+            caret: 'hide',
+            maxDiffPixelRatio: 0.01,
+        },
+    },
+    fullyParallel: true,
+    forbidOnly: !!process.env.CI,
+    retries: process.env.CI ? 1 : 0,
+    reporter: process.env.CI ? 'github' : [['list'], ['html', { open: 'never', outputFolder: 'playwright-report' }]],
+    use: {
+        baseURL: `http://localhost:${port}`,
+        locale: 'cs-CZ',
+        timezoneId: 'Europe/Prague',
+    },
+    webServer: {
+        command: 'node tests/server.mjs',
+        url: `http://localhost:${port}/tests/fixtures/page.html`,
+        reuseExistingServer: !process.env.CI,
+        env: { CC_TARGET: process.env.CC_TARGET || 'var/build', CC_PORT: String(port) },
+    },
+    projects: [
+        // *.cc.test -> localhost for tests on another host (Chromium flag, WebKit fails to launch with it)
+        { name: 'chromium', use: { ...devices['Desktop Chrome'], launchOptions: { args: ['--host-resolver-rules=MAP *.cc.test 127.0.0.1'] } } },
+        { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
+        { name: 'webkit', use: { ...devices['Desktop Safari'] } },
+        // visual snapshots (CC_VISUAL, set in Docker and CI): the committed references are Linux ones (make tests.visual.update),
+        // other platforms write their own on the first run and keep them uncommitted
+        ...(process.env.CC_VISUAL ? [{
+            name: 'visual',
+            testMatch: 'visual/**/*.spec.mjs',
+            use: { ...devices['Desktop Chrome'], viewport: { width: 1280, height: 800 }, deviceScaleFactor: 1 },
+        }] : []),
+    ],
+});

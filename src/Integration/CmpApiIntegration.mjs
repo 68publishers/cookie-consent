@@ -1,9 +1,21 @@
-import 'core-js/modules/esnext.regexp.escape.js'
+import { Events } from '../EventBus/Events.mjs';
+
+const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 const integrateConsentApi = function (wrapper, cmpApiOptions) {
-    const run = (consent) => {
+    const run = async (consent) => {
         const user = wrapper.user;
-        const configurationExport = wrapper.configurationExport;
+        let configurationExport;
+
+        try {
+            configurationExport = await wrapper.configurationExport;
+        } catch (e) {
+            // http:// page: no WebCrypto for the checksum
+            console.warn('CookieConsentWrapper: the consent is not sent into the CMP.', e);
+            wrapper._eventBus.dispatch(Events.ON_CMP_CONSENT_NOT_SENT, e);
+
+            return;
+        }
         const url = cmpApiOptions.url.replace(new RegExp('/$'), '');
         const project = cmpApiOptions.resolveProject();
         const userConsent = {};
@@ -27,15 +39,22 @@ const integrateConsentApi = function (wrapper, cmpApiOptions) {
             attributes[key] = 'function' === typeof value ? value() : value;
         });
 
+        const body = {
+            settingsChecksum: configurationExport.checksum,
+            consents: userConsent,
+            attributes: attributes,
+            environment: cmpApiOptions.environment,
+        };
+
+        // "services" preferences mode: accepted services (providers) by category, normalized (CMP 1.3+, ignored by older versions)
+        if (wrapper.servicesMode) {
+            body.services = wrapper.acceptedServices;
+        }
+
         fetch(`${url}/api/v${cmpApiOptions.version.toString()}/consent/${project}/${user.identity.toString()}`, {
             method: 'put',
             credentials: 'omit',
-            body: JSON.stringify({
-                settingsChecksum: configurationExport.checksum,
-                consents: userConsent,
-                attributes: attributes,
-                environment: cmpApiOptions.environment,
-            }),
+            body: JSON.stringify(body),
         }).then(response => {
             return response.json();
         }).then(json => {
@@ -60,6 +79,7 @@ const integrateConsentApi = function (wrapper, cmpApiOptions) {
 
         }).catch((e) => {
             console.warn('Sending consent into CMP failed.', e);
+            wrapper._eventBus.dispatch(Events.ON_CMP_CONSENT_NOT_SENT, e);
         })
     };
 
@@ -81,7 +101,7 @@ const integrateCookiesApi = function (wrapper, cmpApiOptions) {
             return type;
         },
         provider: (cookie) => cookie.cookieProvider.name,
-        type: (cookie, locale) => wrapper.translate(locale, 'cookie_type_' + cookie.cookieProvider.type),
+        type: (cookie, locale) => cookie.cookieProvider.type ? wrapper.translate(locale, 'cookie_type_' + cookie.cookieProvider.type) : '',
         link: (cookie) => !cookie.cookieProvider.link.length ? '' : `<a href="${cookie.cookieProvider.link}" target="_blank" class="cc-link">${cookie.cookieProvider.link}</a>`,
         link_find_out_more: (cookie, locale) => !cookie.cookieProvider.link.length ? '' : `
             <a href="${cookie.cookieProvider.link}" target="_blank" class="cc-link">
@@ -104,16 +124,14 @@ const integrateCookiesApi = function (wrapper, cmpApiOptions) {
         headers.push(header);
     }
 
-    if (0 >= headers.length) {
-        return;
-    }
-
-    const fetchedLocales = [];
+    // providers of the CMP by storage (category code) and provider code, for the "services" preferences mode
+    const services = {};
+    const fetched = {};
     const cookieToRow = (cookie, locale) => {
-        const row = {};
+        const row = { _provider: cookie.cookieProvider.code };
 
         if (cookie.name.includes('*')) {
-            row._name = '^' + cookie.name.split('*').map(s => RegExp.escape(s)).join('.+') + '$';
+            row._name = '^' + cookie.name.split('*').map(escapeRegExp).join('.+') + '$';
             row.is_regex = true;
         } else {
             row._name = cookie.name;
@@ -128,14 +146,15 @@ const integrateCookiesApi = function (wrapper, cmpApiOptions) {
         return row;
     };
 
-    const run = (loc) => {
-        const locale = loc || wrapper.unwrap().getConfig('current_lang');
-
-        if (-1 !== fetchedLocales.indexOf(locale)) {
-            return;
+    /**
+     * Fetches the cookies of the locale once, fills the cookie table and the providers.
+     * @returns {Promise<boolean>} true if new cookies were loaded
+     */
+    const fetchCookies = (locale) => {
+        if (locale in fetched) {
+            return fetched[locale];
         }
 
-        fetchedLocales.push(locale);
         const url = cmpApiOptions.url.replace(new RegExp('/$'), '');
         const project = cmpApiOptions.resolveProject();
         const queryComponents = [
@@ -146,10 +165,12 @@ const integrateCookiesApi = function (wrapper, cmpApiOptions) {
             queryComponents.push(`environment=${cmpApiOptions.environment}`);
         }
 
-        fetch(`${url}/api/v${cmpApiOptions.version.toString()}/cookies/${project}?${queryComponents.join('&')}`, {
+        const request = fetch(`${url}/api/v${cmpApiOptions.version.toString()}/cookies/${project}?${queryComponents.join('&')}`, {
             method: 'get',
             credentials: 'omit',
-        }).then(response => {
+        });
+
+        return fetched[locale] = Promise.all([request, wrapper.loadLocale(locale)]).then(([response]) => {
             return response.json();
         }).then(json => {
             if ('success' !== json.status) {
@@ -157,7 +178,22 @@ const integrateCookiesApi = function (wrapper, cmpApiOptions) {
             }
 
             if (!('data' in json) || !('cookies' in json.data) || 0 >= json.data.cookies.length) {
-                return;
+                return false;
+            }
+
+            for (const cookie of json.data.cookies) {
+                const category = cookie.category.code;
+                // a cookie without a provider keeps its row with empty provider columns and is not a service
+                const provider = cookie.cookieProvider = cookie.cookieProvider || { name: '', type: '', link: '' };
+
+                if (provider.code) {
+                    services[category] = services[category] || {};
+                    services[category][provider.code] = services[category][provider.code] || { name: provider.name, link: provider.link };
+                }
+            }
+
+            if (0 >= headers.length) {
+                return false;
             }
 
             const cookieTable = wrapper.cookieTables.getCookieTable(locale);
@@ -173,20 +209,39 @@ const integrateCookiesApi = function (wrapper, cmpApiOptions) {
                 cookieTable.addRow(cookie.category.code, cookieToRow(cookie, locale));
             }
 
-            wrapper.cookieTables.appendCookieTables(wrapper.unwrap().getConfig('languages'));
-            wrapper.unwrap().updateLanguage(locale, true);
+            return true;
         }).catch((e) => {
             console.warn('Fetching cookies from CMP failed.', e);
-        })
+
+            return false;
+        });
+    };
+
+    const run = (loc) => {
+        const locale = loc || wrapper.currentLocale;
+        const alreadyRendered = locale in fetched;
+
+        fetchCookies(locale).then((loaded) => {
+            // a prefetched table is already part of the first rendering
+            loaded && !alreadyRendered && wrapper.refreshTranslations(locale);
+        });
     };
 
     wrapper.on('init', () => run());
     wrapper.on('locale:change', (loc) => run(loc));
+
+    return {
+        services,
+        prefetch: (locale) => fetchCookies(locale),
+    };
 }
 
+/**
+ * @returns {{services: object, prefetch: function(string): Promise<boolean>}|null} the cookies API, if enabled
+ */
 export function integrateCmpApi(wrapper, cmpApiOptions) {
     if (!cmpApiOptions.url || !cmpApiOptions.resolveProject()) {
-        return;
+        return null;
     }
 
     if (true === cmpApiOptions.consent_api_enabled) {
@@ -194,6 +249,8 @@ export function integrateCmpApi(wrapper, cmpApiOptions) {
     }
 
     if (true === cmpApiOptions.cookies_api_enabled) {
-        integrateCookiesApi(wrapper, cmpApiOptions);
+        return integrateCookiesApi(wrapper, cmpApiOptions);
     }
+
+    return null;
 }

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cookie consent: default plugin demo</title>
+    <!-- The default look without branding, the same configurations as tests/visual/widget.spec.mjs.
+         Parameters: layout, position, pm, pm_position, mode=services, dark=1, open=preferences, locale, version=1.6.0. -->
+    <script>
+        (function () {
+            var q = new URLSearchParams(location.search);
+            var version = q.get('version') === '1.6.0' ? '1.6.0' : '2.0';
+            var storages = [
+                { name: 'functionality_storage', enabled_by_default: true, display_in_widget: true, readonly: true },
+                { name: 'personalization_storage', display_in_widget: true },
+                { name: 'security_storage', sync_consent_with: 'functionality_storage' },
+                { name: 'ad_storage', display_in_widget: true },
+                { name: 'ad_user_data', sync_consent_with: 'ad_storage' },
+                { name: 'ad_personalization', sync_consent_with: 'ad_storage' },
+                { name: 'analytics_storage', display_in_widget: true },
+            ];
+
+            if ('services' === q.get('mode')) {
+                storages[3].services = [{ name: 'sklik', label: 'Seznam Sklik' }];
+            }
+
+            window.__DEMO__ = { version: version, query: q };
+            window.__CMP_MOCK__ = {};
+            window.dataLayer = [];
+            window.cc_wrapper_config = {
+                locales: [q.get('locale') || 'en'],
+                storage_pool: storages,
+                data_layer_options: { push_consent: true },
+                user_options: { identity: 'demo-user' },
+                plugin_options: { autorun: 'preferences' !== q.get('open') },
+                cmp_api_options: {
+                    url: 'https://cmp.test/',
+                    project: 'demo',
+                    consent_api_enabled: true,
+                    cookies_api_enabled: true,
+                    cookie_table_headers: ['name', 'purpose', 'processing_time', 'provider'],
+                },
+                consent_modal_options: { layout: q.get('layout') || 'box', position: q.get('position') || 'bottom center', show_third_button: true },
+                settings_modal_options: {
+                    layout: q.get('pm') || 'box',
+                    position: q.get('pm_position') || 'left',
+                    preferences_mode: q.get('mode') || 'categories',
+                    modal_trigger_selector: 'footer .footer-item',
+                },
+            };
+            if ('1' === q.get('dark')) {
+                // README: dark.css in external_stylesheets (loaded after the default CSS, otherwise :root of the default CSS wins)
+                document.documentElement.classList.add('cc--darkmode');
+                window.cc_wrapper_config.ui_options = { external_stylesheets: ['/pkg/cookie-consent-dark.css'] };
+            }
+            window.cookieConsentWrapperEvents = [['init', function () {
+                if ('1' === q.get('dark')) {
+                    document.body.classList.add('c_darkmode');
+                }
+                if ('preferences' === q.get('open')) {
+                    var plugin = CookieConsentWrapper.unwrap();
+                    (plugin.showPreferences || plugin.showSettings).call(plugin, 0);
+                }
+            }]];
+        })();
+    </script>
+    <script src="/tests/fixtures/cmp-mock.js"></script>
+    <script>
+        document.write('<script src="' + ('1.6.0' === window.__DEMO__.version ? '/ref/' : '/pkg/') + 'cookie-consent.min.js" async><\/script>');
+    </script>
+    <style>
+        body { margin: 0; font: 15px/1.4 system-ui, sans-serif; background: #f3f3f3; color: #222; }
+        header, main, footer { padding: 16px 24px; }
+        header { background: #333; color: #fff; }
+        header a { color: #fff; }
+        form { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: end; }
+        label { display: flex; flex-direction: column; font-size: 12px; }
+        pre { white-space: pre-wrap; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <header>
+        Default plugin demo, version <strong id="version"></strong>:
+        <a href="#" data-version="2.0">2.0</a> · <a href="#" data-version="1.6.0">1.6.0 (reference)</a>
+    </header>
+    <main>
+        <form>
+            <label>Consent modal <select name="layout"><option>box</option><option>cloud</option><option>bar</option></select></label>
+            <label>Position <select name="position">
+                <option>bottom center</option><option>bottom left</option><option>bottom right</option>
+                <option>middle center</option><option>middle left</option><option>middle right</option>
+                <option>top center</option><option>top left</option><option>top right</option>
+            </select></label>
+            <label>Preferences <select name="pm"><option>box</option><option>bar</option></select></label>
+            <label>Preferences position <select name="pm_position"><option>left</option><option>right</option></select></label>
+            <label>Mode <select name="mode"><option>categories</option><option>services</option></select></label>
+            <label>Language <select name="locale"><option>en</option><option>cs</option></select></label>
+            <label>Open <select name="open"><option value="">consent modal</option><option value="preferences">preferences</option></select></label>
+            <label><span>Dark scheme</span><input type="checkbox" name="dark" value="1"></label>
+            <input type="hidden" name="version">
+            <button>Load</button>
+            <button type="button" id="clear">Clear the consent and reload</button>
+        </form>
+        <details><summary>dataLayer log</summary><pre id="log"></pre></details>
+    </main>
+    <footer><span class="footer-item"></span></footer>
+    <script>
+        (function () {
+            var q = window.__DEMO__.query;
+            var form = document.querySelector('form');
+
+            document.getElementById('version').textContent = window.__DEMO__.version;
+            q.forEach(function (value, key) {
+                var field = form.elements[key];
+                field && ('checkbox' === field.type ? (field.checked = '1' === value) : (field.value = value));
+            });
+            form.elements.version.value = window.__DEMO__.version;
+            document.querySelectorAll('[data-version]').forEach(function (link) {
+                var params = new URLSearchParams(q);
+                params.set('version', link.dataset.version);
+                link.href = '?' + params;
+            });
+            document.getElementById('clear').onclick = function () {
+                document.cookie.split(/;\s*/).forEach(function (c) {
+                    document.cookie = c.split('=')[0] + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+                });
+                location.reload();
+            };
+            setInterval(function () {
+                document.getElementById('log').textContent = window.dataLayer.map(function (e) { return JSON.stringify(e); }).join('\n');
+            }, 500);
+        })();
+    </script>
+</body>
+</html>

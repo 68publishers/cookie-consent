@@ -6,6 +6,41 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+Version 2.0 is built on vanilla-cookieconsent 3.2. The configuration, events, translations and the consent cookie stay compatible with 1.x; custom CSS has to be updated. See [Migration from 1.x to 2.0](docs/migration-from-1.x-to-2.0.md).
+
+### Added
+- The experimental services layout of the settings modal (`settings_modal_options.preferences_mode: 'services'`, not in the GTM template yet, because GTM does not get the consent of services): a toggle for every service (cookie provider) inside a category. Services come from the CMP (Cookies API) and from `storage_pool[].services`; the consent of services is stored in the cookie and sent to the CMP (`services`).
+- Events `consent:saved`, `services:changed` and `cmp:consent-not-sent`; `consent:changed` gets the changed services as the third argument.
+- `CookieConsentWrapper.setSettingsModalClosable()`, `acceptedServices`, `consent_modal_options.equal_weight_buttons`, `plugin_options.lazy_html_generation`, `plugin_options.compat_legacy_ids`.
+- The dark scheme as a separate stylesheet `cookie-consent-dark.css`.
+- Unit, e2e (Chromium, Firefox, WebKit), visual and performance tests, demo pages for the standalone, GTM and CMP integration (`npm run demo`).
+- The Example Project demo (`demo/example-project.html`): a 1.x client configuration with its branding, custom tags and click triggers, the same page on 1.6.0 for comparison and the branding ported to 2.0 (`tests/fixtures/clients/example-project/branding.v2.css`), tested pixel by pixel against 1.6.0.
+
+### Changed
+- **Breaking:** the CMP integration needs HTTPS. On `http://` pages the checksum of the configuration cannot be computed (WebCrypto is available in a secure context only), the consent is not sent into the CMP, a warning is logged and the event `cmp:consent-not-sent` is dispatched.
+- The widget is built on vanilla-cookieconsent 3.2 instead of 2.9; the markup and the CSS classes changed. The buttons keep their 1.x ids (`compat_legacy_ids`).
+- `CookieConsentWrapper.unwrap()` returns the API of the plugin 3.x; the methods of 2.9 are kept with a deprecation warning.
+- A cookie of 1.x is converted when the widget starts and the cookie keeps the fields of 1.x, so neither the upgrade nor a rollback shows the widget again.
+- Only the current locale is loaded before the widget is shown; the template injects only the locale of `Current locale` when it is set.
+- The widget is smaller (JS 24.0 kB gzip instead of 26.9 kB), needs fewer requests (only the current locale) and is shown slightly sooner; it needs browsers supporting ES2020 and HTTPS for the CMP integration (WebCrypto).
+- `CookieConsentWrapper.configurationExport` is a Promise.
+- A returning visitor gets the consent event in the data layer only once per page (the `update` event with the same values as `default` is not pushed).
+- The buttons keep the order of 1.x (primary, secondary, third) and buttons ordered by the CSS `order` property are reordered in the DOM.
+- An opened modal focuses its first button or link like 1.x (the plugin 3.x focuses the modal itself); the focus stays in the modal when it is re-rendered (language change, cookie tables loaded from the CMP). Tab wraps inside the open modal through all its visible links, toggles and buttons, the wrapper does it instead of the plugin 3.x, which wraps at the elements found when the modal was rendered. A focused element outside the list (Firefox focuses a scrollable modal body) continues with the next element instead of jumping to the first one. An empty button group of the preferences modal is hidden like the one of the consent modal.
+- [Template] Renamed the template to `68 Publishers Cookie Consent`, replaced the brand thumbnail with a 96×96 px icon and removed the UTF-8 BOM from the file, as required by the Community Template Gallery style guide.
+
+### Removed
+- The options `transition` and `use_rfc_cookie` (and the template fields `Transition` and `Use RFC cookie`); they are accepted and ignored with a warning.
+- The dependencies `crypto-js`, `uuid` and `core-js`.
+
+### Fixed
+- `plugin_options.script_selector` had no effect.
+- [Template] The consent event had no name for tags saved by a template older than 1.6.0.
+- A consent cookie duplicated on another domain is removed, so the widget is not shown repeatedly.
+- An empty translation set by the client (e.g. an empty title of the last section) is no longer replaced by the text of the default translations loaded later.
+
+### Translations
+- New key `settings_modal_service_counter_label` in all locales (the translations other than cs, sk, en and de are machine translations, corrections are welcome) and the optional key `consent_modal_close_btn_label`.
 
 ## [1.6.0] - 2026-10-22
 ### Added

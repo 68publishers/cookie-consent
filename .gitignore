@@ -1,2 +1,10 @@
 node_modules/
 .idea
+.claude/settings.local.json
+var/
+perf/results/
+test-results/
+playwright-report/
+# visual references: only Linux ones from the Docker image are committed (make tests.visual.update)
+tests/visual/__screenshots__/*
+!tests/visual/__screenshots__/*-linux.png

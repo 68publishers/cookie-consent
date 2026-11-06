@@ -12,6 +12,8 @@
     "settings_modal_accept_all_btn": "Godta alle",
     "settings_modal_reject_all_btn": "Godta nødvendige",
     "settings_modal_close_btn_label": "Lukk",
+    "settings_modal_service_counter_label": "tjeneste|tjenester",
+    "consent_modal_close_btn_label": "",
 
     "settings_modal_before_consent_title": "Cookiebruk",
     "settings_modal_before_consent_description": "Vi bruker cookies for å sikre grunnleggende funksjonaliteter på nettstedet og for å forbedre din online opplevelse. Du kan velge å delta eller melde deg ut av hver kategori når som helst.",

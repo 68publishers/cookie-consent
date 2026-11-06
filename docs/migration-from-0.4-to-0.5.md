@@ -1,5 +1,4 @@
 <div align="center" style="text-align: center; margin-bottom: 50px">
-<img src="images/logo.svg" alt="Cookie Consent Logo" align="center" width="250">
 <h1 align="center">Migration from v0.4 to v0.5</h1>
 </div>
 

@@ -1,0 +1,69 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - main
+      - 'feature/**'
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: Unit, e2e and visual tests
+    runs-on: ubuntu-latest
+    # the same image as Dockerfile (make tests); the tag must match @playwright/test
+    container:
+      image: mcr.microsoft.com/playwright:v1.64.1-noble
+      options: --user 1001
+    env:
+      HOME: /tmp
+      CC_VISUAL: 1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Tests
+        run: npm test
+
+      - name: Upload the report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            playwright-report
+            test-results
+
+  perf:
+    name: Performance against 1.6.0
+    runs-on: ubuntu-latest
+    # the same image as Dockerfile (make tests); the tag must match @playwright/test
+    container:
+      image: mcr.microsoft.com/playwright:v1.64.1-noble
+      options: --user 1001
+    env:
+      HOME: /tmp
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Measure and compare with 1.6.0 (budget in perf/budget.json)
+        run: npm run perf -- --compare --variant=ci
+
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: perf-results
+          path: perf/results

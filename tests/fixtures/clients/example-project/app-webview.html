@@ -1,0 +1,26 @@
+<!-- Custom HTML tag "Cookie consent (mobile app - webview)" of the Example Project, verbatim -->
+<script>
+  CookieConsentWrapper.on('init', function () {
+    var plugin = CookieConsentWrapper.unwrap();
+    
+    if (!plugin.validConsent()) {
+
+      var message = {
+        consent: null,
+        source: null
+      };
+
+      console.log(message);
+
+      if ('ReactNativeWebView' in window) {
+        window.ReactNativeWebView.postMessage(JSON.stringify(message));
+      }
+    }
+  });
+</script>
+
+<style>
+  #cc--main {
+    display: none !important;
+  }
+</style>

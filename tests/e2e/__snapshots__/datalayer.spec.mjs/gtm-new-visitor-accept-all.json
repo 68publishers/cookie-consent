@@ -1,0 +1,80 @@
+[
+  [
+    "consent",
+    "default",
+    {
+      "functionality_storage": "granted",
+      "security_storage": "denied",
+      "personalization_storage": "denied",
+      "ad_storage": "denied",
+      "ad_user_data": "denied",
+      "ad_personalization": "denied",
+      "analytics_storage": "denied"
+    }
+  ],
+  {
+    "event": "68publishers_consent",
+    "consent_status": "default",
+    "functionality_storage": "granted",
+    "security_storage": "denied",
+    "personalization_storage": "denied",
+    "ad_storage": "denied",
+    "ad_user_data": "denied",
+    "ad_personalization": "denied",
+    "analytics_storage": "denied"
+  },
+  [
+    "event",
+    "68publishers_functionality_storage",
+    {}
+  ],
+  [
+    "consent",
+    "update",
+    {
+      "functionality_storage": "granted",
+      "security_storage": "denied",
+      "personalization_storage": "granted",
+      "ad_storage": "granted",
+      "ad_user_data": "granted",
+      "ad_personalization": "granted",
+      "analytics_storage": "granted"
+    }
+  ],
+  {
+    "event": "68publishers_consent",
+    "consent_status": "update",
+    "functionality_storage": "granted",
+    "security_storage": "denied",
+    "personalization_storage": "granted",
+    "ad_storage": "granted",
+    "ad_user_data": "granted",
+    "ad_personalization": "granted",
+    "analytics_storage": "granted"
+  },
+  [
+    "event",
+    "68publishers_personalization_storage",
+    {}
+  ],
+  [
+    "event",
+    "68publishers_ad_storage",
+    {}
+  ],
+  [
+    "event",
+    "68publishers_ad_user_data",
+    {}
+  ],
+  [
+    "event",
+    "68publishers_ad_personalization",
+    {}
+  ],
+  [
+    "event",
+    "68publishers_analytics_storage",
+    {}
+  ]
+]

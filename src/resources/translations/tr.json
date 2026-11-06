@@ -12,6 +12,8 @@
     "settings_modal_accept_all_btn": "Tümünü kabul et",
     "settings_modal_reject_all_btn": "Yalnızca zorunluları kabul et",
     "settings_modal_close_btn_label": "Kapat",
+    "settings_modal_service_counter_label": "hizmet|hizmet",
+    "consent_modal_close_btn_label": "",
 
     "settings_modal_before_consent_title": "Çerez kullanımı",
     "settings_modal_before_consent_description": "Web sitesinin temel işlevlerini sağlamak ve çevrimiçi deneyiminizi iyileştirmek için çerezler kullanıyoruz. Her kategori için istediğiniz zaman onay verebilir veya onayınızı geri çekebilirsiniz.",

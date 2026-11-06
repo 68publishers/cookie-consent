@@ -12,6 +12,8 @@
     "settings_modal_accept_all_btn": "Zaakceptuj wszystkie",
     "settings_modal_reject_all_btn": "Odrzuć wszystkie",
     "settings_modal_close_btn_label": "Zamknij",
+    "settings_modal_service_counter_label": "usługa|usługi",
+    "consent_modal_close_btn_label": "",
 
     "settings_modal_before_consent_title": "Wykorzystanie plików cookie",
     "settings_modal_before_consent_description": "Używamy plików cookie, aby zapewnić podstawowe funkcje strony internetowej i poprawić Twoje doświadczenie online. Dla każdej kategorii możesz wybrać opcję opt-in/out, kiedy tylko chcesz.",

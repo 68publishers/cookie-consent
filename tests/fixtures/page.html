@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cookie consent test page</title>
+    <script src="/tests/fixtures/cmp-mock.js"></script>
+    <script>
+        // Tests put the wrapper config into window.__CC_CONFIG__ (page.addInitScript) before this runs.
+        window.dataLayer = window.dataLayer || [];
+        window.cc_wrapper_config = window.__CC_CONFIG__ || {};
+        window.cookieConsentWrapperEvents = window.cookieConsentWrapperEvents || [];
+        window.__ccEvents = [];
+        ['init', 'consent:first-action', 'consent:accepted', 'consent:changed', 'locale:change', 'consent:saved', 'services:changed'].forEach(function (name) {
+            window.cookieConsentWrapperEvents.push([name, function () {
+                window.__ccEvents.push({ name: name, args: JSON.parse(JSON.stringify(Array.prototype.slice.call(arguments))) });
+            }]);
+        });
+        if (!window.__CC_NO_SCRIPT__) {
+            // window.__CC_PKG__ = '/ref/' runs wrapper 1.6.0 (rollback tests)
+            document.write('<script src="' + (window.__CC_PKG__ || '/pkg/') + 'cookie-consent.min.js" ' + (window.__CC_SYNC__ ? '' : 'async') + '><\/script>');
+        }
+    </script>
+</head>
+<body>
+    <main>
+        <h1>Test page</h1>
+        <p id="content">Lorem ipsum.</p>
+        <footer><div class="footer-item"><a href="#a"><span>Link</span></a></div></footer>
+    </main>
+    <script>
+        // optional extra markup (e.g. blocked page scripts) from window.__CC_BODY_HTML__
+        if (window.__CC_BODY_HTML__) {
+            document.write(window.__CC_BODY_HTML__);
+        }
+    </script>
+</body>
+</html>

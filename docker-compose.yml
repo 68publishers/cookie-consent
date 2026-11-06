@@ -1,0 +1,17 @@
+services:
+  app:
+    build: .
+    user: "${UID:-1000}:${GID:-1000}"
+    init: true
+    ipc: host
+    environment:
+      - HOME=/tmp
+      - CC_VISUAL=1
+    ports:
+      - "4173:4173"
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+
+volumes:
+  node_modules:

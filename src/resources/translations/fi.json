@@ -12,6 +12,8 @@
     "settings_modal_accept_all_btn": "Hyväksy kaikki",
     "settings_modal_reject_all_btn": "Hyväksy vaaditut",
     "settings_modal_close_btn_label": "Sulje",
+    "settings_modal_service_counter_label": "palvelu|palvelua",
+    "consent_modal_close_btn_label": "",
 
     "settings_modal_before_consent_title": "Evästeiden käyttö",
     "settings_modal_before_consent_description": "Käytämme evästeitä varmistaaksemme verkkosivuston perustoiminnot ja parantaaksemme verkkokokemustasi. Voit valita jokaiselle kategorialle haluatko hyväksyä/hylätä ne milloin tahansa.",
