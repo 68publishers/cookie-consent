@@ -1,8 +1,4 @@
 <div align="center" style="text-align: center; margin-bottom: 0px">
-<!--
-<img src="docs/images/logo.svg" alt="Cookie Consent Logo" align="center" width="250">
--->
-
 <img src="docs/images/cookie-consent.svg" alt="Cookie Consent Pro" width="400" align="center">
 <h1 align="center">Cookie Consent Pro</h1>
 
