@@ -17,7 +17,6 @@ An extended integration of [orestbida/cookieconsent](https://github.com/orestbid
 - :white_check_mark: Default translations
 - :white_check_mark: WCAG 2 compliant
 - :white_check_mark: Support for storing consents via [CMP](https://github.com/68publishers/consent-management-platform)
-- :white_check_mark: Consent per category or per service (cookie provider)
 
 ## Table of contents
 
@@ -79,11 +78,6 @@ The plugin is configurable using fields inside the tag definition.
 Both sections contain these fields: `Layout` and `Position`. These settings affect where modals appear and what shape they take (the consent modal layouts `box`, `cloud` and `bar`, the settings modal layouts `box` and `bar`; the `bar` consent modal uses the vertical part of the position only).
 The behavior of the consent modal buttons can be configured through fields `Primary button role`, `Secondary button role` (accept necessary cookies or open the settings modal), and `Buttons order`.
 See the [plugin documentation](https://cookieconsent.orestbida.com/advanced/ui-customization.html) for more details. The field `Transition` was removed in 2.0, animations are set by the CSS variable `--cc-modal-transition-duration`.
-
-The settings modal has the field `Preferences layout`:
-
-- `Categories with cookie tables` (default) shows a toggle for every category and the table of its cookies.
-- `Categories with services (providers)` shows also a toggle for every service (cookie provider) inside the category. The services are the providers of the cookies loaded from the [CMP application](#integration-with-cmp-application) (Cookies API, the provider code is the service name) and the services defined in the configuration (`storage_pool[].services`). The consent of services is stored in the cookie and sent to the CMP. Google Consent Mode keeps working per storage: a storage is `granted` when its category is accepted.
 
 The consent modal has also an option `Show third button` that adds the third button to the modal. If the secondary button's role is `Open settings` the third button's role is `Accept necessary` and vice versa.
 
@@ -499,7 +493,7 @@ Without GTM the wrapper is configured by the object `window.cc_wrapper_config` d
 | | `transition` | Deprecated, ignored. |
 | `settings_modal_options` | `layout`, `position` | Layout (`box`, `bar`) and position (`left`, `right`) of the settings modal. |
 | | `modal_trigger_selector` | CSS selector of an element cloned as the link opening the settings. |
-| | `preferences_mode` | `categories` (default) or `services`. |
+| | `preferences_mode` | `categories` (default) or `services` (experimental: a toggle for every service, i.e. cookie provider; the consent of services is stored in the cookie and sent to the CMP, but not passed to Google Consent Mode or the data layer, so GTM tags follow the categories only). |
 | | `transition` | Deprecated, ignored. |
 | `auto_clear_options` | `enabled`, `strategy`, `cookie_names` | See [Cookies options](#cookies-options); strategies `clear_all_except_defined`, `clear_defined_only`, `cookie_tables`. |
 | `ui_options` | `include_default_stylesheets`, `external_stylesheets`, `internal_stylesheets` | See [Stylesheets](#stylesheets). |

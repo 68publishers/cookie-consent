@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Version 2.0 is built on vanilla-cookieconsent 3.2. The configuration, events, translations and the consent cookie stay compatible with 1.x; custom CSS has to be updated. See [Migration from 1.x to 2.0](docs/migration-from-1.x-to-2.0.md).
 
 ### Added
-- The services layout of the settings modal (`settings_modal_options.preferences_mode: 'services'`, template field `Preferences layout`): a toggle for every service (cookie provider) inside a category. Services come from the CMP (Cookies API) and from `storage_pool[].services`; the consent of services is stored in the cookie and sent to the CMP (`services`).
+- The experimental services layout of the settings modal (`settings_modal_options.preferences_mode: 'services'`, not in the GTM template yet, because GTM does not get the consent of services): a toggle for every service (cookie provider) inside a category. Services come from the CMP (Cookies API) and from `storage_pool[].services`; the consent of services is stored in the cookie and sent to the CMP (`services`).
 - Events `consent:saved`, `services:changed` and `cmp:consent-not-sent`; `consent:changed` gets the changed services as the third argument.
 - `CookieConsentWrapper.setSettingsModalClosable()`, `acceptedServices`, `consent_modal_options.equal_weight_buttons`, `plugin_options.lazy_html_generation`, `plugin_options.compat_legacy_ids`.
 - The dark scheme as a separate stylesheet `cookie-consent-dark.css`.

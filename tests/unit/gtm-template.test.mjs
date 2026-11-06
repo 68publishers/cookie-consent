@@ -21,9 +21,8 @@ describe('GTM template 2.0', () => {
         for (const removed of ['consent_modal_transition', 'settings_modal_transition', 'use_rfc_cookie']) {
             expect(names).not.toContain(`"${removed}"`);
         }
-        for (const added of ['settings_modal_preferences_mode']) {
-            expect(names).toContain(`"${added}"`);
-        }
+        // the services layout waits until GTM gets the consent of services (the data layer)
+        expect(names).not.toContain('"settings_modal_preferences_mode"');
         expect(fs.readFileSync(current, 'utf8')).toContain('2.0.0:');
     });
 });

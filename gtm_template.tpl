@@ -299,25 +299,6 @@ ___TEMPLATE_PARAMETERS___
         "help": "The position is applied only if the layout is set to \u003ccode\u003ebar\u003c/code\u003e."
       },
       {
-        "type": "SELECT",
-        "name": "settings_modal_preferences_mode",
-        "displayName": "Preferences layout",
-        "macrosInSelect": false,
-        "selectItems": [
-          {
-            "value": "categories",
-            "displayValue": "Categories with cookie tables"
-          },
-          {
-            "value": "services",
-            "displayValue": "Categories with services (providers)"
-          }
-        ],
-        "simpleValueType": true,
-        "defaultValue": "categories",
-        "help": "\u003ccode\u003eCategories with services\u003c/code\u003e shows a toggle for every service (cookie provider) inside a category, the providers are loaded from the CMP application (Cookies API). Requires the package version 2.0 or newer, older versions ignore it."
-      },
-      {
         "type": "TEXT",
         "name": "modal_trigger_selector",
         "displayName": "Settings modal trigger selector",
@@ -2442,8 +2423,7 @@ setInWindow('cc_wrapper_config', {
   settings_modal_options: {
     layout: data.settings_modal_layout,
     position: data.settings_modal_position,
-    modal_trigger_selector: data.modal_trigger_selector || undefined,
-    preferences_mode: data.settings_modal_preferences_mode || 'categories'
+    modal_trigger_selector: data.modal_trigger_selector || undefined
   },
 
   ui_options: {
@@ -3116,6 +3096,6 @@ ___NOTES___
 
 Created on 17. 12. 2021 0:22:20
 
-2.0.0: plugin vanilla-cookieconsent 3.x; new field "Preferences layout";
+2.0.0: plugin vanilla-cookieconsent 3.x;
 removed fields "Transition" (both modals) and "Use RFC cookie" (the cookie is always URI encoded);
 the permissions are the same as in 1.6.0. See docs/migration-from-1.x-to-2.0.md.

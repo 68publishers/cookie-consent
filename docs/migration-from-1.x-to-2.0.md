@@ -15,8 +15,7 @@ The only change a client has to make is custom CSS targeting the markup of 1.x.
 1. Import `gtm_template.tpl` of 2.0 into the existing template (Templates → the template → Import). Existing tags keep their configuration.
 2. Set `Package version` to `2.0.0` (or keep `latest`).
 3. Rewrite custom CSS (the field `Internal stylesheet`, external stylesheets, Custom HTML tags), see [CSS selectors](#css-selectors).
-4. Optionally use the new field `Preferences layout` (services of cookie providers).
-5. Check the browser console for deprecation warnings of Custom HTML tags (`unwrap().showSettings()` etc.) and update them when convenient.
+4. Check the browser console for deprecation warnings of Custom HTML tags (`unwrap().showSettings()` etc.) and update them when convenient.
 
 ## Compatibility
 
