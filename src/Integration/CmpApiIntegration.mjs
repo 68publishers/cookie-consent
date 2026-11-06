@@ -101,7 +101,7 @@ const integrateCookiesApi = function (wrapper, cmpApiOptions) {
             return type;
         },
         provider: (cookie) => cookie.cookieProvider.name,
-        type: (cookie, locale) => wrapper.translate(locale, 'cookie_type_' + cookie.cookieProvider.type),
+        type: (cookie, locale) => cookie.cookieProvider.type ? wrapper.translate(locale, 'cookie_type_' + cookie.cookieProvider.type) : '',
         link: (cookie) => !cookie.cookieProvider.link.length ? '' : `<a href="${cookie.cookieProvider.link}" target="_blank" class="cc-link">${cookie.cookieProvider.link}</a>`,
         link_find_out_more: (cookie, locale) => !cookie.cookieProvider.link.length ? '' : `
             <a href="${cookie.cookieProvider.link}" target="_blank" class="cc-link">

@@ -65,12 +65,16 @@ test.describe('CMP integration (mocked API v1)', () => {
                 { name: '_ga', purpose: 'Distinguishes users.', processingTime: '2 years', cookieProvider: { code: 'google_analytics', name: 'Google Analytics', type: '3rd_party', link: '' }, category: { name: 'Analytics', code: 'analytics_storage' } },
             ] };
         });
-        await openPage(page, cmpConfig());
+        const config = cmpConfig();
+        config.cmp_api_options.cookie_table_headers.push('type');
+        await openPage(page, config);
         await showPreferences(page);
         const modal = page.locator(await ui(page, 'preferencesModal'));
 
         await expect(modal.getByText('no_provider', { exact: true }).first()).toBeAttached();
         await expect(modal.getByText('_ga', { exact: true }).first()).toBeAttached();
+        // the provider without a type has an empty cell, not the key "cookie_type_"
+        await expect(modal.getByText('cookie_type_')).toHaveCount(0);
     });
 
     test('a CMP failure does not break the widget', async ({ page }) => {
