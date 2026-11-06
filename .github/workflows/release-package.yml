@@ -8,7 +8,27 @@ on:
         required: true
 
 jobs:
+  tests:
+    runs-on: ubuntu-latest
+    # the same image as Dockerfile and tests.yml; the tag must match @playwright/test
+    container:
+      image: mcr.microsoft.com/playwright:v1.64.1-noble
+      options: --user 1001
+    env:
+      HOME: /tmp
+      CC_VISUAL: 1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Tests
+        run: npm test
+
   release:
+    needs: tests
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -29,12 +49,6 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-
-      - name: Install browsers
-        run: npx playwright install --with-deps chromium firefox webkit
-
-      - name: Tests
-        run: npm test
 
       - name: Git configuration
         run: |
