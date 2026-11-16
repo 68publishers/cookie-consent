@@ -1,0 +1,7 @@
+{
+    "Page URL": "https://www.example.com/",
+    "js.navigator.userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)",
+    "js.cookie_settings_modal_trigger_selector": "footer .footer-item",
+    "js.ad_storage_att": "visible_disabled",
+    "js.cmp_environment": "default"
+}

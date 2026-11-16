@@ -1,0 +1,696 @@
+/* Branding of the Example Project for cookie consent 2.0 (vanilla-cookieconsent 3.x markup).
+ * Port of branding.css (1.x). Each block names the 1.x rules it replaces;
+ * rules without a counterpart are listed at the end as "not needed" with the reason.
+ * Colors: #3366cc green, #666666 gray (links), #a1a1a1 gray light. */
+
+/* ====================== Branding ====================== */
+
+/* 1.x :root variables, #c-p-bn/#s-all-bn, #c-s-bn/#s-rall-bn, #c-t-bn/#s-sv-bn colors,
+   .c-tgl:checked~.c-tg, .cc-link colors, #cm-ov/#cs-ov transparent overlay */
+#cc-main {
+    --cc-color-primary: #3366cc;
+    --cc-color-white: #fff;
+    --cc-color-gray: #666666;
+    --cc-color-gray-light: #a1a1a1;
+    --cc-color-link: #666666;
+    --cc-primary-ring: var(--cc-color-white) 0px 0px 0px 2px, var(--cc-color-gray) 0px 0px 0px 5px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+
+    --cc-font-family: "Open Sans", Arial, Helvetica, sans-serif;
+    --cc-modal-border-radius: 0;
+    --cc-btn-border-radius: 0;
+    --cc-primary-color: #000;
+    --cc-secondary-color: #000;
+    --cc-link-color: var(--cc-color-gray-light);
+
+    --cc-btn-primary-bg: var(--cc-color-primary);
+    --cc-btn-primary-color: var(--cc-color-white);
+    --cc-btn-primary-border-color: var(--cc-color-primary);
+    --cc-btn-primary-hover-bg: var(--cc-color-primary);
+    --cc-btn-primary-hover-color: var(--cc-color-white);
+    --cc-btn-primary-hover-border-color: var(--cc-color-primary);
+    --cc-btn-secondary-bg: var(--cc-color-white);
+    --cc-btn-secondary-color: var(--cc-color-primary);
+    --cc-btn-secondary-border-color: var(--cc-color-white);
+    --cc-btn-secondary-hover-bg: var(--cc-color-white);
+    --cc-btn-secondary-hover-color: var(--cc-color-primary);
+    --cc-btn-secondary-hover-border-color: var(--cc-color-white);
+
+    --cc-toggle-on-bg: var(--cc-color-primary);
+    --cc-toggle-off-bg: #919ea6; /* the default --cc-toggle-bg-off of the plugin 2.9, the 1.x branding keeps it */
+
+    --cc-separator-border-color: transparent;
+    --cc-footer-border-color: transparent;
+    --cc-cookie-category-block-bg: transparent;
+    --cc-cookie-category-block-border: transparent;
+    --cc-cookie-category-block-hover-bg: transparent;
+    --cc-cookie-category-block-hover-border: transparent;
+    --cc-cookie-category-expanded-block-bg: transparent;
+    --cc-cookie-category-expanded-block-hover-bg: transparent;
+    --cc-overlay-bg: transparent;
+}
+
+/* 1.x .cc_div *, :after, :before line-height 1.3em; the font smoothing of 2.9 is inherited by the buttons too (v3 resets it on them) */
+#cc-main *,
+#cc-main :after,
+#cc-main :before {
+    line-height: 1.3em !important;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* 1.x .show--settings #cm: no shadow of the consent modal under the open settings */
+.show--preferences #cc-main .cm {
+    box-shadow: none;
+}
+
+/* 1.x .force--consent #cm-ov */
+.disable--interaction #cc-main .cm-wrapper::before {
+    background: rgba(4, 6, 8, 0.6);
+}
+
+/* 1.x #c-p-bn:focus, #s-all-bn:focus, ... , .cc-link:focus, .b-tl:focus, .c-tgl:focus, .cc-back-button:focus
+   (:focus like 1.x, the ring is visible after a mouse click too) */
+#cc-main .cm__btn:focus,
+#cc-main .pm__btn:focus,
+#cc-main .pm__section-title:focus,
+#cc-main a:focus,
+#cc-main .section__toggle:focus ~ .toggle__icon {
+    outline: none !important;
+    box-shadow: var(--cc-primary-ring) !important;
+}
+
+/* 1.x #cm, #s-inr shadow and color */
+#cc-main .cm,
+#cc-main .pm {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, .4);
+    color: #000;
+}
+
+/* 1.x .cc-always-active */
+#cc-main .cc-always-active {
+    position: absolute;
+    right: 8px;
+    color: var(--cc-color-primary);
+}
+
+/* ====================== Consent modal ====================== */
+
+/* 1.x #cm (max-width, padding, overflow), #c-inr, #c-inr-i */
+#cc-main .cm--box {
+    max-width: 550px;
+    width: calc(100% - 2 * var(--cc-modal-margin));
+}
+
+#cc-main .cm--box {
+    padding: 76px 103px;
+}
+
+/* 1.x #cm.box.bottom (2.9 keeps the consent modal 20 px above the bottom edge) */
+#cc-main .cm--box.cm--bottom {
+    bottom: 20px;
+}
+
+/* the scroller cuts the focus ring (5 px): 6 px padding evened out by a negative margin */
+#cc-main .cm .cm__body {
+    max-height: 70vh;
+    padding: 0 6px 6px;
+    margin: 0 -6px -6px;
+    overflow-y: auto;
+}
+
+#cc-main .cm .cm__texts,
+#cc-main .cm .cm__btns {
+    padding: 0;
+    border: 0;
+}
+
+/* 1.x #c-ttl, #c-txt */
+#cc-main .cm .cm__title {
+    font-size: 18px;
+    padding: 0;
+    margin: 0;
+}
+
+/* 1.x #c-txt padding-top 28px pod titulkem (23,4 px) */
+#cc-main .cm .cm__title + .cm__desc {
+    margin-top: 4.6px;
+}
+
+#cc-main .cm .cm__desc {
+    font-size: 16px;
+    line-height: 1.3em;
+    padding: 0 0 5px;
+    max-height: none;
+    overflow: visible;
+}
+
+/* 1.x .cc_div #c-bns (column), #c-bns button+button, .c-bn */
+#cc-main .cm .cm__btns {
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+#cc-main .cm .cm__btn-group {
+    flex-direction: column;
+    gap: 7px;
+    margin: 0;
+}
+
+#cc-main .cm .cm__btn-group + .cm__btn-group {
+    margin-top: 7px;
+}
+
+#cc-main .cm__btn,
+#cc-main .pm__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 0 !important;
+    padding: 15px;
+    border: 0;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+/* 1.x .c-bn:hover */
+#cc-main .cm__btn:hover,
+#cc-main .pm__btn:hover {
+    opacity: .9;
+}
+
+/* 1.x #c-s-bn::before (settings icon on "Detailed cookie settings", the secondary button) */
+#cc-main .cm__btn[data-role="show"]::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 16.5a4.5 4.5 0 1 1 4.5-4.5 4.4 4.4 0 0 1-4.5 4.5Zm0-7.5a3 3 0 1 0 3 3 2.9 2.9 0 0 0-3-3Z' fill='%233366CC'/%3E%3Cpath d='M21.98 8.28 20.2 5.22a1.5 1.5 0 0 0-1.78-.67l-1.83.62a8 8 0 0 0-.98-.57l-.38-1.89A1.5 1.5 0 0 0 13.77 1.5h-3.54a1.5 1.5 0 0 0-1.47 1.2l-.38 1.9a8 8 0 0 0-1 .56l-1.81-.61a1.5 1.5 0 0 0-1.78.67L2.02 8.28a1.5 1.5 0 0 0 .31 1.88l1.45 1.27-.03.57.02.57-1.44 1.27a1.5 1.5 0 0 0-.31 1.88l1.77 3.06a1.5 1.5 0 0 0 1.78.67l1.83-.62c.31.21.64.4.98.57l.38 1.89a1.5 1.5 0 0 0 1.47 1.2h3.27V21h-3.27l-.53-2.66a7 7 0 0 1-2.02-1.18l-2.59.87-1.77-3.06 2.04-1.8a7 7 0 0 1 0-2.34L3.32 9.03l1.77-3.06 2.57.87a7 7 0 0 1 2.04-1.17L10.23 3h3.54l.53 2.66a7 7 0 0 1 2.02 1.18l2.59-.87 1.77 3.06-2.1 1.84.99 1.13 2.1-1.84a1.5 1.5 0 0 0 .31-1.88Z' fill='%233366CC'/%3E%3Cpath d='m17.25 19.63-1.94-1.94-1.06 1.06 3 3 5.25-5.25-1.06-1.06-4.19 4.19Z' fill='%233366CC'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+/* ====================== Settings modal ====================== */
+
+/* 1.x #s-inr (fixed at the bottom, max-width, padding), #c-s-in, #s-cnt */
+#cc-main .pm--box {
+    top: auto;
+    bottom: 20px;
+    height: auto;
+    max-width: 550px;
+    max-height: 90vh;
+}
+
+/* 1.x transition zoom: the consent modal grows from .95 (2.9 #cm scale(.95)), the settings only fade in (#s-inr transform none !important) */
+#cc-main .cm--box {
+    transform: scale(.95);
+}
+
+.show--consent #cc-main .cc--anim .cm--box {
+    transform: scale(1);
+}
+
+#cc-main .pm--box {
+    transform: none !important;
+}
+
+/* 1.x #s-hdr (the title and the close button are replaced by the back button in the first section) */
+#cc-main .pm__header {
+    display: none;
+}
+
+/* 1.x #s-bl padding 0 6px inside #s-inr padding 103px: the sections are 12 px narrower than the buttons */
+#cc-main .pm .pm__body {
+    padding: 0 115px 0 103px !important;
+    /* focusing with Tab does not scroll an element under the fixed title (87.4 px) nor its ring under the bottom edge */
+    scroll-padding: 94px 0 6px;
+}
+
+/* 1.x #s-inr padding-top 76px outside the scrolling #s-bl: the content does not scroll into the top edge */
+#cc-main .pm {
+    padding-top: 68px;
+}
+
+#cc-main .pm .pm__footer {
+    padding: 10px 103px 76px !important;
+    border-top: 0;
+}
+
+/* 1.x #s-cnt .p, #s-bl .b-tl, #s-bl .c-bl, #s-bl .c-bl:hover, #s-bl .c-bl.b-ex */
+#cc-main .pm__section,
+#cc-main .pm__section--toggle {
+    margin: 0 0 4px;
+    padding: 0;
+    border: 0;
+}
+
+/* 1.x #s-bl .b-tl 18px applies only to the title of the first section, the category titles have .95em (#s-cnt .b-bn .b-tl) */
+#cc-main .pm__section:not(.pm__section--toggle) .pm__section-title {
+    font-size: 18px;
+}
+
+#cc-main .pm__section-desc {
+    margin-top: 8px;
+    font-size: 16px;
+    line-height: 1.3em;
+    color: inherit;
+}
+
+/* 1.x #s-bl .c-bl:first-child > .title (the first section: back button and title) */
+#cc-main .pm__section:not(.pm__section--toggle) .pm__section-title {
+    display: block;
+    padding-bottom: 8px;
+}
+
+/* 1.x #s-bl .c-bl:first-child > .title: the back button and the title stay above the scrolling content (absolute top 74px over the full width);
+   sticky is not enough, it sticks only inside the first section; the padding of the section keeps the place of the title */
+#cc-main .pm__section:first-child:not(.pm__section--toggle) {
+    padding-top: 87.4px;
+}
+
+#cc-main .pm__section:first-child:not(.pm__section--toggle) .pm__section-title-wrapper {
+    position: absolute;
+    top: 68px;
+    left: 103px;
+    right: 0;
+    z-index: 2;
+    /* 1.x: the title is out of the flow and the section has a fixed padding-top 72px, the content does not move even with the back button hidden (mobile app) */
+    height: 87.4px;
+    align-items: flex-start;
+    padding-top: 6px;
+    background: var(--cc-color-white);
+    /* covers the focus ring of the content scrolled under the title (6 px left and right) */
+    box-shadow: 0 -6px 0 6px var(--cc-color-white);
+}
+
+#cc-main .pm__section:first-child:not(.pm__section--toggle) .pm__section-title {
+    width: 100%;
+}
+
+/* the title is 81.4 px high, the 1.x description starts 80 px below the start of the section */
+#cc-main .pm__section:first-child:not(.pm__section--toggle) .pm__section-desc-wrapper {
+    margin-top: -7.4px;
+}
+
+#cc-main .pm__section-title > div {
+    display: block;
+}
+
+/* 1.x #s-bl .c-bl:last-child (the user ID, centered and gray) */
+#cc-main .pm__section:last-child:not(.pm__section--toggle) {
+    margin-top: 2em;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+#cc-main .pm__section:last-child:not(.pm__section--toggle) .pm__section-desc {
+    margin-top: 0;
+    color: var(--cc-color-gray-light);
+    font-size: 14px;
+}
+
+/* 1.x #s-cnt .b-bn .b-tl (accordion title), :hover, :active */
+#cc-main .pm__section--toggle .pm__section-title {
+    min-height: 0;
+    padding: 9px 70px 9px 29px;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+}
+
+#cc-main .pm__section--toggle .pm__section-title:hover {
+    background: transparent;
+}
+
+/* 1.x #s-bl .b-acc .p: only the text of the description is padded, the cookie table follows it without a gap */
+#cc-main .pm__section--toggle .pm__section-desc-wrapper {
+    padding: 0;
+    border: 0;
+    /* v3 overflow hidden cuts the focus ring of the partner links */
+    overflow: visible;
+}
+
+#cc-main .pm__section--toggle .pm__section-desc,
+#cc-main .pm__section-desc .p {
+    display: block;
+    padding: 15px 0 25px;
+    border: 0;
+}
+
+/* 1.x .b-tl.exp::before carets (black triangles instead of the circled arrow) */
+#cc-main .pm__section--expandable .pm__section-arrow {
+    left: 0;
+    border-radius: 0;
+    width: 16px;
+    height: 16px;
+    background: transparent url("data:image/svg+xml,%3Csvg width='6' height='12' viewBox='0 0 6 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.707 1.709C1.078 1.079 0 1.525 0 2.416v7.171c0 .891 1.077 1.337 1.707.708l3.586-3.583a1 1 0 0 0 0-1.414L1.707 1.709Z' fill='black'/%3E%3C/svg%3E") center no-repeat;
+}
+
+#cc-main .pm__section--expandable.is-expanded .pm__section-arrow {
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='6' viewBox='0 0 12 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10.291 1.707C10.921 1.078 10.475 0 9.584 0H2.413C1.522 0 1.076 1.077 1.705 1.707l3.583 3.586a1 1 0 0 0 1.414 0L10.291 1.707Z' fill='black'/%3E%3C/svg%3E");
+}
+
+#cc-main .pm__section--expandable .pm__section-arrow svg {
+    display: none;
+}
+
+/* 1.x .b-tg, .c-tg, .c-tgl, .t-lb (56x32 toggle, no icons), .off-i/.on-i */
+#cc-main .section__toggle-wrapper {
+    right: 8px;
+}
+
+#cc-main .pm__section--toggle .section__toggle,
+#cc-main .pm__section--toggle .section__toggle-wrapper,
+#cc-main .pm__section--toggle .toggle__icon,
+#cc-main .pm__section--toggle .toggle__label {
+    width: 56px;
+    height: 32px;
+    border-radius: 16px;
+}
+
+/* v3 enlarges the track by a 1px shadow, 2.9 does not */
+#cc-main .pm__section--toggle .toggle__icon,
+#cc-main .pm__section--toggle .section__toggle:checked ~ .toggle__icon {
+    box-shadow: none;
+}
+
+#cc-main .pm__section--toggle .toggle__icon-circle {
+    box-shadow: 0 1px 2px rgba(24, 32, 35, .36);
+    top: 4px;
+    left: 4px;
+    width: 24px;
+    height: 24px;
+}
+
+#cc-main .pm__section--toggle .section__toggle:checked ~ .toggle__icon .toggle__icon-circle {
+    transform: translateX(24px);
+}
+
+#cc-main .toggle__icon-on,
+#cc-main .toggle__icon-off {
+    display: none;
+}
+
+/* 1.x input[value="functionality_storage"]:disabled (the readonly toggle is replaced by "Always active") */
+#cc-main .section__toggle-wrapper:has(input[value="functionality_storage"]) {
+    display: none;
+}
+
+/* 1.x #s-bns (buttons in a column), #s-cnt button+button */
+#cc-main .pm .pm__footer {
+    flex-direction: column;
+    gap: 7px;
+    width: 100%;
+}
+
+#cc-main .pm .pm__btn-group {
+    display: contents !important;
+}
+
+/* 1.x #s-rall-bn order 3, #s-sv-bn order 2: "accept all, save, reject"; the wrapper reorders the DOM by the CSS order (tab order) */
+#cc-main .pm__btn[data-role="save"] {
+    order: 2;
+}
+
+#cc-main .pm__btn[data-role="necessary"] {
+    order: 3;
+}
+
+/* 1.x #s-rall-bn, #s-sv-bn colors: both secondary (white with green text) */
+#cc-main .pm__btn[data-role="necessary"] {
+    background: var(--cc-btn-secondary-bg);
+    color: var(--cc-btn-secondary-color);
+    border-color: var(--cc-btn-secondary-border-color);
+}
+
+/* 1.x #s-sv-bn::before (download icon) */
+#cc-main .pm__btn[data-role="save"]::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M3 1.5A1.5 1.5 0 0 0 1.5 3v18A1.5 1.5 0 0 0 3 22.5h18a1.5 1.5 0 0 0 1.5-1.5V3A1.5 1.5 0 0 0 21 1.5h-6.75a1.5 1.5 0 0 0-1.5 1.5v10.94l3.97-3.97a.75.75 0 0 1 1.06 1.06l-5.25 5.25a.75.75 0 0 1-1.06 0l-5.25-5.25a.75.75 0 0 1 1.06-1.06l3.97 3.97V3A3 3 0 0 1 14.25 0H21a3 3 0 0 1 3 3v18a3 3 0 0 1-3 3H3a3 3 0 0 1-3-3V3a3 3 0 0 1 3-3h3.75a.75.75 0 0 1 0 1.5H3Z' fill='%233366CC'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+/* ====================== Links and custom HTML of the translations ====================== */
+
+/* 1.x .cc-link, .cc-link-box */
+#cc-main a.cc-link {
+    white-space: nowrap;
+    color: var(--cc-color-gray-light);
+    font-weight: 600;
+    text-decoration: none;
+    background: none;
+    border-bottom: 1px solid var(--cc-color-gray-light);
+}
+
+/* 1.x .cc-link:hover, :active: the underline disappears */
+#cc-main a.cc-link:hover,
+#cc-main a.cc-link:active {
+    border-bottom-color: transparent;
+}
+
+/* 2.9 links in the descriptions (partners in the advertising cookies): normal weight, the underline disappears on hover */
+#cc-main .pm__section-desc a:not(.cc-link) {
+    font-weight: 400;
+    background: none;
+    border-bottom: 1px solid;
+}
+
+#cc-main .pm__section-desc a:not(.cc-link):hover {
+    border-bottom-color: transparent;
+}
+
+#cc-main .cc-link-box {
+    display: block;
+    margin-top: 25px;
+}
+
+#cc-main .cc-link-box a {
+    display: inline-block;
+}
+
+#cc-main .cc-link-box a:not(:last-child) {
+    margin-right: 20px;
+}
+
+/* 1.x a.cc-back-button (in the title of the first section) */
+#cc-main a.cc-back-button {
+    display: inline-flex;
+    align-items: center;
+    height: 20px;
+    margin-bottom: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    background: none;
+    color: var(--cc-color-link);
+}
+
+#cc-main a.cc-back-button span {
+    border-bottom: 1px solid var(--cc-color-link);
+}
+
+#cc-main a.cc-back-button:hover span {
+    border-bottom-color: transparent;
+}
+
+#cc-main a.cc-back-button::before {
+    content: '';
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    background: url("data:image/svg+xml,%3Csvg width='18' height='16' viewBox='0 0 18 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 1L1 8L8 15' stroke='%23666666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M1 8H17' stroke='%23666666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* 1.x .cc-description-block */
+#cc-main .cc-description-block {
+    border-left: 1px solid var(--cc-color-gray-light);
+    padding-left: 15px;
+    margin-top: 24px;
+}
+
+#cc-main .cc-description-block + .cc-description-block {
+    padding-top: 12px;
+    margin-top: 0;
+}
+
+#cc-main .cc-description-block strong {
+    font-weight: bold;
+}
+
+/* ====================== Cookie table (1.x #s-bl table ...) ====================== */
+
+/* rows as blocks with the column name on the left */
+#cc-main .pm__section-table,
+#cc-main .pm__table-body,
+#cc-main .pm__table-tr,
+#cc-main .pm__table-td {
+    display: block;
+}
+
+#cc-main .pm__table-head {
+    display: none;
+}
+
+#cc-main .pm__section-table {
+    border: 0;
+    font-size: 12.8px;
+}
+
+#cc-main .pm__table-tr,
+#cc-main .pm__table-tr:not(:last-child) {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--cc-color-gray-light);
+}
+
+
+#cc-main .pm__table-tr:first-child {
+    border-top: 1px solid var(--cc-color-gray-light);
+}
+
+/* intentional difference from 1.x: the last row of an expanded category has no divider (visual noise) */
+#cc-main .pm__table-tr:last-child {
+    border-bottom-color: transparent;
+}
+
+#cc-main .pm__table-tr:hover {
+    background: inherit;
+}
+
+#cc-main .pm__table-td {
+    position: relative;
+    padding: 8px 0 8px 120px;
+}
+
+#cc-main .pm__table-td::before {
+    content: attr(data-column);
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 110px;
+    font-weight: bold;
+    word-break: break-word;
+}
+
+#cc-main .pm__table-td a {
+    white-space: nowrap;
+    text-decoration: none;
+    color: var(--cc-color-link);
+    border: 0;
+}
+
+/* ====================== Small screens (1.x @media max-width 688px) ====================== */
+
+@media screen and (max-width: 688px) {
+    #cc-main .cm--box,
+    #cc-main .pm--box {
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    #cc-main .cm--box,
+    #cc-main .cm--box.cm--bottom {
+        bottom: 0;
+        padding: 0;
+    }
+
+    /* 1.x #cm, #s-inr: position fixed, top auto, bottom/left/right 0, no zoom, all !important (the mobile app tag overrides them the same way as in 1.x) */
+    #cc-main .cm--box,
+    #cc-main .pm--box {
+        transform: none !important;
+        position: fixed !important;
+        top: auto !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+
+    /* below 640 px v3 adds a horizontal padding and other button gaps */
+    #cc-main .cm__btns,
+    #cc-main .cm__desc,
+    #cc-main .cm__title {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    #cc-main .cm__btns {
+        border-top: 0 !important;
+    }
+
+    #cc-main .cm__btn-group + .cm__btn-group {
+        margin-top: 7px !important;
+    }
+
+    #cc-main .cm .cm__body,
+    #cc-main .pm .pm__body {
+        padding: 24px 16px 0 !important;
+    }
+
+    #cc-main .cm .cm__body {
+        padding-bottom: 20px !important;
+        margin: 0;
+    }
+
+    #cc-main .pm .pm__footer {
+        padding: 10px 16px 20px !important;
+    }
+
+    /* 1.x #s-bl padding 0 6px on mobile too */
+    #cc-main .pm .pm__body {
+        padding: 0 28px 0 16px !important;
+    }
+
+    #cc-main .pm {
+        padding-top: 16px;
+    }
+
+    /* 1.x #s-bl .c-bl:first-child > .title width 100% (top 22px) */
+    #cc-main .pm__section:first-child:not(.pm__section--toggle) .pm__section-title-wrapper {
+        top: 16px;
+        left: 16px;
+    }
+
+    #cc-main .cm__btn + .cm__btn,
+    #cc-main .pm__btn + .pm__btn,
+    #cc-main .pm__btn-group + .pm__btn-group {
+        margin: 0 !important;
+    }
+
+    /* 2.9 below 688 px: the column names in the --cc-text color of the plugin */
+    #cc-main .pm__table-td::before {
+        color: #2d4156;
+    }
+
+    /* 2.9 below 688 px: a light line under the gray one between the rows of the cookie table */
+    #cc-main .pm__table-tr + .pm__table-tr {
+        border-top: 1px solid #e9edf2;
+    }
+
+    /* below 688 px 2.9 enlarges the toggles (.b-tg scale 1.1) */
+    #cc-main .pm__section--toggle .section__toggle-wrapper {
+        transform: scale(1.1);
+    }
+}
+
+/* ====================== not needed in 2.0 ======================
+ * #c-ttl position fixed (consent modal) -> the v3 consent modal does not scroll the title separately, the text matches to the pixel without it
+ * #s-c-bnc text-align, #s-c-bn         -> the close button is hidden with the header
+ * .bns-t #s-bns height, .cc_div .bns-t .c-bn font-size -> the bar layout of 2.9; v3 has one footer
+ * .cc_div .c-bn svg margin             -> the buttons have no svg
+ * .c--anim transitions                 -> v3 animates itself (--cc-modal-transition-duration .25s), zoom above
+ * #cc--main, #s-cnt, #cs position sticky (mobile) -> containers of 2.9, the v3 modals are fixed
+ * #c-ttl width (mobile)                -> the title of the consent modal is not fixed
+ * .cc_div .c-bn border-radius/outline  -> --cc-btn-border-radius and the focus ring above
+ * .b-tg .c-tgl:disabled cursor         -> the readonly toggle is hidden
+ * The parity with 1.6.0 is verified by tests/visual/example-project-parity.spec.mjs.
+ */

@@ -12,6 +12,8 @@
     "settings_modal_accept_all_btn": "Acceptă toate",
     "settings_modal_reject_all_btn": "Acceptă necesarul",
     "settings_modal_close_btn_label": "Închideți",
+    "settings_modal_service_counter_label": "serviciu|servicii",
+    "consent_modal_close_btn_label": "",
 
     "settings_modal_before_consent_title": "Utilizarea cookie-urilor",
     "settings_modal_before_consent_description": "Utilizăm cookie-uri pentru a asigura funcționalitățile de bază ale site-ului web și pentru a îmbunătăți experiența dvs. online. Puteți alege pentru fiecare categorie să optați pentru opt-in/out oricând doriți.",

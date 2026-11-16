@@ -12,6 +12,8 @@
     "settings_modal_accept_all_btn": "Aceptar todas",
     "settings_modal_reject_all_btn": "Aceptar necesarias",
     "settings_modal_close_btn_label": "Cerrar",
+    "settings_modal_service_counter_label": "servicio|servicios",
+    "consent_modal_close_btn_label": "",
 
     "settings_modal_before_consent_title": "Uso de Cookies",
     "settings_modal_before_consent_description": "Utilizamos cookies para garantizar las funcionalidades básicas del sitio web y mejorar su experiencia. En cada categoría puede elegir si desea aceptarlas o rechazarlas cuando lo desee.",

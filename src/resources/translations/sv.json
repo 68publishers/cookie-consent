@@ -12,6 +12,8 @@
     "settings_modal_accept_all_btn": "Godkänn alla cookies",
     "settings_modal_reject_all_btn": "Godkänn nödvändiga cookies",
     "settings_modal_close_btn_label": "Stäng",
+    "settings_modal_service_counter_label": "tjänst|tjänster",
+    "consent_modal_close_btn_label": "",
 
     "settings_modal_before_consent_title": "Användning av cookies",
     "settings_modal_before_consent_description": "Vi använder cookies för att säkerställa grundläggande funktioner på webbplatsen och för att förbättra din användarupplevelse. Du kan ändra ditt samtycke för varje kategori när som helst.",

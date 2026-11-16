@@ -1,35 +1,47 @@
 import { AutoClearOptions } from './Config/AutoClearOptions.mjs';
 import { Events } from './EventBus/Events.mjs';
+import { eraseCookies } from './Utils/Cookies.mjs';
 
 export class ConsentManager {
-    constructor(cookieConsent, eventBus, config, storagePool, eventTriggers, gtag) {
-        this._cookieConsent = cookieConsent;
+    /**
+     * @param {object} plugin the module of vanilla-cookieconsent 3.x
+     */
+    constructor(plugin, eventBus, config, storagePool, eventTriggers, gtag, cookieTables, { servicesMode = false, acceptedServices = () => ({}) } = {}) {
+        this._plugin = plugin;
         this._eventBus = eventBus;
         this._config = config;
         this._storagePool = storagePool;
         this._eventTriggers = eventTriggers;
         this._gtag = gtag;
+        this._cookieTables = cookieTables;
+        this._servicesMode = servicesMode;
+        this._acceptedServices = acceptedServices;
 
         this.first_action_triggered = false;
     }
 
-    onFirstAction(userPreferences) {
+    onFirstConsent() {
         setTimeout(() => {
-            if ('all' !== userPreferences.accept_type && 0 < userPreferences.rejected_categories.length) {
-                this._autoClearCookies();
+            const preferences = this._plugin.getUserPreferences();
+
+            if ('all' !== preferences.acceptType && 0 < preferences.rejectedCategories.length) {
+                this._autoClearCookies(preferences.rejectedCategories);
             }
 
-            const consent = this._updateConsent();
+            const consent = this._updateConsent(true);
             this.first_action_triggered = true;
 
             this._updateLastActionDate();
             this._eventBus.dispatch(Events.ON_CONSENT_FIRST_ACTION, consent);
+            this._servicesMode && this._eventBus.dispatch(Events.ON_SERVICES_CHANGED, this._acceptedServices());
         }, 0);
     }
 
-    onAccept() {
+    onConsent() {
         setTimeout(() => {
-            const consent = this.first_action_triggered ? this._getContent() : this._updateConsent();
+            // a returning visitor: gtag "update" and the event triggers, but no consent event in the data layer,
+            // its values are the same as the "default" pushed by the GTM template
+            const consent = this.first_action_triggered ? this._getConsent() : this._updateConsent(false);
             this.first_action_triggered = false;
 
             this._showModalAgainIfAnyStorageIsExpired();
@@ -37,75 +49,78 @@ export class ConsentManager {
         }, 0);
     }
 
-    onChange(cookie, changedCategories) {
+    onChange({ changedCategories, changedServices = {} }) {
         setTimeout(() => {
-            const consent = this._updateConsent();
+            const consent = this._updateConsent(true);
+            const denied = changedCategories.filter(category => category in consent && 'denied' === consent[category]);
+            const servicesChanged = Object.values(changedServices).some(services => 0 < services.length);
 
-            if (0 < changedCategories.length) {
-                for (let changedCategoryKey in changedCategories) {
-                    if (!(changedCategories[changedCategoryKey] in consent)) {
-                        continue;
-                    }
+            if (0 < denied.length) {
+                this._autoClearCookies(denied);
+            }
 
-                    if ('denied' === consent[changedCategories[changedCategoryKey]]) {
-                        this._autoClearCookies();
-
-                        break;
-                    }
-                }
+            if (this._servicesMode && servicesChanged) {
+                this._autoClearServicesCookies();
             }
 
             this._updateLastActionDate();
-            this._eventBus.dispatch(Events.ON_CONSENT_CHANGED, consent, changedCategories);
+            this._eventBus.dispatch(Events.ON_CONSENT_CHANGED, consent, changedCategories, changedServices);
+            this._servicesMode && servicesChanged && this._eventBus.dispatch(Events.ON_SERVICES_CHANGED, this._acceptedServices());
         }, 0);
     }
 
-    _getContent() {
-        const storageArr = this._storagePool.all();
+    /**
+     * "cookie_tables" auto clear for rejected services (providers) of accepted categories.
+     */
+    _autoClearServicesCookies() {
+        const options = this._config.autoClearOptions;
+
+        if (!options.enabled || AutoClearOptions.STRATEGY_COOKIE_TABLES !== options.strategy) {
+            return;
+        }
+
+        const rejected = this._plugin.getUserPreferences().rejectedServices || {};
+        const names = [];
+
+        for (const category of Object.keys(rejected)) {
+            for (const service of rejected[category]) {
+                names.push(...this._cookieTables.cookieNamesOf(category, service));
+            }
+        }
+
+        this._eraseCookies(names);
+    }
+
+    get consent() {
+        return this._getConsent();
+    }
+
+    _getConsent() {
         const consent = {};
 
-        for (let storageKey in storageArr) {
-            const storage = storageArr[storageKey];
+        for (const storage of this._storagePool.all()) {
             const checkName = null !== storage.syncConsentWith ? storage.syncConsentWith : storage.name;
 
-            consent[storage.name] = this._cookieConsent.allowedCategory(checkName) ? 'granted' : 'denied';
+            consent[storage.name] = this._plugin.acceptedCategory(checkName) ? 'granted' : 'denied';
         }
 
         return consent;
     }
 
-    _updateConsent() {
-        const storageArr = this._storagePool.all();
-        const consent = {};
-        const accepted = [];
-
-        for (let storageKey in storageArr) {
-            const storage = storageArr[storageKey];
-            const checkName = null !== storage.syncConsentWith ? storage.syncConsentWith : storage.name;
-            const allowed = this._cookieConsent.allowedCategory(checkName);
-
-            consent[storage.name] = allowed ? 'granted' : 'denied';
-
-            if (allowed) {
-                accepted.push(storage.name);
-            }
-        }
+    _updateConsent(pushConsentEvent) {
+        const consent = this._getConsent();
+        const accepted = Object.keys(consent).filter(name => 'granted' === consent[name]);
 
         this._gtag('consent', 'update', consent);
-        this._pushConsentToDataLayer(consent);
+        pushConsentEvent && this._pushConsentToDataLayer(consent);
 
         if (0 >= accepted.length) {
             return consent;
         }
 
-        let eventTriggerKey;
-        let eventTrigger;
-
-        for (eventTriggerKey in this._eventTriggers) {
-            eventTrigger = this._eventTriggers[eventTriggerKey];
-
-            if (eventTrigger.tryInvoke(this._gtag, accepted)) {
-                delete this._eventTriggers[eventTriggerKey];
+        for (const key in this._eventTriggers) {
+            if (this._eventTriggers[key].tryInvoke(this._gtag, accepted)) {
+                delete this._eventTriggers[key];
             }
         }
 
@@ -127,53 +142,65 @@ export class ConsentManager {
         });
     }
 
-    _autoClearCookies() {
-        if (!this._config.autoClearOptions.enabled) {
+    /**
+     * @param {string[]} rejectedCategories
+     */
+    _autoClearCookies(rejectedCategories) {
+        const options = this._config.autoClearOptions;
+
+        if (!options.enabled) {
             return;
         }
 
-        const strategy = this._config.autoClearOptions.strategy;
+        const consentCookieName = this._config.pluginOptions.cookie_name;
+        let cookiesForDeletion = [];
 
-        // AutoClear based on cookie tables is managed by the original plugin
-        if (AutoClearOptions.STRATEGY_COOKIE_TABLES === strategy) {
+        if (AutoClearOptions.STRATEGY_COOKIE_TABLES === options.strategy) {
+            // cookies listed in the cookie tables (CMP) of the rejected categories
+            for (const category of rejectedCategories) {
+                cookiesForDeletion.push(...this._cookieTables.cookieNamesOf(category));
+            }
+        } else {
+            const cookieNames = options.cookie_names || [];
+
+            for (const cookie of document.cookie.split(/;\s*/)) {
+                const name = cookie.split('=')[0];
+
+                if (!name || consentCookieName === name) {
+                    continue;
+                }
+
+                if ((AutoClearOptions.STRATEGY_CLEAR_ALL_EXCEPT_DEFINED === options.strategy && -1 === cookieNames.indexOf(name))
+                    || (AutoClearOptions.STRATEGY_CLEAR_DEFINED_ONLY === options.strategy && -1 !== cookieNames.indexOf(name))
+                ) {
+                    cookiesForDeletion.push(name);
+                }
+            }
+        }
+
+        this._eraseCookies(cookiesForDeletion);
+    }
+
+    _eraseCookies(names) {
+        const consentCookieName = this._config.pluginOptions.cookie_name;
+        const cookiesForDeletion = names.filter(name => name !== consentCookieName);
+
+        if (0 >= cookiesForDeletion.length) {
             return;
         }
 
-        const allCookies = document.cookie.split(/;\s*/);
-        const cookiesForDeletion = [];
-
-        const cookieNames = this._config.autoClearOptions.cookie_names || [];
-
-        for(let i = 0; i < allCookies.length; i++){
-            const name = allCookies[i].split("=")[0];
-
-            if (this._config.pluginOptions.cookie_name === name) {
-                continue;
-            }
-
-            if ((AutoClearOptions.STRATEGY_CLEAR_ALL_EXCEPT_DEFINED === strategy && -1 === cookieNames.indexOf(name))
-                || AutoClearOptions.STRATEGY_CLEAR_DEFINED_ONLY === strategy && -1 !== cookieNames.indexOf(name)
-            ) {
-                cookiesForDeletion.push(name);
-            }
-        }
-
-        const domain = this._cookieConsent.getConfig('cookie_domain');
+        const domain = this._plugin.getConfig('cookie').domain || window.location.hostname;
         const domains = [domain];
 
         if (0 === domain.lastIndexOf('www.', 0)) {
             domains.push(domain.substring(4));
         }
 
-        if (0 < cookiesForDeletion.length) {
-            for (let i = 0; i < domains.length; i++) {
-                this._cookieConsent.eraseCookies(cookiesForDeletion, '/', domains[i]);
-            }
-        }
+        eraseCookies(cookiesForDeletion, '/', domains);
     }
 
     _updateLastActionDate() {
-        this._cookieConsent.set('data', {
+        this._plugin.setCookieData({
             value: {
                 last_action_date: (new Date()).toJSON(),
             },
@@ -182,23 +209,20 @@ export class ConsentManager {
     }
 
     _showModalAgainIfAnyStorageIsExpired() {
-        let lastActionDate = (this._cookieConsent.get('data') || {}).last_action_date;
+        let lastActionDate = (this._plugin.getCookie('data') || {}).last_action_date;
 
         lastActionDate = lastActionDate ? new Date(lastActionDate) : undefined;
 
-        if (!lastActionDate || 'Invalid Date' === lastActionDate || isNaN(lastActionDate)) {
+        if (!lastActionDate || isNaN(lastActionDate.getTime())) {
             this._updateLastActionDate();
 
             return;
         }
 
-        const storageArr = this._storagePool.all();
-
-        for (let storageKey in storageArr) {
-            const storage = storageArr[storageKey];
+        for (const storage of this._storagePool.all()) {
             const checkName = null !== storage.syncConsentWith ? storage.syncConsentWith : storage.name;
 
-            if (this._cookieConsent.allowedCategory(checkName)) {
+            if (this._plugin.acceptedCategory(checkName)) {
                 continue;
             }
 
@@ -206,13 +230,11 @@ export class ConsentManager {
                 continue;
             }
 
-            const now = new Date();
             const expirationDate = new Date(lastActionDate.valueOf());
-
             expirationDate.setDate(expirationDate.getDate() + storage.showModalAgainExpiration);
 
-            if (now >= expirationDate) {
-                this._cookieConsent.showSettings(0);
+            if (new Date() >= expirationDate) {
+                this._plugin.showPreferences();
                 this._updateLastActionDate();
 
                 return;

@@ -12,6 +12,8 @@
     "settings_modal_accept_all_btn": "Prihvatiti sve kolačiće",
     "settings_modal_reject_all_btn": "Prihvatiti nužne kolačiće",
     "settings_modal_close_btn_label": "Zatvoriti",
+    "settings_modal_service_counter_label": "usluga|usluge",
+    "consent_modal_close_btn_label": "",
 
     "settings_modal_before_consent_title": "Korištenje datoteka kolačića",
     "settings_modal_before_consent_description": "Datoteke kolačića koristimo za osiguranje osnovnih funkcija stranice i za poboljšanje vašeg korisničkog doživljaja. Svoju suglasnost za svaku kategoriju možete bilokada promijeniti.",

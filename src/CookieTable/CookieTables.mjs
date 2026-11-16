@@ -13,30 +13,54 @@ export class CookieTables {
         return this._cookieTables[locale];
     }
 
-    appendCookieTables(languagesConfig) {
-        for (let locale in languagesConfig) {
-            if (!(locale in this._cookieTables)) {
-                continue;
+    /**
+     * Cookie table of the locale in the format of vanilla-cookieconsent 3.x, null if the locale has none.
+     * @returns {{headers: Object<string, string>, rows: function(string): Object<string, string>[]}|null}
+     */
+    exportFor(locale) {
+        const table = this._cookieTables[locale];
+
+        if (!table || 0 >= table.header.length) {
+            return null;
+        }
+
+        const headers = {};
+
+        for (const column of table.header) {
+            const [key, label] = Object.entries(column)[0];
+
+            if ('_name' !== key) {
+                headers[key] = label;
             }
+        }
 
-            const config = languagesConfig[locale];
-            const cookieTable = this.getCookieTable(locale);
+        return {
+            headers,
+            rows: (storageName) => table.getRows(storageName).map((row) => {
+                const out = {};
+                Object.keys(headers).forEach(key => { out[key] = row[key] ?? ''; });
+                return out;
+            }),
+        };
+    }
 
-            if (0 >= cookieTable.header.length) {
-                continue;
-            }
+    /**
+     * Cookie names (string or RegExp) of the storage (and the provider) from tables of all locales, for the "cookie_tables" auto clear.
+     * @returns {(string|RegExp)[]}
+     */
+    cookieNamesOf(storageName, provider = null) {
+        const names = {};
 
-            config.settings_modal.cookie_table_headers = cookieTable.header;
-
-            for (let blockIndex in config.settings_modal.blocks) {
-                const block = config.settings_modal.blocks[blockIndex];
-
-                if (!('toggle' in block) || !('value' in block.toggle)) {
+        for (const table of Object.values(this._cookieTables)) {
+            for (const row of table.getRows(storageName)) {
+                if (null !== provider && row._provider !== provider) {
                     continue;
                 }
 
-                block.cookie_table = cookieTable.getRows(block.toggle.value);
+                names[(row.is_regex ? 're:' : 's:') + row._name] = row.is_regex ? new RegExp(row._name) : row._name;
             }
         }
+
+        return Object.values(names);
     }
 }

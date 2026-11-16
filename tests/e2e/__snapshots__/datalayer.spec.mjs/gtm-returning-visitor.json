@@ -1,0 +1,60 @@
+[
+  [
+    "consent",
+    "default",
+    {
+      "functionality_storage": "granted",
+      "security_storage": "denied",
+      "personalization_storage": "denied",
+      "ad_storage": "denied",
+      "ad_user_data": "denied",
+      "ad_personalization": "denied",
+      "analytics_storage": "granted"
+    }
+  ],
+  {
+    "event": "68publishers_consent",
+    "consent_status": "default",
+    "functionality_storage": "granted",
+    "security_storage": "denied",
+    "personalization_storage": "denied",
+    "ad_storage": "denied",
+    "ad_user_data": "denied",
+    "ad_personalization": "denied",
+    "analytics_storage": "granted"
+  },
+  [
+    "event",
+    "68publishers_functionality_storage",
+    {}
+  ],
+  [
+    "event",
+    "68publishers_analytics_storage",
+    {}
+  ],
+  [
+    "consent",
+    "update",
+    {
+      "functionality_storage": "granted",
+      "security_storage": "denied",
+      "personalization_storage": "denied",
+      "ad_storage": "denied",
+      "ad_user_data": "denied",
+      "ad_personalization": "denied",
+      "analytics_storage": "granted"
+    }
+  ],
+  {
+    "event": "68publishers_consent",
+    "consent_status": "update",
+    "functionality_storage": "granted",
+    "security_storage": "denied",
+    "personalization_storage": "denied",
+    "ad_storage": "denied",
+    "ad_user_data": "denied",
+    "ad_personalization": "denied",
+    "analytics_storage": "granted"
+  }
+]

@@ -10,5 +10,14 @@ export class StorageConfig {
         this.readonly = config.readonly || false;
         this.sync_consent_with = config.sync_consent_with || null;
         this.show_modal_again_expiration = config.show_modal_again_expiration || null;
+        // services (providers) of the storage shown in the "services" preferences mode: [{name, label?, link?, cookies?}]
+        this.services = Array.isArray(config.services)
+            ? config.services.filter(service => service && service.name).map(service => ({
+                name: String(service.name),
+                label: service.label ? String(service.label) : null,
+                link: service.link ? String(service.link) : null,
+                cookies: Array.isArray(service.cookies) ? service.cookies.map(String) : [],
+            }))
+            : [];
     }
 }

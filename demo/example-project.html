@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cookie consent: Example Project demo</title>
+    <!-- Example Project: the GTM template through the sandbox shim with the tag configuration of a 1.x client,
+         mocked CMP, its Custom HTML tags and click triggers. ?version=1.6.0 = package 1.6.0 with the 1.x CSS
+         (reference), otherwise 2.0 with branding.v2.css. ?app=settings|webview = tags of the mobile app. -->
+    <script>
+        (function () {
+            var params = new URLSearchParams(location.search);
+            var get = function (url) {
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', url, false);
+                xhr.send();
+                return xhr.responseText;
+            };
+
+            window.__DEMO__ = { version: params.get('version') === '1.6.0' ? '1.6.0' : '2.0', app: params.get('app'), get: get };
+            window.__GTM_PKG__ = window.__DEMO__.version === '1.6.0' ? '/ref/' : '/pkg/';
+
+            window.dataLayer = window.dataLayer || [];
+            window.cookieConsentWrapperEvents = window.cookieConsentWrapperEvents || [];
+            window.__ccEvents = [];
+            ['init', 'consent:first-action', 'consent:accepted', 'consent:changed', 'locale:change', 'consent:saved'].forEach(function (name) {
+                window.cookieConsentWrapperEvents.push([name, function () {
+                    window.__ccEvents.push({ name: name, args: JSON.parse(JSON.stringify(Array.prototype.slice.call(arguments))) });
+                }]);
+            });
+
+            // click triggers and the js.pers_cookie_state variable of the GTM container
+            window.__CLICK_TRIGGERS__ = JSON.parse(get('/tests/fixtures/clients/example-project/click-triggers.json'));
+            window.__GTM_VARIABLES__ = {
+                'js.pers_cookie_state': (0, eval)(get('/tests/fixtures/clients/example-project/pers-cookie-state.js')),
+                'js.navigator.userAgent': function () { return window.__DEMO__.app ? 'ExampleApp' : navigator.userAgent; },
+            };
+        })();
+    </script>
+    <script src="/tests/fixtures/cmp-mock.js"></script>
+    <script src="/tests/fixtures/gtm-click-triggers.js"></script>
+    <script src="/tests/gtm/sandbox-shim.js"></script>
+    <script src="/__gtm/template.js"></script>
+    <script>
+        (function () {
+            var demo = window.__DEMO__;
+            var data = JSON.parse(demo.get('/tests/fixtures/gtm/example-project.json')).data;
+
+            if ('2.0' === demo.version) {
+                data.internal_stylesheets = demo.get('/tests/fixtures/clients/example-project/branding.v2.css');
+            }
+            if (demo.app) {
+                data.modal_trigger_selector = '';
+                data.cmp_api_environment_code = 'mobile';
+            }
+            if (window.__DEMO_DATA__) {
+                Object.assign(data, window.__DEMO_DATA__);
+            }
+
+            window.runGtmTemplate(window.__gtmTemplateCode, data);
+        })();
+    </script>
+    <style>
+        body { margin: 0; font-family: Arial, Helvetica, sans-serif; color: #333; background: #f4f4f4; }
+        .demo-header { background: #3366cc; color: #fff; padding: 16px 24px; display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
+        .demo-header strong { font-size: 22px; letter-spacing: 1px; }
+        .demo-header a { color: #fff; }
+        .demo-main { max-width: 960px; margin: 0 auto; padding: 24px 16px; }
+        .demo-main button { margin: 0 8px 8px 0; }
+        .demo-log { background: #fff; padding: 12px; font-size: 12px; }
+        .demo-log pre { white-space: pre-wrap; word-break: break-all; }
+        footer { margin-top: 40px; padding: 16px 24px; background: #333; color: #fff; }
+        footer a { color: #fff; }
+    </style>
+</head>
+<body>
+    <header class="demo-header">
+        <strong>EXAMPLE PROJECT</strong>
+        <span>cookie consent demo, version <b id="demo-version"></b></span>
+        <a href="?version=2.0">2.0</a>
+        <a href="?version=1.6.0">1.6.0 (reference)</a>
+        <a href="?version=2.0&amp;app=settings">2.0 mobile app</a>
+        <a href="?version=1.6.0&amp;app=settings">1.6.0 mobile app</a>
+    </header>
+    <main class="demo-main">
+        <h1>Example Project cookie consent demo</h1>
+        <p>The configuration of a “Cookie Consent v1.4.1” GTM tag, the CMP is mocked. Both versions share the cookie, switching the version verifies the consent migration too.</p>
+        <button type="button" id="demo-reset">Clear the consent and reload</button>
+        <button type="button" id="demo-settings">Open the settings</button>
+        <details class="demo-log">
+            <summary>Log (dataLayer, events, click triggers, cookie, CMP)</summary>
+            <pre id="demo-log"></pre>
+        </details>
+    </main>
+    <!-- the wrapper inserts the cookie settings link (modal_trigger_selector footer .footer-item) -->
+    <footer><div class="footer-item"></div></footer>
+    <script>
+        (function () {
+            var demo = window.__DEMO__;
+            document.getElementById('demo-version').textContent = demo.version + (demo.app ? ' (mobile app ' + demo.app + ')' : '');
+
+            document.getElementById('demo-reset').addEventListener('click', function () {
+                document.cookie.split(/;\s*/).forEach(function (c) {
+                    var name = c.split('=')[0];
+                    document.cookie = name + '=; Max-Age=0; path=/';
+                    document.cookie = name + '=; Max-Age=0; path=/; domain=' + location.hostname;
+                });
+                location.reload();
+            });
+            document.getElementById('demo-settings').addEventListener('click', function () {
+                var plugin = CookieConsentWrapper.unwrap();
+                (plugin.showPreferences || plugin.showSettings).call(plugin, 0);
+            });
+
+            var runTag = function (html) {
+                // Custom HTML tag like in GTM; for 2.0 only the CSS selectors are rewritten (the map of the migration guide)
+                if ('2.0' === demo.version) {
+                    html = html.replace(/<style>[\s\S]*?<\/style>/g, function (css) {
+                        return css.split('#cc_div #cm').join('#cc-main .cm').split('#cc--main').join('#cc-main')
+                            .split('#s-inr').join('#cc-main .pm').split('.cc-back-button').join('#cc-main .cc-back-button');
+                    });
+                }
+                var container = document.createElement('div');
+                container.innerHTML = html;
+                container.querySelectorAll('style').forEach(function (style) { document.head.appendChild(style); });
+                container.querySelectorAll('script').forEach(function (script) {
+                    var s = document.createElement('script');
+                    s.textContent = script.textContent;
+                    document.body.appendChild(s);
+                });
+            };
+
+            runTag(demo.get('/tests/fixtures/clients/example-project/domain-fix.html'));
+            if ('settings' === demo.app) {
+                runTag(demo.get('/tests/fixtures/clients/example-project/app-settings.html'));
+            } else if ('webview' === demo.app) {
+                runTag(demo.get('/tests/fixtures/clients/example-project/app-webview.html'));
+            }
+
+            var normalize = function (e) {
+                return typeof e === 'object' && e !== null && typeof e.length === 'number' && !Array.isArray(e) ? Array.prototype.slice.call(e) : e;
+            };
+            setInterval(function () {
+                var details = document.querySelector('.demo-log');
+                if (!details.open) {
+                    return;
+                }
+                document.getElementById('demo-log').textContent = [
+                    'cookie: ' + document.cookie,
+                    'click triggers: ' + JSON.stringify(window.__firedTriggers),
+                    'events: ' + JSON.stringify((window.__ccEvents || []).map(function (e) { return e.name; })),
+                    'CMP: ' + JSON.stringify((window.__cmpRequests || []).map(function (r) { return r.method + ' ' + r.path; })),
+                    'dataLayer:',
+                ].concat(window.dataLayer.map(function (e) { try { return JSON.stringify(normalize(e)); } catch (x) { return String(e); } })).join('\n');
+            }, 500);
+        })();
+    </script>
+</body>
+</html>

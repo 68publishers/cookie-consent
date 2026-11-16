@@ -12,7 +12,10 @@ const compat = new FlatCompat({
     allConfig: js.configs.all
 });
 
-export default [...compat.extends("eslint:recommended"), {
+export default [{
+    // copies of client GTM tags
+    ignores: ["tests/fixtures/clients/**"],
+}, ...compat.extends("eslint:recommended"), {
     languageOptions: {
         globals: {
             ...Object.fromEntries(Object.entries(globals.node).map(([key]) => [key, "off"])),
@@ -37,5 +40,14 @@ export default [...compat.extends("eslint:recommended"), {
 
         "no-trailing-spaces": "error",
         "eol-last": ["error", "always"],
+    },
+}, {
+    // tests and perf run in Node (Playwright, Vitest) and in the browser (page.evaluate)
+    files: ["perf/**", "tests/**"],
+    languageOptions: {
+        globals: {
+            ...globals.node,
+            ...globals.browser,
+        },
     },
 }];

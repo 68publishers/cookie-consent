@@ -29,6 +29,10 @@ export class Storage {
         return this._config.sync_consent_with;
     }
 
+    get services() {
+        return this._config.services;
+    }
+
     get showModalAgainExpiration() {
         return this._config.show_modal_again_expiration;
     }

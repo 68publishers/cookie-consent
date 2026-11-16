@@ -1,0 +1,31 @@
+[
+  [
+    "consent",
+    "update",
+    {
+      "functionality_storage": "granted",
+      "personalization_storage": "denied",
+      "security_storage": "granted",
+      "ad_storage": "granted",
+      "ad_user_data": "granted",
+      "ad_personalization": "granted",
+      "analytics_storage": "denied"
+    }
+  ],
+  {
+    "event": "68publishers_consent",
+    "consent_status": "update",
+    "functionality_storage": "granted",
+    "personalization_storage": "denied",
+    "security_storage": "granted",
+    "ad_storage": "granted",
+    "ad_user_data": "granted",
+    "ad_personalization": "granted",
+    "analytics_storage": "denied"
+  },
+  [
+    "event",
+    "68publishers_ad_storage",
+    {}
+  ]
+]

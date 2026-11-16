@@ -48,16 +48,33 @@ export class Dictionary {
         return key;
     }
 
-    async exportTranslations(storagePool, config) {
-        const dictionary = {};
-        let key;
-        let catalogue;
+    registerSource(locale, url) {
+        this.#catalogue(locale).setSource(url);
+    }
 
-        for (key in this._catalogues) {
-            catalogue = this._catalogues[key];
-            dictionary[catalogue.locale] = await catalogue.exportTranslations(storagePool, config, this._placeholders);
+    get locales() {
+        return Object.keys(this._catalogues);
+    }
+
+    has(locale) {
+        return locale in this._catalogues;
+    }
+
+    async load(locale) {
+        if (locale in this._catalogues) {
+            await this._catalogues[locale].load();
+        }
+    }
+
+    async exportTranslation(locale, storagePool, config, cookieTable = null, revisionEnabled = false) {
+        return this.#catalogue(locale).exportTranslations(storagePool, config, this._placeholders, cookieTable, revisionEnabled);
+    }
+
+    #catalogue(locale) {
+        if (!(locale in this._catalogues)) {
+            this._catalogues[locale] = new Catalogue(locale);
         }
 
-        return dictionary;
+        return this._catalogues[locale];
     }
 }

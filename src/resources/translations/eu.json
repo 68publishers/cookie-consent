@@ -12,6 +12,8 @@
     "settings_modal_accept_all_btn": "Onartu guztiak",
     "settings_modal_reject_all_btn": "Onartu beharrezkoak",
     "settings_modal_close_btn_label": "Itxi",
+    "settings_modal_service_counter_label": "zerbitzua|zerbitzuak",
+    "consent_modal_close_btn_label": "",
 
     "settings_modal_before_consent_title": "Cookien erabilera",
     "settings_modal_before_consent_description": "Cookieak erabiltzen ditugu webgunearen oinarrizko funtzionaltasunak bermatzeko eta zure esperientzia hobetzeko. Kategoria bakoitzean, nahi duzunean onartu edo baztertu nahi dituzun aukera dezakezu.",

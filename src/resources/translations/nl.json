@@ -12,6 +12,8 @@
     "settings_modal_accept_all_btn": "Alles accepteren",
     "settings_modal_reject_all_btn": "Alleen noodzakelijk",
     "settings_modal_close_btn_label": "Sluiten",
+    "settings_modal_service_counter_label": "dienst|diensten",
+    "consent_modal_close_btn_label": "",
 
     "settings_modal_before_consent_title": "Gebruik van cookies",
     "settings_modal_before_consent_description": "We gebruiken cookies om de basisfuncties van de website te garanderen en om jouw online ervaring te verbeteren. Je kunt per categorie kiezen voor opt-in of opt-out wanneer je maar wilt.",
